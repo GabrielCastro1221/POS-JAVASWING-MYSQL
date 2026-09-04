@@ -51,12 +51,26 @@ public class Login extends javax.swing.JPanel {
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnLogin.setText("Ingresar");
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLoginMouseClicked(evt);
+            }
+        });
         roundedPanel1.add(btnLogin);
         btnLogin.setBounds(0, 0, 360, 40);
 
         add(roundedPanel1);
         roundedPanel1.setBounds(30, 280, 360, 40);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+        System sys = new System();
+        sys.setVisible(true);
+        java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
+    }//GEN-LAST:event_btnLoginMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
