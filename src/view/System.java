@@ -16,8 +16,15 @@ public class System extends javax.swing.JFrame {
     private void init() {
         setBackground(new Color(0, 0, 0, 0));
         getContentPane().setBackground(new Color(0, 0, 0, 0));
+
         backPanel.setOpaque(false);
         backPanel.setBackground(new Color(0, 0, 0, 0));
+
+        jPanel1.setOpaque(false);
+        jPanel1.setBackground(new Color(0, 0, 0, 0));
+
+        jPanel2.setOpaque(false);
+        jPanel2.setBackground(new Color(0, 0, 0, 0));
 
         aplicarFormaRedondeada();
 
@@ -40,21 +47,38 @@ public class System extends javax.swing.JFrame {
     private void initComponents() {
 
         backPanel = new components.RoundedPanel();
+        jPanel1 = new javax.swing.JPanel();
+        sidebar1 = new view.Sidebar();
+        jPanel2 = new javax.swing.JPanel();
+        search1 = new view.Search();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        backPanel.setPreferredSize(new java.awt.Dimension(1120, 650));
+        backPanel.setPreferredSize(new java.awt.Dimension(1105, 618));
+
+        jPanel1.setBackground(new java.awt.Color(61, 63, 65));
+        jPanel1.setLayout(null);
+        jPanel1.add(sidebar1);
+        sidebar1.setBounds(0, 0, 210, 720);
+
+        jPanel2.setBackground(new java.awt.Color(60, 61, 65));
+        jPanel2.setLayout(null);
+        jPanel2.add(search1);
+        search1.setBounds(0, 20, 520, 40);
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(220, 0, 1180, 60);
 
         javax.swing.GroupLayout backPanelLayout = new javax.swing.GroupLayout(backPanel);
         backPanel.setLayout(backPanelLayout);
         backPanelLayout.setHorizontalGroup(
             backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1400, Short.MAX_VALUE)
         );
         backPanelLayout.setVerticalGroup(
             backPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -79,5 +103,9 @@ public class System extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private components.RoundedPanel backPanel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private view.Search search1;
+    private view.Sidebar sidebar1;
     // End of variables declaration//GEN-END:variables
 }

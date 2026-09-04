@@ -21,13 +21,19 @@ public class RoundedPanelSys extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        RoundRectangle2D.Double roundedShape = new RoundRectangle2D.Double(0, 0, this.getWidth() - 1, this.getHeight() - 1, arc, arc);
+
+        RoundRectangle2D.Double roundedShape = new RoundRectangle2D.Double(
+                0, 0, this.getWidth() - 1, this.getHeight() - 1, arc, arc
+        );
+
         g2.setColor(this.getBackground());
         g2.fill(roundedShape);
+
         if (line) {
-            g2.setColor(new Color(230, 230, 230));
+            g2.setColor(new Color(61, 63, 65));
             g2.draw(roundedShape);
         }
+
         g2.dispose();
     }
 

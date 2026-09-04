@@ -21,11 +21,9 @@ CREATE TABLE IF NOT EXISTS usuarios (
 -- ===============================
 CREATE TABLE IF NOT EXISTS clientes (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    dni BIGINT NOT NULL UNIQUE,
     nombre VARCHAR(150) NOT NULL,
     telefono VARCHAR(20) NOT NULL,
-    direccion VARCHAR(200) NOT NULL,
-    razon_social VARCHAR(200) NOT NULL,
+    correo VARCHAR(100) NOT NULL UNIQUE,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

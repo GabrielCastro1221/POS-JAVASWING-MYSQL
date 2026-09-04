@@ -2,6 +2,9 @@ package view;
 
 import components.RoundedPanelSys;
 import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -9,25 +12,32 @@ public class ListMenu extends RoundedPanelSys {
 
     String path = "";
     String text = "";
-    Color backgroundColor = new Color(243, 243, 243);
-    Color backgroundColorHover = new Color(230, 230, 230);
 
     public ListMenu() {
         initComponents();
         setArc(10);
         setOpaque(false);
+        init();
+    }
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                setBackground(backgroundColorHover);
-            }
+    private void init() {
+        lblOption.setForeground(Color.DARK_GRAY);
+        icon.setForeground(Color.DARK_GRAY);
+    }
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setBackground(backgroundColor);
-            }
-        });
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        Color redDark = new Color(196, 94, 95);
+        Color redLight = new Color(224, 109, 106);
+
+        GradientPaint gradient = new GradientPaint(0, 0, redDark, 0, getHeight(), redLight);
+
+        g2.setPaint(gradient);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), getArc(), getArc());
+
+        g2.dispose();
+        super.paintComponent(g);
     }
 
     public String getPath() {
