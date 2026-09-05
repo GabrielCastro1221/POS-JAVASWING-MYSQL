@@ -56,18 +56,11 @@ public class System extends javax.swing.JFrame implements SelectOption {
     }
 
     public void addForm(JComponent com) {
-        // Limpia el contenedor
         formContainer.removeAll();
-
-        // Asegura que el contenedor tenga fondo estable
         formContainer.setOpaque(true);
-        formContainer.setBackground(new Color(61, 63, 65)); // mismo tono que tu UI
-
-        // Usa BorderLayout para que el formulario ocupe todo el espacio
+        formContainer.setBackground(new Color(61, 63, 65));
         formContainer.setLayout(new java.awt.BorderLayout());
         formContainer.add(com, java.awt.BorderLayout.CENTER);
-
-        // Refresca el contenedor
         formContainer.revalidate();
         formContainer.repaint();
     }
