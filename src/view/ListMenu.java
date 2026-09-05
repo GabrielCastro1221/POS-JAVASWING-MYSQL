@@ -12,11 +12,17 @@ public class ListMenu extends RoundedPanelSys {
 
     String path = "";
     String text = "";
+    Color backgroundColor = new Color(243, 243, 243);
+    Color backgroundColorHover = new Color(230, 230, 230);
+    Color backgroundColorHoverSelected = new Color(234, 234, 234);
+    boolean selected = false;
+    int id = 0;
 
     public ListMenu() {
         initComponents();
         setArc(10);
         setOpaque(false);
+        
         init();
     }
 
@@ -56,6 +62,23 @@ public class ListMenu extends RoundedPanelSys {
     public void setText(String text) {
         this.text = text;
         lblOption.setText(text);
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+        setBackground(selected ? backgroundColorHover : backgroundColor);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @SuppressWarnings("unchecked")

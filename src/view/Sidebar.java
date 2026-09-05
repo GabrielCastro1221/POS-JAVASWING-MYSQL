@@ -1,8 +1,15 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.List;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class Sidebar extends javax.swing.JPanel {
+
+    ArrayList<ListMenu> options = new ArrayList<>();
 
     public Sidebar() {
         initComponents();
@@ -17,6 +24,54 @@ public class Sidebar extends javax.swing.JPanel {
         jPanel1.setBackground(new Color(0, 0, 0, 0));
         jPanel2.setOpaque(false);
         jPanel2.setBackground(new Color(0, 0, 0, 0));
+        listMenu1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu2.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu4.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu5.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu6.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu7.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu8.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    public void optionsEvent(SelectOption SelectOption) {
+        listMenu1.setId(1);
+        options.add(listMenu1);
+        listMenu2.setId(2);
+        options.add(listMenu2);
+        listMenu3.setId(3);
+        options.add(listMenu3);
+        listMenu4.setId(4);
+        options.add(listMenu4);
+        listMenu5.setId(5);
+        options.add(listMenu5);
+        listMenu6.setId(6);
+        options.add(listMenu6);
+        listMenu7.setId(7);
+        options.add(listMenu7);
+        listMenu8.setId(8);
+        options.add(listMenu8);
+
+        for (ListMenu option : options) {
+            option.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    for (ListMenu op : options) {
+                        op.setSelected(false);
+                    }
+                    SelectOption.changeForm(option.getId());
+                    option.setSelected(true);
+                }
+            });
+        }
+    }
+
+    public ListMenu getListMenu1() {
+        return listMenu1;
+    }
+
+    public void setListMenu1(ListMenu listMenu1) {
+        this.listMenu1 = listMenu1;
     }
 
     @SuppressWarnings("unchecked")

@@ -1,16 +1,29 @@
 package view;
 
+import form.Clientes;
+import form.Config;
+import form.NuevaVenta;
+import form.Productos;
+import form.Proveedores;
+import form.Reportes;
+import form.Usuarios;
+import form.Ventas;
+
 import java.awt.Color;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JComponent;
 
-public class System extends javax.swing.JFrame {
+public class System extends javax.swing.JFrame implements SelectOption {
 
     public System() {
         setUndecorated(true);
         initComponents();
         this.init();
+        sidebar.getListMenu1().setSelected(true);
+        sidebar.optionsEvent(this);
+        addForm(new NuevaVenta());
     }
 
     private void init() {
@@ -42,15 +55,33 @@ public class System extends javax.swing.JFrame {
         }
     }
 
+    public void addForm(JComponent com) {
+        // Limpia el contenedor
+        formContainer.removeAll();
+
+        // Asegura que el contenedor tenga fondo estable
+        formContainer.setOpaque(true);
+        formContainer.setBackground(new Color(61, 63, 65)); // mismo tono que tu UI
+
+        // Usa BorderLayout para que el formulario ocupe todo el espacio
+        formContainer.setLayout(new java.awt.BorderLayout());
+        formContainer.add(com, java.awt.BorderLayout.CENTER);
+
+        // Refresca el contenedor
+        formContainer.revalidate();
+        formContainer.repaint();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         backPanel = new components.RoundedPanel();
         jPanel1 = new javax.swing.JPanel();
-        sidebar1 = new view.Sidebar();
+        sidebar = new view.Sidebar();
         jPanel2 = new javax.swing.JPanel();
         search1 = new view.Search();
+        formContainer = new components.FormContainer();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -59,16 +90,32 @@ public class System extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(61, 63, 65));
         jPanel1.setLayout(null);
-        jPanel1.add(sidebar1);
-        sidebar1.setBounds(0, 0, 210, 720);
+        jPanel1.add(sidebar);
+        sidebar.setBounds(0, 0, 210, 720);
 
         jPanel2.setBackground(new java.awt.Color(60, 61, 65));
         jPanel2.setLayout(null);
         jPanel2.add(search1);
-        search1.setBounds(0, 20, 520, 40);
+        search1.setBounds(0, 10, 520, 40);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(220, 0, 1180, 60);
+
+        formContainer.setBackground(new java.awt.Color(61, 63, 65));
+
+        javax.swing.GroupLayout formContainerLayout = new javax.swing.GroupLayout(formContainer);
+        formContainer.setLayout(formContainerLayout);
+        formContainerLayout.setHorizontalGroup(
+            formContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1180, Short.MAX_VALUE)
+        );
+        formContainerLayout.setVerticalGroup(
+            formContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 660, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(formContainer);
+        formContainer.setBounds(220, 60, 1180, 660);
 
         javax.swing.GroupLayout backPanelLayout = new javax.swing.GroupLayout(backPanel);
         backPanel.setLayout(backPanelLayout);
@@ -103,9 +150,36 @@ public class System extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private components.RoundedPanel backPanel;
+    private components.FormContainer formContainer;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private view.Search search1;
-    private view.Sidebar sidebar1;
+    private view.Sidebar sidebar;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void changeForm(int id) {
+        JComponent formToChange;
+        switch (id) {
+            case 1 ->
+                formToChange = new NuevaVenta();
+            case 2 ->
+                formToChange = new Productos();
+            case 3 ->
+                formToChange = new Proveedores();
+            case 4 ->
+                formToChange = new Ventas();
+            case 5 ->
+                formToChange = new Clientes();
+            case 6 ->
+                formToChange = new Reportes();
+            case 7 ->
+                formToChange = new Usuarios();
+            case 8 ->
+                formToChange = new Config();
+            default ->
+                formToChange = new NuevaVenta();
+        }
+        addForm(formToChange);
+    }
 }
