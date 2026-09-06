@@ -10,8 +10,11 @@ import form.Usuarios;
 import form.Ventas;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
 
@@ -21,6 +24,7 @@ public class System extends javax.swing.JFrame implements SelectOption {
         setUndecorated(true);
         initComponents();
         this.init();
+        btnCloseSys.setCursor(new Cursor(Cursor.HAND_CURSOR));
         sidebar.getListMenu1().setSelected(true);
         sidebar.optionsEvent(this);
         addForm(new NuevaVenta());
@@ -45,6 +49,13 @@ public class System extends javax.swing.JFrame implements SelectOption {
             @Override
             public void componentResized(ComponentEvent e) {
                 aplicarFormaRedondeada();
+            }
+        });
+
+        btnCloseSys.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
             }
         });
     }
@@ -74,6 +85,7 @@ public class System extends javax.swing.JFrame implements SelectOption {
         sidebar = new view.Sidebar();
         jPanel2 = new javax.swing.JPanel();
         search1 = new view.Search();
+        btnCloseSys = new components.Picture();
         formContainer = new components.FormContainer();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,6 +102,15 @@ public class System extends javax.swing.JFrame implements SelectOption {
         jPanel2.setLayout(null);
         jPanel2.add(search1);
         search1.setBounds(0, 10, 520, 40);
+
+        btnCloseSys.setPath("/assets/close.png");
+        btnCloseSys.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCloseSysMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btnCloseSys);
+        btnCloseSys.setBounds(1140, 20, 20, 20);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(220, 0, 1180, 60);
@@ -136,6 +157,10 @@ public class System extends javax.swing.JFrame implements SelectOption {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCloseSysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseSysMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCloseSysMouseClicked
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(() -> new System().setVisible(true));
@@ -143,6 +168,7 @@ public class System extends javax.swing.JFrame implements SelectOption {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private components.RoundedPanel backPanel;
+    private components.Picture btnCloseSys;
     private components.FormContainer formContainer;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -40,7 +40,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="components.CustomTextField" name="customTextField1">
+    <Component class="components.CustomTextField" name="txtLoginEmail">
       <Properties>
         <Property name="placeholder" type="java.lang.String" value="Email"/>
       </Properties>
@@ -50,7 +50,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="components.CustomPasswordField" name="customPasswordField1">
+    <Component class="components.CustomPasswordField" name="txtLoginPass">
       <Properties>
         <Property name="placeholder" type="java.lang.String" value="Contrase&#xf1;a"/>
       </Properties>
@@ -93,6 +93,7 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnLoginMouseClicked"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="btnLoginKeyPressed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
