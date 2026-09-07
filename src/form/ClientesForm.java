@@ -172,7 +172,7 @@ public class ClientesForm extends javax.swing.JPanel {
         lblTitleFormClientes.setForeground(new java.awt.Color(196, 94, 95));
         lblTitleFormClientes.setText("Formulario clientes");
         add(lblTitleFormClientes);
-        lblTitleFormClientes.setBounds(30, 20, 300, 28);
+        lblTitleFormClientes.setBounds(70, 30, 220, 28);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearClienteMouseClicked

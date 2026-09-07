@@ -1,6 +1,7 @@
 package form;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -10,11 +11,13 @@ public class ProveedoresForm extends javax.swing.JPanel {
 
     public ProveedoresForm() {
         initComponents();
+        btnCrearProveedor.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnActualizarProveedor.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnEliminarProveedor.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.init();
     }
-    
+
     private void init() {
-        // Fondo transparente
         setOpaque(false);
         setBackground(new Color(0, 0, 0, 0));
     }
@@ -26,12 +29,9 @@ public class ProveedoresForm extends javax.swing.JPanel {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int arc = 20; // radio de las esquinas
-        RoundRectangle2D rounded = new RoundRectangle2D.Double(
-                0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
-
-        // Borde translúcido
-        g2.setColor(new Color(255, 255, 255, 80)); 
+        int arc = 20;
+        RoundRectangle2D rounded = new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
+        g2.setColor(new Color(255, 255, 255, 80));
         g2.draw(rounded);
 
         g2.dispose();
@@ -251,7 +251,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtDireccionProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionProveedorActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtDireccionProveedorActionPerformed
 
     private void btnCrearProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearProveedorMouseClicked
@@ -263,11 +263,11 @@ public class ProveedoresForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearProveedorKeyPressed
 
     private void btnActualizarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarProveedorMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnActualizarProveedorMouseClicked
 
     private void btnActualizarProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarProveedorKeyPressed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnActualizarProveedorKeyPressed
 
     private void btnEliminarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarProveedorMouseClicked

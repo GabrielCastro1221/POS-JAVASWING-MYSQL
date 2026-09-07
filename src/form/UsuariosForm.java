@@ -67,7 +67,7 @@ public class UsuariosForm extends javax.swing.JPanel {
         lblFormTitleUsuarios.setForeground(new java.awt.Color(196, 94, 95));
         lblFormTitleUsuarios.setText("Formulario usuarios");
         add(lblFormTitleUsuarios);
-        lblFormTitleUsuarios.setBounds(37, 35, 225, 28);
+        lblFormTitleUsuarios.setBounds(60, 30, 225, 28);
 
         lblNombreUsuario.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -99,7 +99,6 @@ public class UsuariosForm extends javax.swing.JPanel {
         add(cbxRolUsuario);
         cbxRolUsuario.setBounds(30, 380, 290, 31);
 
-        txtPassUsuario.setForeground(new java.awt.Color(200, 200, 200));
         txtPassUsuario.setPlaceholder("Ingrese la contraseña del usuario");
         add(txtPassUsuario);
         txtPassUsuario.setBounds(30, 240, 290, 33);
