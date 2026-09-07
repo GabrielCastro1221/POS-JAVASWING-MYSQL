@@ -8,7 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import model.ClientesDAO;
-import model.Clientes;
+import model.Cliente;
 
 public class ClientesForm extends javax.swing.JPanel {
 
@@ -27,6 +27,8 @@ public class ClientesForm extends javax.swing.JPanel {
         btnCrearCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnActualizarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnEliminarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        txtIdCliente.setVisible(false);
+        txtFechaCliente.setVisible(false);
     }
 
     @Override
@@ -41,6 +43,14 @@ public class ClientesForm extends javax.swing.JPanel {
         g2.setColor(new Color(255, 255, 255, 80));
         g2.draw(rounded);
         g2.dispose();
+    }
+
+    public void setDatosCliente(int id, String nombre, String telefono, String correo, String fecha) {
+        txtIdCliente.setText(String.valueOf(id));
+        txtNombreCliente.setText(nombre);
+        txtTelefonoCliente.setText(telefono);
+        txtEmailCliente.setText(correo);
+        txtFechaCliente.setText(fecha);
     }
 
     @SuppressWarnings("unchecked")
@@ -60,6 +70,8 @@ public class ClientesForm extends javax.swing.JPanel {
         lblEmailCliente = new javax.swing.JLabel();
         lblTelefonoCliente = new javax.swing.JLabel();
         lblTitleFormClientes = new javax.swing.JLabel();
+        txtIdCliente = new components.CustomTextField();
+        txtFechaCliente = new components.CustomTextField();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -178,11 +190,16 @@ public class ClientesForm extends javax.swing.JPanel {
         lblTitleFormClientes.setText("Formulario clientes");
         add(lblTitleFormClientes);
         lblTitleFormClientes.setBounds(70, 30, 220, 28);
+        add(txtIdCliente);
+        txtIdCliente.setBounds(20, 20, 10, 33);
+        add(txtFechaCliente);
+        txtFechaCliente.setBounds(40, 20, 10, 33);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearClienteMouseClicked
+
         try {
-            Clientes nuevo = new Clientes();
+            Cliente nuevo = new Cliente();
             nuevo.setNombre(txtNombreCliente.getText());
             nuevo.setCorreo(txtEmailCliente.getText());
             nuevo.setTelefono(txtTelefonoCliente.getText());
@@ -191,12 +208,19 @@ public class ClientesForm extends javax.swing.JPanel {
             if (client.RegistrarCliente(nuevo)) {
                 JOptionPane.showMessageDialog(this, "Cliente registrado con éxito");
                 limpiarCampos();
+
+                if (getParent() instanceof Clientes) {
+                    Clientes panelClientes = (Clientes) getParent();
+                    panelClientes.cargarClientes();
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Error al registrar cliente");
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido");
         }
+
+
     }//GEN-LAST:event_btnCrearClienteMouseClicked
 
     private void btnCrearClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearClienteKeyPressed
@@ -205,6 +229,26 @@ public class ClientesForm extends javax.swing.JPanel {
 
     private void btnActualizarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarClienteMouseClicked
 
+        try {
+            Cliente c = new Cliente();
+            c.setId(Integer.parseInt(txtIdCliente.getText()));
+            c.setNombre(txtNombreCliente.getText());
+            c.setTelefono(txtTelefonoCliente.getText());
+            c.setCorreo(txtEmailCliente.getText());
+
+            if (client.ModificarCliente(c)) {
+                JOptionPane.showMessageDialog(this, "Cliente actualizado con éxito");
+                limpiarCampos();
+                if (getParent() instanceof Clientes) {
+                    Clientes panelClientes = (Clientes) getParent();
+                    panelClientes.cargarClientes();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar cliente");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: ID inválido");
+        }
     }//GEN-LAST:event_btnActualizarClienteMouseClicked
 
     private void btnActualizarClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarClienteKeyPressed
@@ -212,7 +256,26 @@ public class ClientesForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarClienteKeyPressed
 
     private void btnEliminarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarClienteMouseClicked
-        
+
+        try {
+            int id = Integer.parseInt(txtIdCliente.getText());
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            
+            if (confirm == JOptionPane.YES_OPTION) {
+                if (client.EliminarCliente(id)) {
+                    JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito");
+                    limpiarCampos();
+                    if (getParent() instanceof Clientes) {
+                        Clientes panelClientes = (Clientes) getParent();
+                        panelClientes.cargarClientes();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar cliente");
+                }
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: ID inválido");
+        }
     }//GEN-LAST:event_btnEliminarClienteMouseClicked
 
     private void btnEliminarClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarClienteKeyPressed
@@ -232,6 +295,8 @@ public class ClientesForm extends javax.swing.JPanel {
     private components.RoundedPanel roundedPanelCrearCliente;
     private components.RoundedPanel roundedPanelEliminarCliente;
     private components.CustomTextField txtEmailCliente;
+    private components.CustomTextField txtFechaCliente;
+    private components.CustomTextField txtIdCliente;
     private components.CustomTextField txtNombreCliente;
     private components.CustomTextField txtTelefonoCliente;
     // End of variables declaration//GEN-END:variables

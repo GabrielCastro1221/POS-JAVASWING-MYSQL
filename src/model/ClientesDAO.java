@@ -12,7 +12,7 @@ public class ClientesDAO {
 
     private final Conexion cn = Conexion.getInstancia();
 
-    public boolean RegistrarCliente(Clientes cl) {
+    public boolean RegistrarCliente(Cliente cl) {
         String sql = "INSERT INTO clientes (nombre, telefono, correo) VALUES (?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, cl.getNombre());
@@ -26,18 +26,19 @@ public class ClientesDAO {
         }
     }
 
-    public List<Clientes> ListarClientes() {
-        List<Clientes> listaCl = new ArrayList<>();
+    public List<Cliente> ListarClientes() {
+        List<Cliente> listaCl = new ArrayList<>();
         String sql = "SELECT * FROM clientes";
 
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Clientes cl = new Clientes();
+                Cliente cl = new Cliente();
                 cl.setId(rs.getInt("id"));
                 cl.setNombre(rs.getString("nombre"));
                 cl.setTelefono(rs.getString("telefono"));
                 cl.setCorreo(rs.getString("correo"));
+                cl.setFecha(rs.getTimestamp("fecha"));
                 listaCl.add(cl);
             }
         } catch (SQLException e) {
@@ -58,7 +59,7 @@ public class ClientesDAO {
         }
     }
 
-    public boolean ModificarCliente(Clientes cl) {
+    public boolean ModificarCliente(Cliente cl) {
         String sql = "UPDATE clientes SET nombre = ?, telefono = ?, correo = ? WHERE id = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -75,8 +76,8 @@ public class ClientesDAO {
         }
     }
 
-    public Clientes buscarCliente(String correo) {
-        Clientes c = null;
+    public Cliente buscarCliente(String correo) {
+        Cliente c = null;
         String sql = "SELECT * FROM clientes WHERE correo = ?";
 
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -84,7 +85,7 @@ public class ClientesDAO {
             ps.setString(1, correo);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    c = new Clientes();
+                    c = new Cliente();
                     c.setId(rs.getInt("id"));
                     c.setNombre(rs.getString("nombre"));
                     c.setTelefono(rs.getString("telefono"));

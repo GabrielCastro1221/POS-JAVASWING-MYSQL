@@ -1,16 +1,17 @@
 package model;
 
-public class Clientes {
+public class Cliente {
 
     private int id;
     private String nombre;
     private String telefono;
     private String correo;
+    private java.sql.Timestamp fecha;
 
-    public Clientes() {
+    public Cliente() {
     }
 
-    public Clientes(int id, String nombre, String telefono, String correo) {
+    public Cliente(int id, String nombre, String telefono, String correo) {
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -48,5 +49,12 @@ public class Clientes {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    
+
+    public java.sql.Timestamp getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(java.sql.Timestamp fecha) {
+        this.fecha = fecha;
+    }
 }
