@@ -35,21 +35,5 @@ public class AuthDAO {
         }
         return usuario;
     }
-
-    public boolean registrar(Auth reg) {
-        String sql = "INSERT INTO usuarios (nombre, correo, pass, rol, telefono) VALUES (?, ?, ?, ?, ?)";
-        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setString(1, reg.getNombre());
-            ps.setString(2, reg.getCorreo());
-            ps.setString(3, reg.getPass());
-            ps.setString(4, reg.getRol());
-            ps.setString(5, reg.getTelefono());
-            ps.execute();
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Error en registrar: " + e.getMessage());
-            return false;
-        }
-    }
+    
 }
