@@ -79,4 +79,8 @@ public class Proveedores {
         this.razon_social = razon_social;
     }
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

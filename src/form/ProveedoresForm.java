@@ -6,6 +6,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
+
+import model.Proveedores;
+import model.ProveedoresDAO;
 
 public class ProveedoresForm extends javax.swing.JPanel {
 
@@ -255,7 +259,26 @@ public class ProveedoresForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDireccionProveedorActionPerformed
 
     private void btnCrearProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearProveedorMouseClicked
+        try {
+            Proveedores proveedor = new Proveedores();
+            ProveedoresDAO dao = new ProveedoresDAO();
 
+            proveedor.setRuc(Long.parseLong(txtRucProveedor.getText().trim()));
+            proveedor.setNombre(txtNombreProveedor.getText().trim());
+            proveedor.setVendedor(txtVendedorProveedor.getText().trim());
+            proveedor.setTelefono(txtTelefonoProveedor.getText().trim());
+            proveedor.setDireccion(txtDireccionProveedor.getText().trim());
+            proveedor.setRazon_social(txtRazonProveedor.getText().trim());
+
+            if (dao.registrarProveedor(proveedor)) {
+                JOptionPane.showMessageDialog(this, "Proveedor registrado correctamente");
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo registrar el proveedor", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El RUC debe contener solo números", "Dato inválido", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnCrearProveedorMouseClicked
 
     private void btnCrearProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearProveedorKeyPressed
@@ -299,4 +322,15 @@ public class ProveedoresForm extends javax.swing.JPanel {
     private components.CustomTextField txtTelefonoProveedor;
     private components.CustomTextField txtVendedorProveedor;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiarCampos() {
+        txtRucProveedor.setText("");
+        txtNombreProveedor.setText("");
+        txtVendedorProveedor.setText("");
+        txtTelefonoProveedor.setText("");
+        txtDireccionProveedor.setText("");
+        txtRazonProveedor.setText("");
+
+        txtRucProveedor.requestFocus();
+    }
 }

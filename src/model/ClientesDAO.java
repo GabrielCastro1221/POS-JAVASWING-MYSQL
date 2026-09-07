@@ -15,15 +15,13 @@ public class ClientesDAO {
     public boolean RegistrarCliente(Clientes cl) {
         String sql = "INSERT INTO clientes (nombre, telefono, correo) VALUES (?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setString(1, cl.getNombre());
-            ps.setInt(2, cl.getTelefono());
+            ps.setString(2, cl.getTelefono());
             ps.setString(3, cl.getCorreo());
-
-            ps.executeUpdate();
-            return true;
+            int resultado = ps.executeUpdate();
+            return resultado > 0;
         } catch (SQLException e) {
-            System.out.println("Error al registrar cliente: " + e.toString());
+            System.out.println("Error al registrar cliente: " + e.getMessage());
             return false;
         }
     }
@@ -38,7 +36,7 @@ public class ClientesDAO {
                 Clientes cl = new Clientes();
                 cl.setId(rs.getInt("id"));
                 cl.setNombre(rs.getString("nombre"));
-                cl.setTelefono(rs.getInt("telefono"));
+                cl.setTelefono(rs.getString("telefono"));
                 cl.setCorreo(rs.getString("correo"));
                 listaCl.add(cl);
             }
@@ -51,7 +49,6 @@ public class ClientesDAO {
     public boolean EliminarCliente(int id) {
         String sql = "DELETE FROM clientes WHERE id = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, id);
             ps.executeUpdate();
             return true;
@@ -66,7 +63,7 @@ public class ClientesDAO {
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, cl.getNombre());
-            ps.setInt(2, cl.getTelefono());
+            ps.setString(2, cl.getTelefono());
             ps.setString(3, cl.getCorreo());
             ps.setInt(4, cl.getId());
 
@@ -90,7 +87,7 @@ public class ClientesDAO {
                     c = new Clientes();
                     c.setId(rs.getInt("id"));
                     c.setNombre(rs.getString("nombre"));
-                    c.setTelefono(rs.getInt("telefono"));
+                    c.setTelefono(rs.getString("telefono"));
                     c.setCorreo(rs.getString("correo"));
                 }
             }

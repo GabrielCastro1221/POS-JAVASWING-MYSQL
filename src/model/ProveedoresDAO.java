@@ -16,14 +16,12 @@ public class ProveedoresDAO {
         String sql = "INSERT INTO proveedores (ruc, nombre, vendedor, telefono, direccion, razon_social) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setLong(1, pr.getRuc());
             ps.setString(2, pr.getNombre());
             ps.setString(3, pr.getVendedor());
             ps.setString(4, pr.getTelefono());
             ps.setString(5, pr.getDireccion());
             ps.setString(6, pr.getRazon_social());
-
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {

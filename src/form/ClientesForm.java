@@ -6,8 +6,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
+import model.ClientesDAO;
+import model.Clientes;
 
 public class ClientesForm extends javax.swing.JPanel {
+
+    private final ClientesDAO client = new ClientesDAO();
 
     public ClientesForm() {
         initComponents();
@@ -176,7 +181,22 @@ public class ClientesForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearClienteMouseClicked
+        try {
+            Clientes nuevo = new Clientes();
+            nuevo.setNombre(txtNombreCliente.getText());
+            nuevo.setCorreo(txtEmailCliente.getText());
+            nuevo.setTelefono(txtTelefonoCliente.getText());
 
+            ClientesDAO client = new ClientesDAO();
+            if (client.RegistrarCliente(nuevo)) {
+                JOptionPane.showMessageDialog(this, "Cliente registrado con éxito");
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al registrar cliente");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido");
+        }
     }//GEN-LAST:event_btnCrearClienteMouseClicked
 
     private void btnCrearClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearClienteKeyPressed
@@ -192,7 +212,7 @@ public class ClientesForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarClienteKeyPressed
 
     private void btnEliminarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarClienteMouseClicked
-
+        
     }//GEN-LAST:event_btnEliminarClienteMouseClicked
 
     private void btnEliminarClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarClienteKeyPressed
@@ -215,4 +235,12 @@ public class ClientesForm extends javax.swing.JPanel {
     private components.CustomTextField txtNombreCliente;
     private components.CustomTextField txtTelefonoCliente;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiarCampos() {;
+        txtNombreCliente.setText("");
+        txtEmailCliente.setText("");
+        txtTelefonoCliente.setText("");
+
+        txtNombreCliente.requestFocus();
+    }
 }

@@ -7,6 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 
+import model.Proveedores;
+import model.ProveedoresDAO;
+import model.Categoria;
+import model.CategoriaDAO;
+import model.Productos;
+import model.ProductosDAO;
+
 public class ProductosForm extends javax.swing.JPanel {
 
     public ProductosForm() {
@@ -17,6 +24,8 @@ public class ProductosForm extends javax.swing.JPanel {
         btnActualizarProducto.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnEliminarProducto.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.init();
+        cargarProveedores();
+        cargarCategorias();
     }
 
     private void init() {
@@ -39,6 +48,24 @@ public class ProductosForm extends javax.swing.JPanel {
         g2.dispose();
     }
 
+    private void cargarProveedores() {
+        ProveedoresDAO dao = new ProveedoresDAO();
+        cbxProveedorProducto.removeAllItems();
+
+        for (Proveedores pr : dao.listarProveedores()) {
+            cbxProveedorProducto.addItem(pr);
+        }
+    }
+
+    private void cargarCategorias() {
+        CategoriaDAO dao = new CategoriaDAO();
+        cbxCategoriaProducto.removeAllItems();
+
+        for (Categoria cat : dao.listarCategorias()) {
+            cbxCategoriaProducto.addItem(cat);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -48,7 +75,6 @@ public class ProductosForm extends javax.swing.JPanel {
         lblNombreProducto = new javax.swing.JLabel();
         txtNombreProducto = new components.CustomTextField();
         lblProveedorProducto = new javax.swing.JLabel();
-        cbxProveedorProducto = new components.CustomComboBox();
         lblStockProducto = new javax.swing.JLabel();
         txtStockProducto = new components.CustomTextField();
         lblPrecioNetoProducto = new javax.swing.JLabel();
@@ -56,7 +82,6 @@ public class ProductosForm extends javax.swing.JPanel {
         lblPrecioBrutoProducto = new javax.swing.JLabel();
         txtPrecioBrutoProducto = new components.CustomTextField();
         lblCategoriaProducto = new javax.swing.JLabel();
-        cbxCategoriaProducto = new components.CustomComboBox();
         roundedPanelCrearProducto = new components.RoundedPanel();
         btnCrearProducto = new javax.swing.JLabel();
         roundedPanelActualizarProducto = new components.RoundedPanel();
@@ -64,6 +89,8 @@ public class ProductosForm extends javax.swing.JPanel {
         roundedPanelEliminarProducto = new components.RoundedPanel();
         btnEliminarProducto = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        cbxCategoriaProducto = new components.CustomComboBox();
+        cbxProveedorProducto = new components.CustomComboBox();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setLayout(null);
@@ -95,8 +122,6 @@ public class ProductosForm extends javax.swing.JPanel {
         lblProveedorProducto.setText("Proveedor");
         add(lblProveedorProducto);
         lblProveedorProducto.setBounds(20, 190, 80, 17);
-        add(cbxProveedorProducto);
-        cbxProveedorProducto.setBounds(20, 210, 160, 31);
 
         lblStockProducto.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblStockProducto.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,8 +162,6 @@ public class ProductosForm extends javax.swing.JPanel {
         lblCategoriaProducto.setText("Categoria");
         add(lblCategoriaProducto);
         lblCategoriaProducto.setBounds(150, 330, 70, 17);
-        add(cbxCategoriaProducto);
-        cbxCategoriaProducto.setBounds(100, 350, 170, 31);
 
         roundedPanelCrearProducto.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelCrearProducto.setCornerRadius(10);
@@ -220,6 +243,10 @@ public class ProductosForm extends javax.swing.JPanel {
         jLabel1.setText("Formulario productos");
         add(jLabel1);
         jLabel1.setBounds(60, 40, 250, 28);
+        add(cbxCategoriaProducto);
+        cbxCategoriaProducto.setBounds(90, 350, 200, 21);
+        add(cbxProveedorProducto);
+        cbxProveedorProducto.setBounds(20, 220, 160, 21);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPrecioNetoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioNetoProductoActionPerformed
@@ -227,7 +254,35 @@ public class ProductosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPrecioNetoProductoActionPerformed
 
     private void btnCrearProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearProductoMouseClicked
+        ProductosDAO dao = new ProductosDAO();
 
+        Productos pro = new Productos();
+        pro.setCodigo(txtCodigoProducto.getText().trim());
+        pro.setNombre(txtNombreProducto.getText().trim());
+        pro.setStock(Integer.parseInt(txtStockProducto.getText().trim()));
+        pro.setPrecio_neto(Double.parseDouble(txtPrecioNetoProducto.getText().trim()));
+        pro.setPrecio_bruto(Double.parseDouble(txtPrecioBrutoProducto.getText().trim()));
+
+        Proveedores proveedorSeleccionado = (Proveedores) cbxProveedorProducto.getSelectedItem();
+        pro.setProveedor_id(proveedorSeleccionado.getId());
+
+        Categoria categoriaSeleccionada = (Categoria) cbxCategoriaProducto.getSelectedItem();
+        pro.setCategoria_id(categoriaSeleccionada.getId());
+
+        boolean registrado = dao.registrarProducto(pro);
+
+        if (registrado) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Producto registrado correctamente");
+            txtCodigoProducto.setText("");
+            txtNombreProducto.setText("");
+            txtStockProducto.setText("");
+            txtPrecioNetoProducto.setText("");
+            txtPrecioBrutoProducto.setText("");
+            cbxProveedorProducto.setSelectedIndex(0);
+            cbxCategoriaProducto.setSelectedIndex(0);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar producto");
+        }
     }//GEN-LAST:event_btnCrearProductoMouseClicked
 
     private void btnCrearProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearProductoKeyPressed

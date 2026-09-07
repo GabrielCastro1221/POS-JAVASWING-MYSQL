@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import model.Usuarios;
+import model.UsuariosDAO;
 
 public class UsuariosForm extends javax.swing.JPanel {
 
@@ -15,6 +17,9 @@ public class UsuariosForm extends javax.swing.JPanel {
         btnActualizarUsuario.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnEliminarUsuario.setCursor(new Cursor(Cursor.HAND_CURSOR));
         cbxRolUsuario.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cbxRolUsuario.removeAllItems();
+        cbxRolUsuario.addItem("admin");
+        cbxRolUsuario.addItem("vendedor");
         this.init();
     }
 
@@ -96,6 +101,8 @@ public class UsuariosForm extends javax.swing.JPanel {
         lblPassUsuario.setText("Contraseña");
         add(lblPassUsuario);
         lblPassUsuario.setBounds(40, 220, 110, 17);
+
+        cbxRolUsuario.setToolTipText("");
         add(cbxRolUsuario);
         cbxRolUsuario.setBounds(30, 380, 290, 31);
 
@@ -197,7 +204,26 @@ public class UsuariosForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearUsuarioMouseClicked
+        UsuariosDAO dao = new UsuariosDAO();
 
+        Usuarios u = new Usuarios();
+        u.setNombre(txtNombreUsuario.getText().trim());
+        u.setCorreo(txtEmailUsuario.getText().trim());
+        u.setPass(new String(txtPassUsuario.getPassword()));
+        u.setRol(cbxRolUsuario.getSelectedItem().toString());
+        u.setTelefono(txtTelefonoUsuario.getText().trim());
+        boolean registrado = dao.RegistrarUsuario(u);
+
+        if (registrado) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Usuario registrado correctamente");
+            txtNombreUsuario.setText("");
+            txtEmailUsuario.setText("");
+            txtPassUsuario.setText("");
+            txtTelefonoUsuario.setText("");
+            cbxRolUsuario.setSelectedIndex(0);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar usuario");
+        }
     }//GEN-LAST:event_btnCrearUsuarioMouseClicked
 
     private void btnCrearUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearUsuarioKeyPressed

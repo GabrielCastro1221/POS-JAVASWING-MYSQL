@@ -7,22 +7,15 @@ import java.sql.SQLException;
 public class Conexion {
 
     private static Conexion instancia;
-    private Connection con;
+    private String url;
+    private String usuario;
+    private String clave;
 
     private Conexion() {
-        try {
-            Enviroment env = Enviroment.getInstancia();
-
-            String url = "jdbc:mysql://" + env.get("DB_HOST") + ":" + env.get("DB_PORT")
-                    + "/" + env.get("DB_NAME") + "?serverTimezone=" + env.get("DB_TIMEZONE");
-            String usuario = env.get("DB_USER");
-            String clave = env.get("DB_PASSWORD");
-
-            con = DriverManager.getConnection(url, usuario, clave);
-            System.out.println("Conexión exitosa a la base de datos.");
-        } catch (SQLException e) {
-            System.out.println("Error de conexión: " + e.getMessage());
-        }
+        Enviroment env = Enviroment.getInstancia();
+        url = "jdbc:mysql://" + env.get("DB_HOST") + ":" + env.get("DB_PORT") + "/" + env.get("DB_NAME") + "?serverTimezone=" + env.get("DB_TIMEZONE");
+        usuario = env.get("DB_USER");
+        clave = env.get("DB_PASSWORD");
     }
 
     public static Conexion getInstancia() {
@@ -32,7 +25,7 @@ public class Conexion {
         return instancia;
     }
 
-    public Connection getConnection() {
-        return con;
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, usuario, clave);
     }
 }

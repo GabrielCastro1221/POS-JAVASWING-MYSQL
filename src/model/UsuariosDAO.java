@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UsuariosDAO {
 
@@ -16,9 +17,11 @@ public class UsuariosDAO {
         String sql = "INSERT INTO usuarios (nombre, correo, pass, rol, telefono) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
+            String hashedPass = BCrypt.hashpw(u.getPass(), BCrypt.gensalt());
+
             ps.setString(1, u.getNombre());
             ps.setString(2, u.getCorreo());
-            ps.setString(3, u.getPass());
+            ps.setString(3, hashedPass);
             ps.setString(4, u.getRol());
             ps.setString(5, u.getTelefono());
 
