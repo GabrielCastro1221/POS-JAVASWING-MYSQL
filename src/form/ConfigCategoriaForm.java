@@ -132,7 +132,11 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
 
         tableCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
                 "ID", "NOMBRE"
