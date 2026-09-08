@@ -12,10 +12,23 @@ public class ProductosDAO {
 
     private final Conexion cn = Conexion.getInstancia();
 
-    public boolean registrarProducto(Productos pro) {
+    public boolean registrarCodigoBarra(String codigoBarra, int productoId) {
+        String sql = "INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES (?, ?)";
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, codigoBarra);
+            ps.setInt(2, productoId);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al registrar código de barras: " + e.toString());
+            return false;
+        }
+    }
+
+    public int registrarProducto(Productos pro) {
         String sql = "INSERT INTO productos (codigo, nombre, proveedor_id, stock, precio_neto, precio_bruto, categoria_id) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, pro.getCodigo());
             ps.setString(2, pro.getNombre());
@@ -26,11 +39,16 @@ public class ProductosDAO {
             ps.setInt(7, pro.getCategoria_id());
 
             ps.executeUpdate();
-            return true;
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
         } catch (SQLException e) {
             System.out.println("Error al registrar producto: " + e.toString());
-            return false;
         }
+        return -1;
     }
 
     public List<Productos> listarProductos() {

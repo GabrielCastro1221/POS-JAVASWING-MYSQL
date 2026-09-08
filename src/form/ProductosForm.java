@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import model.Proveedores;
@@ -70,7 +71,6 @@ public class ProductosForm extends javax.swing.JPanel {
 
     public void setDatosProducto(String id, String codigo, String nombre, String proveedor, String stock, String precioNeto, String precioBruto, String categoria) {
         txtIdProducto.setText(id);
-        txtCodigoProducto.setText(codigo);
         txtNombreProducto.setText(nombre);
         cbxProveedorProducto.setSelectedItem(proveedor);
         txtStockProducto.setText(stock);
@@ -83,8 +83,6 @@ public class ProductosForm extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblCodigoProducto = new javax.swing.JLabel();
-        txtCodigoProducto = new components.CustomTextField();
         lblNombreProducto = new javax.swing.JLabel();
         txtNombreProducto = new components.CustomTextField();
         lblProveedorProducto = new javax.swing.JLabel();
@@ -101,64 +99,54 @@ public class ProductosForm extends javax.swing.JPanel {
         btnActualizarProducto = new javax.swing.JLabel();
         roundedPanelEliminarProducto = new components.RoundedPanel();
         btnEliminarProducto = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         cbxCategoriaProducto = new components.CustomComboBox();
         cbxProveedorProducto = new components.CustomComboBox();
         txtIdProducto = new components.CustomTextField();
+        codigoBarraPanel2 = new components.CodigoBarraPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setLayout(null);
-
-        lblCodigoProducto.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
-        lblCodigoProducto.setForeground(new java.awt.Color(255, 255, 255));
-        lblCodigoProducto.setText("Codigo");
-        add(lblCodigoProducto);
-        lblCodigoProducto.setBounds(30, 110, 41, 17);
-
-        txtCodigoProducto.setForeground(new java.awt.Color(200, 200, 200));
-        txtCodigoProducto.setText("Codigo producto");
-        add(txtCodigoProducto);
-        txtCodigoProducto.setBounds(20, 140, 160, 33);
 
         lblNombreProducto.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblNombreProducto.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreProducto.setText("Nombre");
         add(lblNombreProducto);
-        lblNombreProducto.setBounds(190, 110, 60, 17);
+        lblNombreProducto.setBounds(190, 20, 60, 17);
 
         txtNombreProducto.setForeground(new java.awt.Color(200, 200, 200));
         txtNombreProducto.setText("Nombre producto");
         add(txtNombreProducto);
-        txtNombreProducto.setBounds(190, 140, 160, 33);
+        txtNombreProducto.setBounds(190, 40, 160, 33);
 
         lblProveedorProducto.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblProveedorProducto.setForeground(new java.awt.Color(255, 255, 255));
         lblProveedorProducto.setText("Proveedor");
         add(lblProveedorProducto);
-        lblProveedorProducto.setBounds(20, 190, 80, 17);
+        lblProveedorProducto.setBounds(200, 80, 80, 17);
 
         lblStockProducto.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblStockProducto.setForeground(new java.awt.Color(255, 255, 255));
         lblStockProducto.setText("Stock");
         add(lblStockProducto);
-        lblStockProducto.setBounds(200, 190, 45, 17);
+        lblStockProducto.setBounds(200, 130, 45, 17);
 
         txtStockProducto.setForeground(new java.awt.Color(200, 200, 200));
         txtStockProducto.setText("Stock disponible");
         add(txtStockProducto);
-        txtStockProducto.setBounds(190, 210, 160, 33);
+        txtStockProducto.setBounds(190, 150, 160, 33);
 
         lblPrecioNetoProducto.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblPrecioNetoProducto.setForeground(new java.awt.Color(255, 255, 255));
         lblPrecioNetoProducto.setText("Precio neto");
         add(lblPrecioNetoProducto);
-        lblPrecioNetoProducto.setBounds(20, 260, 90, 17);
+        lblPrecioNetoProducto.setBounds(190, 190, 90, 17);
 
         txtPrecioNetoProducto.setForeground(new java.awt.Color(200, 200, 200));
         txtPrecioNetoProducto.setText("Precio neto ");
         txtPrecioNetoProducto.addActionListener(this::txtPrecioNetoProductoActionPerformed);
         add(txtPrecioNetoProducto);
-        txtPrecioNetoProducto.setBounds(20, 280, 160, 33);
+        txtPrecioNetoProducto.setBounds(190, 220, 160, 33);
 
         lblPrecioBrutoProducto.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblPrecioBrutoProducto.setForeground(new java.awt.Color(255, 255, 255));
@@ -175,7 +163,7 @@ public class ProductosForm extends javax.swing.JPanel {
         lblCategoriaProducto.setForeground(new java.awt.Color(255, 255, 255));
         lblCategoriaProducto.setText("Categoria");
         add(lblCategoriaProducto);
-        lblCategoriaProducto.setBounds(150, 330, 70, 17);
+        lblCategoriaProducto.setBounds(190, 320, 70, 17);
 
         roundedPanelCrearProducto.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelCrearProducto.setCornerRadius(10);
@@ -251,18 +239,20 @@ public class ProductosForm extends javax.swing.JPanel {
 
         add(roundedPanelEliminarProducto);
         roundedPanelEliminarProducto.setBounds(20, 500, 330, 40);
-
-        jLabel1.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(196, 94, 95));
-        jLabel1.setText("Formulario productos");
-        add(jLabel1);
-        jLabel1.setBounds(60, 40, 250, 28);
         add(cbxCategoriaProducto);
-        cbxCategoriaProducto.setBounds(90, 350, 200, 21);
+        cbxCategoriaProducto.setBounds(190, 350, 160, 21);
         add(cbxProveedorProducto);
-        cbxProveedorProducto.setBounds(20, 220, 160, 21);
+        cbxProveedorProducto.setBounds(190, 100, 160, 21);
         add(txtIdProducto);
         txtIdProducto.setBounds(40, 550, 10, 33);
+        add(codigoBarraPanel2);
+        codigoBarraPanel2.setBounds(20, 40, 160, 330);
+
+        jLabel1.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Codigos Barra");
+        add(jLabel1);
+        jLabel1.setBounds(20, 20, 100, 17);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPrecioNetoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioNetoProductoActionPerformed
@@ -273,7 +263,7 @@ public class ProductosForm extends javax.swing.JPanel {
         ProductosDAO dao = new ProductosDAO();
 
         Productos pro = new Productos();
-        pro.setCodigo(txtCodigoProducto.getText().trim());
+        pro.setCodigo("COD-" + System.currentTimeMillis());
         pro.setNombre(txtNombreProducto.getText().trim());
         pro.setStock(Integer.parseInt(txtStockProducto.getText().trim()));
         pro.setPrecio_neto(Double.parseDouble(txtPrecioNetoProducto.getText().trim()));
@@ -285,20 +275,21 @@ public class ProductosForm extends javax.swing.JPanel {
         Categoria categoriaSeleccionada = (Categoria) cbxCategoriaProducto.getSelectedItem();
         pro.setCategoria_id(categoriaSeleccionada.getId());
 
-        boolean registrado = dao.registrarProducto(pro);
-        ((Producto) getParent()).cargarProductos();
-        if (registrado) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Producto registrado correctamente");
-            txtCodigoProducto.setText("");
-            txtNombreProducto.setText("");
-            txtStockProducto.setText("");
-            txtPrecioNetoProducto.setText("");
-            txtPrecioBrutoProducto.setText("");
-            cbxProveedorProducto.setSelectedIndex(0);
-            cbxCategoriaProducto.setSelectedIndex(0);
+        int idProducto = dao.registrarProducto(pro);
+        if (idProducto > 0) {
+            for (String codigoBarra : codigoBarraPanel2.getCodigos()) {
+                dao.registrarCodigoBarra(codigoBarra, idProducto);
+            }
+
+            ((Producto) getParent()).cargarProductos();
+            JOptionPane.showMessageDialog(this, "Producto registrado correctamente");
+
+            limpiarCampos();
+            codigoBarraPanel2.setCodigos(new ArrayList<>());
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar producto");
+            JOptionPane.showMessageDialog(this, "Error al registrar producto");
         }
+
     }//GEN-LAST:event_btnCrearProductoMouseClicked
 
     private void btnCrearProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearProductoKeyPressed
@@ -309,7 +300,7 @@ public class ProductosForm extends javax.swing.JPanel {
         try {
             Productos p = new Productos();
             p.setId(Integer.parseInt(txtIdProducto.getText()));
-            p.setCodigo(txtCodigoProducto.getText().trim());
+            p.setCodigo("AUTO-" + System.currentTimeMillis());
             p.setNombre(txtNombreProducto.getText().trim());
 
             Proveedores proveedorSeleccionado = (Proveedores) cbxProveedorProducto.getSelectedItem();
@@ -324,15 +315,21 @@ public class ProductosForm extends javax.swing.JPanel {
 
             ProductosDAO dao = new ProductosDAO();
             if (dao.modificarProducto(p)) {
+                for (String codigoBarra : codigoBarraPanel2.getCodigos()) {
+                    dao.registrarCodigoBarra(codigoBarra, p.getId());
+                }
+
                 JOptionPane.showMessageDialog(this, "Producto actualizado correctamente");
                 limpiarCampos();
-                ((Producto) getParent()).cargarProductos(); // refrescar tabla
+                codigoBarraPanel2.setCodigos(new ArrayList<>());
+                ((Producto) getParent()).cargarProductos();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al actualizar producto");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
+
     }//GEN-LAST:event_btnActualizarProductoMouseClicked
 
     private void btnActualizarProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarProductoKeyPressed
@@ -370,9 +367,9 @@ public class ProductosForm extends javax.swing.JPanel {
     private javax.swing.JLabel btnEliminarProducto;
     private components.CustomComboBox cbxCategoriaProducto;
     private components.CustomComboBox cbxProveedorProducto;
+    private components.CodigoBarraPanel codigoBarraPanel2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblCategoriaProducto;
-    private javax.swing.JLabel lblCodigoProducto;
     private javax.swing.JLabel lblNombreProducto;
     private javax.swing.JLabel lblPrecioBrutoProducto;
     private javax.swing.JLabel lblPrecioNetoProducto;
@@ -381,7 +378,6 @@ public class ProductosForm extends javax.swing.JPanel {
     private components.RoundedPanel roundedPanelActualizarProducto;
     private components.RoundedPanel roundedPanelCrearProducto;
     private components.RoundedPanel roundedPanelEliminarProducto;
-    private components.CustomTextField txtCodigoProducto;
     private components.CustomTextField txtIdProducto;
     private components.CustomTextField txtNombreProducto;
     private components.CustomTextField txtPrecioBrutoProducto;
@@ -391,14 +387,13 @@ public class ProductosForm extends javax.swing.JPanel {
 
     private void limpiarCampos() {
         txtIdProducto.setText("");
-        txtCodigoProducto.setText("");
         txtNombreProducto.setText("");
         txtStockProducto.setText("");
         txtPrecioNetoProducto.setText("");
         txtPrecioBrutoProducto.setText("");
         cbxProveedorProducto.setSelectedIndex(0);
         cbxCategoriaProducto.setSelectedIndex(0);
-        txtCodigoProducto.requestFocus();
+        codigoBarraPanel2.setCodigos(new ArrayList<>());
     }
 
 }
