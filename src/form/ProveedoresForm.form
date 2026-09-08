@@ -36,48 +36,51 @@
                       <Component id="lblRazonProvvedor" min="-2" pref="87" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="roundedPanelEliminarProveedor" min="-2" pref="300" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="lblTelefonoProveedor" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="lblVendedorProveedor" min="-2" pref="68" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="lblRucProveedor" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="txtIdProveedor" min="-2" pref="10" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="txtRucProveedor" min="-2" pref="249" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtRucProveedor" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtNombreProveedor" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtNombreProveedor" max="32767" attributes="0"/>
                               <Component id="txtVendedorProveedor" max="32767" attributes="0"/>
+                              <Component id="txtTelefonoProveedor" max="32767" attributes="0"/>
                               <Component id="txtDireccionProveedor" max="32767" attributes="0"/>
-                              <Component id="txtTelefonoProveedor" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtRazonProveedor" max="32767" attributes="0"/>
-                              <Component id="roundedPanelCrearProveedor" alignment="1" max="32767" attributes="0"/>
-                              <Component id="roundedPanelActualizarProveedor" alignment="1" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                          <Component id="lblTelefonoProveedor" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                          <Component id="lblRucProveedor" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                                          <Component id="lblVendedorProveedor" min="-2" pref="68" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="226" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="txtRazonProveedor" pref="249" max="32767" attributes="0"/>
+                              <Component id="roundedPanelCrearProveedor" max="32767" attributes="0"/>
+                              <Component id="roundedPanelActualizarProveedor" max="32767" attributes="0"/>
+                              <Component id="roundedPanelEliminarProveedor" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="34" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Component id="lblRucProveedor" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblRucProveedor" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtIdProveedor" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtRucProveedor" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -94,19 +97,19 @@
               <Component id="txtTelefonoProveedor" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblDireccionProveedor" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="txtDireccionProveedor" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Component id="lblRazonProvvedor" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtRazonProveedor" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Component id="roundedPanelCrearProveedor" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="roundedPanelActualizarProveedor" min="-2" pref="40" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="roundedPanelEliminarProveedor" min="-2" pref="40" max="-2" attributes="0"/>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace pref="100" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -128,7 +131,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="c8" green="c8" red="c8" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ingrese el NIT del proveedor"/>
+        <Property name="text" type="java.lang.String" value="Ingrese NIT"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNombreProveedor">
@@ -147,7 +150,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="c8" green="c8" red="c8" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ingrese el nombre del proveedor"/>
+        <Property name="text" type="java.lang.String" value="Ingrese Nombre"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblVendedorProveedor">
@@ -166,7 +169,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="c8" green="c8" red="c8" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ingrese el nombre del vendedor"/>
+        <Property name="text" type="java.lang.String" value="Ingrese vendedor"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblDireccionProveedor">
@@ -185,7 +188,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="c8" green="c8" red="c8" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ingrese la direccion del proveedor"/>
+        <Property name="text" type="java.lang.String" value="Ingrese direccion"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDireccionProveedorActionPerformed"/>
@@ -207,7 +210,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="c8" green="c8" red="c8" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ingrese el telefono del proveedor"/>
+        <Property name="text" type="java.lang.String" value="Ingrese telefono"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblRazonProvvedor">
@@ -226,7 +229,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="c8" green="c8" red="c8" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ingrese la razon social del proveedor"/>
+        <Property name="text" type="java.lang.String" value="Ingrese razon social"/>
       </Properties>
     </Component>
     <Container class="components.RoundedPanel" name="roundedPanelCrearProveedor">
@@ -261,7 +264,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="0" width="300" height="40"/>
+              <AbsoluteConstraints x="0" y="0" width="250" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -299,7 +302,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="0" width="300" height="40"/>
+              <AbsoluteConstraints x="0" y="0" width="250" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -337,11 +340,13 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="0" width="300" height="40"/>
+              <AbsoluteConstraints x="0" y="0" width="250" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="components.CustomTextField" name="txtIdProveedor">
+    </Component>
   </SubComponents>
 </Form>

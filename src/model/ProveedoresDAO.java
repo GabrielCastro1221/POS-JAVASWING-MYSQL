@@ -45,6 +45,7 @@ public class ProveedoresDAO {
                 pr.setTelefono(rs.getString("telefono"));
                 pr.setDireccion(rs.getString("direccion"));
                 pr.setRazon_social(rs.getString("razon_social"));
+                pr.setFecha(rs.getTimestamp("fecha"));
 
                 listaPr.add(pr);
             }

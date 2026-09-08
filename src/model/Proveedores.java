@@ -9,6 +9,7 @@ public class Proveedores {
     private String telefono;
     private String direccion;
     private String razon_social;
+    private java.sql.Timestamp fecha;
 
     public Proveedores() {
     }
@@ -77,6 +78,14 @@ public class Proveedores {
 
     public void setRazon_social(String razon_social) {
         this.razon_social = razon_social;
+    }
+
+    public java.sql.Timestamp getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(java.sql.Timestamp fecha) {
+        this.fecha = fecha;
     }
 
     @Override

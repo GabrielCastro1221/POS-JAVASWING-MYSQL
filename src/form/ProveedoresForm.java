@@ -18,6 +18,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
         btnCrearProveedor.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnActualizarProveedor.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnEliminarProveedor.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        txtIdProveedor.setVisible(false);
         this.init();
     }
 
@@ -63,6 +64,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
         btnActualizarProveedor = new javax.swing.JLabel();
         roundedPanelEliminarProveedor = new components.RoundedPanel();
         btnEliminarProveedor = new javax.swing.JLabel();
+        txtIdProveedor = new components.CustomTextField();
 
         setBackground(new java.awt.Color(61, 63, 65));
 
@@ -71,28 +73,28 @@ public class ProveedoresForm extends javax.swing.JPanel {
         lblRucProveedor.setText("RUC/NIT");
 
         txtRucProveedor.setForeground(new java.awt.Color(200, 200, 200));
-        txtRucProveedor.setText("Ingrese el NIT del proveedor");
+        txtRucProveedor.setText("Ingrese NIT");
 
         lblNombreProveedor.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblNombreProveedor.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreProveedor.setText("Nombre");
 
         txtNombreProveedor.setForeground(new java.awt.Color(200, 200, 200));
-        txtNombreProveedor.setText("Ingrese el nombre del proveedor");
+        txtNombreProveedor.setText("Ingrese Nombre");
 
         lblVendedorProveedor.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblVendedorProveedor.setForeground(new java.awt.Color(255, 255, 255));
         lblVendedorProveedor.setText("Vendedor");
 
         txtVendedorProveedor.setForeground(new java.awt.Color(200, 200, 200));
-        txtVendedorProveedor.setText("Ingrese el nombre del vendedor");
+        txtVendedorProveedor.setText("Ingrese vendedor");
 
         lblDireccionProveedor.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblDireccionProveedor.setForeground(new java.awt.Color(255, 255, 255));
         lblDireccionProveedor.setText("Direccion");
 
         txtDireccionProveedor.setForeground(new java.awt.Color(200, 200, 200));
-        txtDireccionProveedor.setText("Ingrese la direccion del proveedor");
+        txtDireccionProveedor.setText("Ingrese direccion");
         txtDireccionProveedor.addActionListener(this::txtDireccionProveedorActionPerformed);
 
         lblTelefonoProveedor.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
@@ -100,14 +102,14 @@ public class ProveedoresForm extends javax.swing.JPanel {
         lblTelefonoProveedor.setText("Telefono");
 
         txtTelefonoProveedor.setForeground(new java.awt.Color(200, 200, 200));
-        txtTelefonoProveedor.setText("Ingrese el telefono del proveedor");
+        txtTelefonoProveedor.setText("Ingrese telefono");
 
         lblRazonProvvedor.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblRazonProvvedor.setForeground(new java.awt.Color(255, 255, 255));
         lblRazonProvvedor.setText("Razon social");
 
         txtRazonProveedor.setForeground(new java.awt.Color(200, 200, 200));
-        txtRazonProveedor.setText("Ingrese la razon social del proveedor");
+        txtRazonProveedor.setText("Ingrese razon social");
 
         roundedPanelCrearProveedor.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelCrearProveedor.setCornerRadius(10);
@@ -129,7 +131,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
             }
         });
         roundedPanelCrearProveedor.add(btnCrearProveedor);
-        btnCrearProveedor.setBounds(0, 0, 300, 40);
+        btnCrearProveedor.setBounds(0, 0, 250, 40);
 
         roundedPanelActualizarProveedor.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelActualizarProveedor.setCornerRadius(10);
@@ -151,7 +153,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
             }
         });
         roundedPanelActualizarProveedor.add(btnActualizarProveedor);
-        btnActualizarProveedor.setBounds(0, 0, 300, 40);
+        btnActualizarProveedor.setBounds(0, 0, 250, 40);
 
         roundedPanelEliminarProveedor.setBottomColor(new java.awt.Color(213, 69, 53));
         roundedPanelEliminarProveedor.setCornerRadius(10);
@@ -173,7 +175,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
             }
         });
         roundedPanelEliminarProveedor.add(btnEliminarProveedor);
-        btnEliminarProveedor.setBounds(0, 0, 300, 40);
+        btnEliminarProveedor.setBounds(0, 0, 250, 40);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -191,37 +193,40 @@ public class ProveedoresForm extends javax.swing.JPanel {
                         .addGap(42, 42, 42)
                         .addComponent(lblRazonProvvedor, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(roundedPanelEliminarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(lblTelefonoProveedor))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(lblVendedorProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(lblRucProveedor)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(36, 36, 36)
+                            .addComponent(txtRucProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtRucProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtNombreProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtVendedorProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtDireccionProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtTelefonoProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtRazonProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(roundedPanelCrearProveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(roundedPanelActualizarProveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(6, 6, 6)
-                                            .addComponent(lblTelefonoProveedor))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(lblRucProveedor))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(6, 6, 6)
-                                            .addComponent(lblVendedorProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(226, 226, 226))))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                                .addComponent(txtDireccionProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtRazonProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                .addComponent(roundedPanelCrearProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(roundedPanelActualizarProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(roundedPanelEliminarProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(lblRucProveedor)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblRucProveedor)
+                    .addComponent(txtIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRucProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -238,19 +243,19 @@ public class ProveedoresForm extends javax.swing.JPanel {
                 .addComponent(txtTelefonoProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblDireccionProveedor)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDireccionProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(13, 13, 13)
                 .addComponent(lblRazonProvvedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRazonProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(21, 21, 21)
                 .addComponent(roundedPanelCrearProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roundedPanelActualizarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roundedPanelEliminarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -262,7 +267,6 @@ public class ProveedoresForm extends javax.swing.JPanel {
         try {
             Proveedores proveedor = new Proveedores();
             ProveedoresDAO dao = new ProveedoresDAO();
-
             proveedor.setRuc(Long.parseLong(txtRucProveedor.getText().trim()));
             proveedor.setNombre(txtNombreProveedor.getText().trim());
             proveedor.setVendedor(txtVendedorProveedor.getText().trim());
@@ -273,6 +277,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
             if (dao.registrarProveedor(proveedor)) {
                 JOptionPane.showMessageDialog(this, "Proveedor registrado correctamente");
                 limpiarCampos();
+                ((Proveedor) getParent()).cargarProveedores();
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo registrar el proveedor", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -286,7 +291,27 @@ public class ProveedoresForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearProveedorKeyPressed
 
     private void btnActualizarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarProveedorMouseClicked
+        try {
+            Proveedores pr = new Proveedores();
+            pr.setId(Integer.parseInt(txtIdProveedor.getText()));
+            pr.setRuc(Long.parseLong(txtRucProveedor.getText().trim()));
+            pr.setNombre(txtNombreProveedor.getText().trim());
+            pr.setVendedor(txtVendedorProveedor.getText().trim());
+            pr.setTelefono(txtTelefonoProveedor.getText().trim());
+            pr.setDireccion(txtDireccionProveedor.getText().trim());
+            pr.setRazon_social(txtRazonProveedor.getText().trim());
 
+            ProveedoresDAO dao = new ProveedoresDAO();
+            if (dao.modificarProveedor(pr)) {
+                JOptionPane.showMessageDialog(this, "Proveedor actualizado correctamente");
+                limpiarCampos();
+                ((Proveedor) getParent()).cargarProveedores();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar proveedor");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnActualizarProveedorMouseClicked
 
     private void btnActualizarProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarProveedorKeyPressed
@@ -294,7 +319,23 @@ public class ProveedoresForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarProveedorKeyPressed
 
     private void btnEliminarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarProveedorMouseClicked
+        try {
+            int id = Integer.parseInt(txtIdProveedor.getText());
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este proveedor?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
+            if (confirm == JOptionPane.YES_OPTION) {
+                ProveedoresDAO dao = new ProveedoresDAO();
+                if (dao.eliminarProveedor(id)) {
+                    JOptionPane.showMessageDialog(this, "Proveedor eliminado correctamente");
+                    limpiarCampos();
+                    ((Proveedor) getParent()).cargarProveedores();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar proveedor");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnEliminarProveedorMouseClicked
 
     private void btnEliminarProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarProveedorKeyPressed
@@ -316,6 +357,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
     private components.RoundedPanel roundedPanelCrearProveedor;
     private components.RoundedPanel roundedPanelEliminarProveedor;
     private components.CustomTextField txtDireccionProveedor;
+    private components.CustomTextField txtIdProveedor;
     private components.CustomTextField txtNombreProveedor;
     private components.CustomTextField txtRazonProveedor;
     private components.CustomTextField txtRucProveedor;
@@ -332,5 +374,15 @@ public class ProveedoresForm extends javax.swing.JPanel {
         txtRazonProveedor.setText("");
 
         txtRucProveedor.requestFocus();
+    }
+
+    public void setDatosProveedor(String id, String ruc, String nombre, String vendedor, String telefono, String direccion, String razon) {
+        txtIdProveedor.setText(id);
+        txtRucProveedor.setText(ruc);
+        txtNombreProveedor.setText(nombre);
+        txtVendedorProveedor.setText(vendedor);
+        txtTelefonoProveedor.setText(telefono);
+        txtDireccionProveedor.setText(direccion);
+        txtRazonProveedor.setText(razon);
     }
 }
