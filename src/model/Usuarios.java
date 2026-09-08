@@ -8,6 +8,7 @@ public class Usuarios {
     private String pass;
     private String rol;
     private String telefono;
+    private java.sql.Timestamp fecha;
 
     public Usuarios() {
     }
@@ -69,4 +70,11 @@ public class Usuarios {
         this.telefono = telefono;
     }
 
+    public java.sql.Timestamp getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(java.sql.Timestamp fecha) {
+        this.fecha = fecha;
+    }
 }

@@ -6,7 +6,7 @@ import form.NuevaVenta;
 import form.Productos;
 import form.Proveedor;
 import form.Reportes;
-import form.Usuarios;
+import form.Usuario;
 import form.Ventas;
 
 import java.awt.Color;
@@ -193,7 +193,7 @@ public class System extends javax.swing.JFrame implements SelectOption {
             case 6 ->
                 formToChange = new Reportes();
             case 7 ->
-                formToChange = new Usuarios();
+                formToChange = new Usuario();
             case 8 ->
                 formToChange = new Config();
             default ->

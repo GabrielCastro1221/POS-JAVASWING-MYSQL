@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
 import model.Usuarios;
 import model.UsuariosDAO;
 
@@ -20,6 +21,7 @@ public class UsuariosForm extends javax.swing.JPanel {
         cbxRolUsuario.removeAllItems();
         cbxRolUsuario.addItem("admin");
         cbxRolUsuario.addItem("vendedor");
+        txtIdUsuario.setVisible(false);
         this.init();
     }
 
@@ -43,6 +45,15 @@ public class UsuariosForm extends javax.swing.JPanel {
         g2.dispose();
     }
 
+    public void setDatosUsuario(String id, String nombre, String correo, String pass, String rol, String telefono) {
+        txtIdUsuario.setText(id);
+        txtNombreUsuario.setText(nombre);
+        txtEmailUsuario.setText(correo);
+        txtPassUsuario.setText(pass);
+        cbxRolUsuario.setSelectedItem(rol);
+        txtTelefonoUsuario.setText(telefono);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,6 +75,7 @@ public class UsuariosForm extends javax.swing.JPanel {
         btnActualizarUsuario = new javax.swing.JLabel();
         roundedPanelEliminarUsuario = new components.RoundedPanel();
         btnEliminarUsuario = new javax.swing.JLabel();
+        txtIdUsuario = new components.CustomTextField();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setLayout(null);
@@ -104,7 +116,7 @@ public class UsuariosForm extends javax.swing.JPanel {
 
         cbxRolUsuario.setToolTipText("");
         add(cbxRolUsuario);
-        cbxRolUsuario.setBounds(30, 380, 290, 31);
+        cbxRolUsuario.setBounds(30, 380, 290, 21);
 
         txtPassUsuario.setPlaceholder("Ingrese la contraseña del usuario");
         add(txtPassUsuario);
@@ -201,11 +213,12 @@ public class UsuariosForm extends javax.swing.JPanel {
 
         add(roundedPanelEliminarUsuario);
         roundedPanelEliminarUsuario.setBounds(30, 540, 290, 40);
+        add(txtIdUsuario);
+        txtIdUsuario.setBounds(60, 600, 10, 33);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearUsuarioMouseClicked
         UsuariosDAO dao = new UsuariosDAO();
-
         Usuarios u = new Usuarios();
         u.setNombre(txtNombreUsuario.getText().trim());
         u.setCorreo(txtEmailUsuario.getText().trim());
@@ -213,6 +226,7 @@ public class UsuariosForm extends javax.swing.JPanel {
         u.setRol(cbxRolUsuario.getSelectedItem().toString());
         u.setTelefono(txtTelefonoUsuario.getText().trim());
         boolean registrado = dao.RegistrarUsuario(u);
+        ((Usuario) getParent()).cargarUsuarios();
 
         if (registrado) {
             javax.swing.JOptionPane.showMessageDialog(this, "Usuario registrado correctamente");
@@ -232,6 +246,28 @@ public class UsuariosForm extends javax.swing.JPanel {
 
     private void btnActualizarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarUsuarioMouseClicked
 
+        try {
+            Usuarios u = new Usuarios();
+            u.setId(Integer.parseInt(txtIdUsuario.getText()));
+            u.setNombre(txtNombreUsuario.getText().trim());
+            u.setCorreo(txtEmailUsuario.getText().trim());
+            u.setPass(new String(txtPassUsuario.getPassword()));
+            u.setRol(cbxRolUsuario.getSelectedItem().toString());
+            u.setTelefono(txtTelefonoUsuario.getText().trim());
+
+            UsuariosDAO dao = new UsuariosDAO();
+            if (dao.ModificarUsuario(u)) {
+                JOptionPane.showMessageDialog(this, "Usuario actualizado correctamente");
+                limpiarCampos();
+                ((Usuario) getParent()).cargarUsuarios();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar usuario");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+
+
     }//GEN-LAST:event_btnActualizarUsuarioMouseClicked
 
     private void btnActualizarUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarUsuarioKeyPressed
@@ -239,7 +275,27 @@ public class UsuariosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarUsuarioKeyPressed
 
     private void btnEliminarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioMouseClicked
+        try {
+            int id = Integer.parseInt(txtIdUsuario.getText());
 
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "¿Seguro que deseas eliminar este usuario?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                UsuariosDAO dao = new UsuariosDAO();
+                if (dao.EliminarUsuario(id)) {
+                    JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente");
+                    limpiarCampos();
+                    ((Usuario) getParent()).cargarUsuarios();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar usuario");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnEliminarUsuarioMouseClicked
 
     private void btnEliminarUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioKeyPressed
@@ -262,8 +318,21 @@ public class UsuariosForm extends javax.swing.JPanel {
     private components.RoundedPanel roundedPanelCrearUsuario;
     private components.RoundedPanel roundedPanelEliminarUsuario;
     private components.CustomTextField txtEmailUsuario;
+    private components.CustomTextField txtIdUsuario;
     private components.CustomTextField txtNombreUsuario;
     private components.CustomPasswordField txtPassUsuario;
     private components.CustomTextField txtTelefonoUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiarCampos() {
+        txtIdUsuario.setText("");
+        txtNombreUsuario.setText("");
+        txtEmailUsuario.setText("");
+        txtPassUsuario.setText("");
+        txtTelefonoUsuario.setText("");
+        cbxRolUsuario.setSelectedIndex(0);
+
+        txtNombreUsuario.requestFocus();
+    }
+
 }

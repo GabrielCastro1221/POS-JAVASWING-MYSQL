@@ -47,6 +47,7 @@ public class UsuariosDAO {
                 u.setPass(rs.getString("pass"));
                 u.setRol(rs.getString("rol"));
                 u.setTelefono(rs.getString("telefono"));
+                u.setFecha(rs.getTimestamp("fecha"));
                 listaUs.add(u);
             }
         } catch (SQLException e) {
