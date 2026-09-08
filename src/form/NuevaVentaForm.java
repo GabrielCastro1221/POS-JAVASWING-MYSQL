@@ -1,8 +1,8 @@
 package form;
 
-public class VentasForm extends javax.swing.JPanel {
+public class NuevaVentaForm extends javax.swing.JPanel {
 
-    public VentasForm() {
+    public NuevaVentaForm() {
         initComponents();
     }
 
