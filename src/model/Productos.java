@@ -1,6 +1,7 @@
 package model;
 
 public class Productos {
+
     private int id;
     private String codigo;
     private String nombre;
@@ -9,11 +10,12 @@ public class Productos {
     private double precio_neto;
     private double precio_bruto;
     private int categoria_id;
-    
+    private java.sql.Timestamp fecha;
+
     public Productos() {
     }
-    
-    public Productos(int id, String codigo, String nombre, int proveedor_id, int stock, double precio_neto, 
+
+    public Productos(int id, String codigo, String nombre, int proveedor_id, int stock, double precio_neto,
             double precio_bruto, int categoria_id) {
         this.id = id;
         this.codigo = codigo;
@@ -88,5 +90,12 @@ public class Productos {
     public void setCategoria_id(int categoria_id) {
         this.categoria_id = categoria_id;
     }
-    
+
+    public java.sql.Timestamp getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(java.sql.Timestamp fecha) {
+        this.fecha = fecha;
+    }
 }

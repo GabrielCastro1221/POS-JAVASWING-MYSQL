@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
 
 import model.Proveedores;
 import model.ProveedoresDAO;
@@ -23,6 +24,7 @@ public class ProductosForm extends javax.swing.JPanel {
         btnCrearProducto.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnActualizarProducto.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnEliminarProducto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        txtIdProducto.setVisible(false);
         this.init();
         cargarProveedores();
         cargarCategorias();
@@ -66,6 +68,17 @@ public class ProductosForm extends javax.swing.JPanel {
         }
     }
 
+    public void setDatosProducto(String id, String codigo, String nombre, String proveedor, String stock, String precioNeto, String precioBruto, String categoria) {
+        txtIdProducto.setText(id);
+        txtCodigoProducto.setText(codigo);
+        txtNombreProducto.setText(nombre);
+        cbxProveedorProducto.setSelectedItem(proveedor);
+        txtStockProducto.setText(stock);
+        txtPrecioNetoProducto.setText(precioNeto);
+        txtPrecioBrutoProducto.setText(precioBruto);
+        cbxCategoriaProducto.setSelectedItem(categoria);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -91,6 +104,7 @@ public class ProductosForm extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         cbxCategoriaProducto = new components.CustomComboBox();
         cbxProveedorProducto = new components.CustomComboBox();
+        txtIdProducto = new components.CustomTextField();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setLayout(null);
@@ -247,6 +261,8 @@ public class ProductosForm extends javax.swing.JPanel {
         cbxCategoriaProducto.setBounds(90, 350, 200, 21);
         add(cbxProveedorProducto);
         cbxProveedorProducto.setBounds(20, 220, 160, 21);
+        add(txtIdProducto);
+        txtIdProducto.setBounds(40, 550, 10, 33);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtPrecioNetoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioNetoProductoActionPerformed
@@ -270,7 +286,7 @@ public class ProductosForm extends javax.swing.JPanel {
         pro.setCategoria_id(categoriaSeleccionada.getId());
 
         boolean registrado = dao.registrarProducto(pro);
-
+        ((Producto) getParent()).cargarProductos();
         if (registrado) {
             javax.swing.JOptionPane.showMessageDialog(this, "Producto registrado correctamente");
             txtCodigoProducto.setText("");
@@ -290,7 +306,33 @@ public class ProductosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearProductoKeyPressed
 
     private void btnActualizarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarProductoMouseClicked
+        try {
+            Productos p = new Productos();
+            p.setId(Integer.parseInt(txtIdProducto.getText()));
+            p.setCodigo(txtCodigoProducto.getText().trim());
+            p.setNombre(txtNombreProducto.getText().trim());
 
+            Proveedores proveedorSeleccionado = (Proveedores) cbxProveedorProducto.getSelectedItem();
+            p.setProveedor_id(proveedorSeleccionado.getId());
+
+            p.setStock(Integer.parseInt(txtStockProducto.getText().trim()));
+            p.setPrecio_neto(Double.parseDouble(txtPrecioNetoProducto.getText().trim()));
+            p.setPrecio_bruto(Double.parseDouble(txtPrecioBrutoProducto.getText().trim()));
+
+            Categoria categoriaSeleccionada = (Categoria) cbxCategoriaProducto.getSelectedItem();
+            p.setCategoria_id(categoriaSeleccionada.getId());
+
+            ProductosDAO dao = new ProductosDAO();
+            if (dao.modificarProducto(p)) {
+                JOptionPane.showMessageDialog(this, "Producto actualizado correctamente");
+                limpiarCampos();
+                ((Producto) getParent()).cargarProductos(); // refrescar tabla
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar producto");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnActualizarProductoMouseClicked
 
     private void btnActualizarProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarProductoKeyPressed
@@ -298,7 +340,23 @@ public class ProductosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarProductoKeyPressed
 
     private void btnEliminarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarProductoMouseClicked
+        try {
+            int id = Integer.parseInt(txtIdProducto.getText());
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este producto?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
+            if (confirm == JOptionPane.YES_OPTION) {
+                ProductosDAO dao = new ProductosDAO();
+                if (dao.eliminarProducto(id)) {
+                    JOptionPane.showMessageDialog(this, "Producto eliminado correctamente");
+                    limpiarCampos();
+                    ((Producto) getParent()).cargarProductos();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar producto");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnEliminarProductoMouseClicked
 
     private void btnEliminarProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarProductoKeyPressed
@@ -324,9 +382,23 @@ public class ProductosForm extends javax.swing.JPanel {
     private components.RoundedPanel roundedPanelCrearProducto;
     private components.RoundedPanel roundedPanelEliminarProducto;
     private components.CustomTextField txtCodigoProducto;
+    private components.CustomTextField txtIdProducto;
     private components.CustomTextField txtNombreProducto;
     private components.CustomTextField txtPrecioBrutoProducto;
     private components.CustomTextField txtPrecioNetoProducto;
     private components.CustomTextField txtStockProducto;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiarCampos() {
+        txtIdProducto.setText("");
+        txtCodigoProducto.setText("");
+        txtNombreProducto.setText("");
+        txtStockProducto.setText("");
+        txtPrecioNetoProducto.setText("");
+        txtPrecioBrutoProducto.setText("");
+        cbxProveedorProducto.setSelectedIndex(0);
+        cbxCategoriaProducto.setSelectedIndex(0);
+        txtCodigoProducto.requestFocus();
+    }
+
 }

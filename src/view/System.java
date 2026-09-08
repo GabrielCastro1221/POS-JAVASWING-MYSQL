@@ -3,7 +3,7 @@ package view;
 import form.Clientes;
 import form.Config;
 import form.NuevaVenta;
-import form.Productos;
+import form.Producto;
 import form.Proveedor;
 import form.Reportes;
 import form.Usuario;
@@ -183,7 +183,7 @@ public class System extends javax.swing.JFrame implements SelectOption {
             case 1 ->
                 formToChange = new NuevaVenta();
             case 2 ->
-                formToChange = new Productos();
+                formToChange = new Producto();
             case 3 ->
                 formToChange = new Proveedor();
             case 4 ->

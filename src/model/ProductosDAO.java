@@ -49,6 +49,7 @@ public class ProductosDAO {
                 pr.setPrecio_neto(rs.getDouble("precio_neto"));
                 pr.setPrecio_bruto(rs.getDouble("precio_bruto"));
                 pr.setCategoria_id(rs.getInt("categoria_id"));
+                pr.setFecha(rs.getTimestamp("fecha"));
                 listaPr.add(pr);
             }
         } catch (SQLException e) {
