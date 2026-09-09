@@ -145,7 +145,7 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tableCategoria);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(30, 300, 250, 220);
+        jScrollPane1.setBounds(30, 300, 250, 200);
 
         roundedPanelActualizarCategoria.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelActualizarCategoria.setCornerRadius(10);

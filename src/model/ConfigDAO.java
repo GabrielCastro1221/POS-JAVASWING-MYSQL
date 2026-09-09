@@ -5,30 +5,32 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigDAO {
 
     private final Conexion cn = Conexion.getInstancia();
 
-    public Config obtenerConfig() {
-        Config cfg = null;
-        String sql = "SELECT * FROM config LIMIT 1";
+    public List<Config> listarConfig() {
+        List<Config> lista = new ArrayList<>();
+        String sql = "SELECT * FROM config";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
-            if (rs.next()) {
-                cfg = new Config();
+            while (rs.next()) {
+                Config cfg = new Config();
                 cfg.setId(rs.getInt("id"));
-                cfg.setRuc(rs.getInt("ruc"));
                 cfg.setNombre(rs.getString("nombre_empresa"));
+                cfg.setRuc(rs.getInt("ruc"));
                 cfg.setTelefono(rs.getInt("telefono"));
                 cfg.setDireccion(rs.getString("direccion"));
                 cfg.setRazon_social(rs.getString("razon_social"));
                 cfg.setFecha(rs.getTimestamp("fecha"));
+                lista.add(cfg);
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener configuración: " + e.toString());
+            System.out.println("Error al listar configuraciones: " + e.toString());
         }
-        return cfg;
+        return lista;
     }
 
     public boolean registrarConfig(Config cfg) {
@@ -64,6 +66,18 @@ public class ConfigDAO {
             return true;
         } catch (SQLException e) {
             System.out.println("Error al actualizar configuración: " + e.toString());
+            return false;
+        }
+    }
+
+    public boolean eliminarConfig(int id) {
+        String sql = "DELETE FROM config WHERE id = ?";
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+            return filas > 0;
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar configuración: " + e.toString());
             return false;
         }
     }

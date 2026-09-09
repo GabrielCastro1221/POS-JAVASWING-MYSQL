@@ -1,6 +1,7 @@
 package form;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -16,6 +17,10 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
     private void init() {
         setOpaque(false);
         setBackground(new Color(0, 0, 0, 0));
+        txtTelClienteVenta.setVisible(false);
+        txtCorreoClienteVenta.setVisible(false);
+        txtIdClienteVenta.addActionListener(e -> cargarClientePorId());
+        btnGenerarVenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     @Override
@@ -30,6 +35,35 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         g2.dispose();
     }
 
+    private void cargarClientePorId() {
+        String idTexto = txtIdClienteVenta.getText().trim();
+        if (idTexto.isEmpty()) {
+            return;
+        }
+        try {
+            int idCliente = Integer.parseInt(idTexto);
+
+            model.ClientesDAO dao = new model.ClientesDAO();
+            model.Cliente cliente = dao.buscarClientePorId(idCliente);
+
+            if (cliente != null) {
+                txtIdClienteVenta.setText(cliente.getId() + "");
+                txtNombreClienteVenta.setText(cliente.getNombre());
+                txtTelClienteVenta.setText(cliente.getTelefono());
+                txtCorreoClienteVenta.setText(cliente.getCorreo());
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Cliente no encontrado");
+                limpiarCamposCliente();
+            }
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ID inválido");
+        }
+    }
+
+    public void actualizarTotal(double total) {
+        lblTotalVenta.setText("$ " + String.format("%.2f", total));
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -37,11 +71,13 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         lblNombreClienteVenta = new javax.swing.JLabel();
         txtNombreClienteVenta = new components.CustomTextField();
         lblDniClienteVenta1 = new javax.swing.JLabel();
-        txtDniClienteVenta1 = new components.CustomTextField();
+        txtIdClienteVenta = new components.CustomTextField();
         roundedPanelGenerarVenta = new components.RoundedPanel();
         btnGenerarVenta = new javax.swing.JLabel();
         lblTotalPagar = new javax.swing.JLabel();
         lblTotalVenta = new javax.swing.JLabel();
+        txtTelClienteVenta = new javax.swing.JLabel();
+        txtCorreoClienteVenta = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setPreferredSize(new java.awt.Dimension(1000, 300));
@@ -60,14 +96,14 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
 
         lblDniClienteVenta1.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblDniClienteVenta1.setForeground(new java.awt.Color(255, 255, 255));
-        lblDniClienteVenta1.setText("CC/DNI - Cliente");
+        lblDniClienteVenta1.setText("ID - Cliente");
         add(lblDniClienteVenta1);
-        lblDniClienteVenta1.setBounds(60, 40, 110, 17);
+        lblDniClienteVenta1.setBounds(80, 40, 110, 17);
 
-        txtDniClienteVenta1.setForeground(new java.awt.Color(200, 200, 200));
-        txtDniClienteVenta1.setText("Ingrese Identificacion");
-        add(txtDniClienteVenta1);
-        txtDniClienteVenta1.setBounds(20, 60, 210, 33);
+        txtIdClienteVenta.setForeground(new java.awt.Color(200, 200, 200));
+        txtIdClienteVenta.setText("Ingrese el ID");
+        add(txtIdClienteVenta);
+        txtIdClienteVenta.setBounds(20, 60, 210, 33);
 
         roundedPanelGenerarVenta.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelGenerarVenta.setTopColor(new java.awt.Color(0, 153, 255));
@@ -106,6 +142,10 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         lblTotalVenta.setText("$ ----------");
         add(lblTotalVenta);
         lblTotalVenta.setBounds(990, 60, 80, 23);
+        add(txtTelClienteVenta);
+        txtTelClienteVenta.setBounds(480, 30, 0, 0);
+        add(txtCorreoClienteVenta);
+        txtCorreoClienteVenta.setBounds(490, 70, 0, 0);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -116,7 +156,16 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
     private javax.swing.JLabel lblTotalPagar;
     private javax.swing.JLabel lblTotalVenta;
     private components.RoundedPanel roundedPanelGenerarVenta;
-    private components.CustomTextField txtDniClienteVenta1;
+    private javax.swing.JLabel txtCorreoClienteVenta;
+    private components.CustomTextField txtIdClienteVenta;
     private components.CustomTextField txtNombreClienteVenta;
+    private javax.swing.JLabel txtTelClienteVenta;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiarCamposCliente() {
+        txtIdClienteVenta.setText("");
+        txtNombreClienteVenta.setText("");
+        txtTelClienteVenta.setText("");
+        txtCorreoClienteVenta.setText("");
+    }
 }

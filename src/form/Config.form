@@ -24,7 +24,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="configCategoriaForm2" min="-2" pref="310" max="-2" attributes="0"/>
-              <EmptySpace pref="864" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="configDataForm2" min="-2" pref="842" max="-2" attributes="0"/>
+              <EmptySpace pref="16" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -32,7 +34,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-              <Component id="configCategoriaForm2" min="-2" pref="562" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="configCategoriaForm2" pref="562" max="32767" attributes="0"/>
+                  <Component id="configDataForm2" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace pref="55" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -40,6 +45,8 @@
   </Layout>
   <SubComponents>
     <Component class="form.ConfigCategoriaForm" name="configCategoriaForm2">
+    </Component>
+    <Component class="form.ConfigDataForm" name="configDataForm2">
     </Component>
   </SubComponents>
 </Form>

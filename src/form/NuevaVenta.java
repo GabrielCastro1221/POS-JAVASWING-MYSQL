@@ -5,6 +5,54 @@ public class NuevaVenta extends javax.swing.JPanel {
     public NuevaVenta() {
         initComponents();
         setOpaque(false);
+
+        tableVenta.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{"ID", "CODIGO", "NOMBRE", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"}
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+
+    }
+
+    public void agregarProductoATabla(int productoId, String codigo, String nombre, int cantidad, double precioUnitario, double subtotal, int stock) {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableVenta.getModel();
+        boolean encontrado = false;
+
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            int idTabla = (int) modelo.getValueAt(i, 0);
+            if (idTabla == productoId) {
+                int cantidadExistente = (int) modelo.getValueAt(i, 3);
+                int nuevaCantidad = cantidadExistente + cantidad;
+
+                if (nuevaCantidad > stock) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "No hay suficiente stock disponible");
+                    return;
+                }
+                modelo.setValueAt(nuevaCantidad, i, 3);
+                modelo.setValueAt(nuevaCantidad * precioUnitario, i, 5);
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            modelo.insertRow(0, new Object[]{productoId, codigo, nombre, cantidad, precioUnitario, subtotal});
+        }
+
+        calcularTotalVenta();
+    }
+
+    private void calcularTotalVenta() {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableVenta.getModel();
+        double total = 0;
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            total += (double) modelo.getValueAt(i, 5);
+        }
+        nuevaVentaUserForm2.actualizarTotal(total);
     }
 
     @SuppressWarnings("unchecked")
@@ -21,15 +69,7 @@ public class NuevaVenta extends javax.swing.JPanel {
 
         tableVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "CODIGO", "NOMBRE", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"

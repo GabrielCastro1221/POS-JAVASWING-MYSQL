@@ -97,4 +97,27 @@ public class ClientesDAO {
         }
         return c;
     }
+
+    public Cliente buscarClientePorId(int id) {
+        Cliente c = null;
+        String sql = "SELECT * FROM clientes WHERE id = ?";
+
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    c = new Cliente();
+                    c.setId(rs.getInt("id"));
+                    c.setNombre(rs.getString("nombre"));
+                    c.setTelefono(rs.getString("telefono"));
+                    c.setCorreo(rs.getString("correo"));
+                    c.setFecha(rs.getTimestamp("fecha"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar cliente por ID: " + e.toString());
+        }
+        return c;
+    }
+
 }

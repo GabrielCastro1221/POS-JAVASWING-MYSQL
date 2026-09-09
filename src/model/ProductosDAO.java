@@ -110,13 +110,14 @@ public class ProductosDAO {
         }
     }
 
-    public Productos buscarProducto(String codigo) {
+    public Productos buscarProductoPorCodigoBarra(String codigoBarra) {
         Productos pro = null;
-        String sql = "SELECT * FROM productos WHERE codigo = ?";
+        String sql = "SELECT p.* FROM productos p "
+                + "INNER JOIN codigos_barras cb ON p.id = cb.producto_id "
+                + "WHERE cb.codigo_barra = ?";
 
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
-            ps.setString(1, codigo);
+            ps.setString(1, codigoBarra);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     pro = new Productos();
@@ -128,10 +129,11 @@ public class ProductosDAO {
                     pro.setPrecio_neto(rs.getDouble("precio_neto"));
                     pro.setPrecio_bruto(rs.getDouble("precio_bruto"));
                     pro.setCategoria_id(rs.getInt("categoria_id"));
+                    pro.setFecha(rs.getTimestamp("fecha"));
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error al buscar producto: " + e.toString());
+            System.out.println("Error al buscar producto por código de barras: " + e.toString());
         }
         return pro;
     }
