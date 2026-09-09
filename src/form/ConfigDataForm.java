@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
-import java.util.List;
 
 public class ConfigDataForm extends javax.swing.JPanel {
 
@@ -15,23 +14,32 @@ public class ConfigDataForm extends javax.swing.JPanel {
         setOpaque(false);
         btnCrearConfig.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnActualizarConfig.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnEliminarConfig.setCursor(new Cursor(Cursor.HAND_CURSOR));
         txtIdConfig.setVisible(false);
 
-        cargarConfigEnTabla();
+        model.ConfigDAO dao = new model.ConfigDAO();
+        model.Config cfg = dao.obtenerUltimaConfig();
+        if (cfg != null) {
+            txtIdConfig.setText(String.valueOf(cfg.getId()));
+            mostrarConfigEnLabels(cfg);
+        } else {
+            limpiarLabels();
+        }
 
-        tableDatos.getColumnModel().getColumn(0).setMinWidth(0);
-        tableDatos.getColumnModel().getColumn(0).setMaxWidth(0);
-
-        tableDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblNombreConfig.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                int fila = tableDatos.getSelectedRow();
-                if (fila >= 0) {
-                    cargarDatosEnFormulario(fila);
+                if (evt.getClickCount() == 2) {
+                    model.ConfigDAO dao = new model.ConfigDAO();
+                    model.Config cfg = dao.obtenerUltimaConfig();
+                    if (cfg != null) {
+                        cargarConfigEnFormulario(cfg);
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(ConfigDataForm.this, "No hay configuración registrada");
+                    }
                 }
             }
         });
+
     }
 
     @Override
@@ -48,34 +56,21 @@ public class ConfigDataForm extends javax.swing.JPanel {
         g2.dispose();
     }
 
-    private void cargarConfigEnTabla() {
-        model.ConfigDAO dao = new model.ConfigDAO();
-        List<model.Config> lista = dao.listarConfig();
-
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableDatos.getModel();
-        modelo.setRowCount(0);
-
-        for (model.Config cfg : lista) {
-            modelo.addRow(new Object[]{
-                cfg.getId(),
-                cfg.getNombre(),
-                cfg.getRuc(),
-                cfg.getTelefono(),
-                cfg.getDireccion(),
-                cfg.getRazon_social()
-            });
-        }
+    private void mostrarConfigEnLabels(model.Config cfg) {
+        lblNombreConfig.setText(cfg.getNombre());
+        lblRucConfig.setText(String.valueOf(cfg.getRuc()));
+        lblTelefonoConfig1.setText(String.valueOf(cfg.getTelefono()));
+        lblDireccionConfig.setText(cfg.getDireccion());
+        lblRazonConfig.setText(cfg.getRazon_social());
     }
 
-    private void cargarDatosEnFormulario(int fila) {
-        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableDatos.getModel();
-
-        txtIdConfig.setText(modelo.getValueAt(fila, 0).toString());
-        txtNombreEmpresa.setText(modelo.getValueAt(fila, 1).toString());
-        txtRucEmpresa.setText(modelo.getValueAt(fila, 2).toString());
-        txtTelefonoEmpresa.setText(modelo.getValueAt(fila, 3).toString());
-        txtDireccionEmpresa.setText(modelo.getValueAt(fila, 4).toString());
-        txtRazonEmpresa.setText(modelo.getValueAt(fila, 5).toString());
+    private void cargarConfigEnFormulario(model.Config cfg) {
+        txtIdConfig.setText(String.valueOf(cfg.getId()));
+        txtNombreEmpresa.setText(cfg.getNombre());
+        txtRucEmpresa.setText(String.valueOf(cfg.getRuc()));
+        txtTelefonoEmpresa.setText(String.valueOf(cfg.getTelefono()));
+        txtDireccionEmpresa.setText(cfg.getDireccion());
+        txtRazonEmpresa.setText(cfg.getRazon_social());
     }
 
     @SuppressWarnings("unchecked")
@@ -97,17 +92,22 @@ public class ConfigDataForm extends javax.swing.JPanel {
         btnActualizarConfig = new javax.swing.JLabel();
         roundedPanelCrearConfig1 = new components.RoundedPanel();
         btnCrearConfig = new javax.swing.JLabel();
-        roundedPanelEliminarConfig = new components.RoundedPanel();
-        btnEliminarConfig = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableDatos = new components.CustomTable();
         txtIdConfig = new javax.swing.JTextField();
+        lblNombreConfig = new javax.swing.JLabel();
+        lblRucConfig = new javax.swing.JLabel();
+        lblRucTitle = new javax.swing.JLabel();
+        lblRazonConfig = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblTelefonoConfig1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblDireccionConfig = new javax.swing.JLabel();
+        picture1 = new components.Picture();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setLayout(null);
 
         lblTitleFormCategoria.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        lblTitleFormCategoria.setForeground(new java.awt.Color(196, 94, 95));
+        lblTitleFormCategoria.setForeground(new java.awt.Color(255, 51, 51));
         lblTitleFormCategoria.setText("Datos de empresa");
         add(lblTitleFormCategoria);
         lblTitleFormCategoria.setBounds(40, 20, 240, 28);
@@ -220,52 +220,63 @@ public class ConfigDataForm extends javax.swing.JPanel {
 
         add(roundedPanelCrearConfig1);
         roundedPanelCrearConfig1.setBounds(30, 380, 250, 40);
-
-        roundedPanelEliminarConfig.setBottomColor(new java.awt.Color(213, 69, 53));
-        roundedPanelEliminarConfig.setCornerRadius(10);
-        roundedPanelEliminarConfig.setTopColor(new java.awt.Color(224, 109, 106));
-        roundedPanelEliminarConfig.setLayout(null);
-
-        btnEliminarConfig.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
-        btnEliminarConfig.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarConfig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnEliminarConfig.setText("Eliminar datos");
-        btnEliminarConfig.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarConfigMouseClicked(evt);
-            }
-        });
-        btnEliminarConfig.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnEliminarConfigKeyPressed(evt);
-            }
-        });
-        roundedPanelEliminarConfig.add(btnEliminarConfig);
-        btnEliminarConfig.setBounds(0, 0, 250, 40);
-
-        add(roundedPanelEliminarConfig);
-        roundedPanelEliminarConfig.setBounds(30, 480, 250, 40);
-
-        tableDatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "NOMBRE", "RUC/NIT", "TELEFONO", "DIRECCION", "RAZON SOCIAL"
-            }
-        ));
-        jScrollPane1.setViewportView(tableDatos);
-        if (tableDatos.getColumnModel().getColumnCount() > 0) {
-            tableDatos.getColumnModel().getColumn(0).setPreferredWidth(80);
-            tableDatos.getColumnModel().getColumn(1).setPreferredWidth(50);
-            tableDatos.getColumnModel().getColumn(2).setPreferredWidth(70);
-            tableDatos.getColumnModel().getColumn(4).setPreferredWidth(120);
-        }
-
-        add(jScrollPane1);
-        jScrollPane1.setBounds(310, 20, 520, 500);
         add(txtIdConfig);
         txtIdConfig.setBounds(240, 40, 30, 23);
+
+        lblNombreConfig.setFont(new java.awt.Font("Caladea", 1, 36)); // NOI18N
+        lblNombreConfig.setForeground(new java.awt.Color(255, 51, 51));
+        lblNombreConfig.setText("Miscelanea Bellavista");
+        add(lblNombreConfig);
+        lblNombreConfig.setBounds(370, 80, 370, 50);
+
+        lblRucConfig.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
+        lblRucConfig.setForeground(new java.awt.Color(255, 255, 255));
+        lblRucConfig.setText("1053782271");
+        add(lblRucConfig);
+        lblRucConfig.setBounds(540, 160, 150, 20);
+
+        lblRucTitle.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
+        lblRucTitle.setForeground(new java.awt.Color(255, 51, 51));
+        lblRucTitle.setText("RUC/NIT:");
+        add(lblRucTitle);
+        lblRucTitle.setBounds(430, 160, 110, 28);
+
+        lblRazonConfig.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
+        lblRazonConfig.setForeground(new java.awt.Color(255, 255, 255));
+        lblRazonConfig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblRazonConfig.setText("Tu tienda de confianza!");
+        add(lblRazonConfig);
+        lblRazonConfig.setBounds(420, 250, 270, 28);
+
+        jLabel2.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel2.setText("Telefono:");
+        add(jLabel2);
+        jLabel2.setBounds(430, 190, 110, 28);
+
+        lblTelefonoConfig1.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
+        lblTelefonoConfig1.setForeground(new java.awt.Color(255, 255, 255));
+        lblTelefonoConfig1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTelefonoConfig1.setText("3146381395");
+        add(lblTelefonoConfig1);
+        lblTelefonoConfig1.setBounds(530, 190, 150, 28);
+
+        jLabel3.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel3.setText("Direccion:");
+        add(jLabel3);
+        jLabel3.setBounds(420, 220, 120, 28);
+
+        lblDireccionConfig.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
+        lblDireccionConfig.setForeground(new java.awt.Color(255, 255, 255));
+        lblDireccionConfig.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDireccionConfig.setText("Calle 9B #7-59");
+        add(lblDireccionConfig);
+        lblDireccionConfig.setBounds(530, 220, 170, 28);
+
+        picture1.setPath("/assets/Logo.png");
+        add(picture1);
+        picture1.setBounds(380, 300, 350, 170);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtRazonEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRazonEmpresaActionPerformed
@@ -286,16 +297,11 @@ public class ConfigDataForm extends javax.swing.JPanel {
 
     private void btnActualizarConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarConfigMouseClicked
         try {
-            if (txtIdConfig.getText().isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar un registro para actualizar");
-                return;
-            }
-
             model.Config cfg = new model.Config();
             cfg.setId(Integer.parseInt(txtIdConfig.getText()));
             cfg.setNombre(txtNombreEmpresa.getText().trim());
-            cfg.setRuc(Integer.parseInt(txtRucEmpresa.getText().trim()));
-            cfg.setTelefono(Integer.parseInt(txtTelefonoEmpresa.getText().trim()));
+            cfg.setRuc(Long.parseLong(txtRucEmpresa.getText().trim()));
+            cfg.setTelefono(txtTelefonoEmpresa.getText().trim());
             cfg.setDireccion(txtDireccionEmpresa.getText().trim());
             cfg.setRazon_social(txtRazonEmpresa.getText().trim());
             cfg.setFecha(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -305,20 +311,13 @@ public class ConfigDataForm extends javax.swing.JPanel {
 
             if (actualizado) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Configuración actualizada correctamente");
-                int fila = tableDatos.getSelectedRow();
-                javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableDatos.getModel();
-                modelo.setValueAt(cfg.getNombre(), fila, 1);
-                modelo.setValueAt(cfg.getRuc(), fila, 2);
-                modelo.setValueAt(cfg.getTelefono(), fila, 3);
-                modelo.setValueAt(cfg.getDireccion(), fila, 4);
-                modelo.setValueAt(cfg.getRazon_social(), fila, 5);
+                mostrarConfigEnLabels(cfg);
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar configuración");
             }
         } catch (NumberFormatException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Verifique los campos numéricos (RUC, Teléfono)");
         }
-
     }//GEN-LAST:event_btnActualizarConfigMouseClicked
 
     private void btnActualizarConfigKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarConfigKeyPressed
@@ -326,91 +325,54 @@ public class ConfigDataForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarConfigKeyPressed
 
     private void btnCrearConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearConfigMouseClicked
-
         try {
             model.Config cfg = new model.Config();
             cfg.setNombre(txtNombreEmpresa.getText().trim());
-            cfg.setRuc(Integer.parseInt(txtRucEmpresa.getText().trim()));
-            cfg.setTelefono(Integer.parseInt(txtTelefonoEmpresa.getText().trim()));
+            cfg.setRuc(Long.parseLong(txtRucEmpresa.getText().trim()));
+            cfg.setTelefono(txtTelefonoEmpresa.getText().trim());
             cfg.setDireccion(txtDireccionEmpresa.getText().trim());
             cfg.setRazon_social(txtRazonEmpresa.getText().trim());
             cfg.setFecha(new java.sql.Timestamp(System.currentTimeMillis()));
 
             model.ConfigDAO dao = new model.ConfigDAO();
-
             boolean registrado = dao.registrarConfig(cfg);
 
             if (registrado) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Configuración registrada correctamente");
+                mostrarConfigEnLabels(cfg);
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar configuración");
             }
         } catch (NumberFormatException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Verifique los campos numéricos (RUC, Teléfono)");
         }
-
     }//GEN-LAST:event_btnCrearConfigMouseClicked
 
     private void btnCrearConfigKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearConfigKeyPressed
 
     }//GEN-LAST:event_btnCrearConfigKeyPressed
 
-    private void btnEliminarConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarConfigMouseClicked
-        try {
-            if (txtIdConfig.getText().isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar un registro para eliminar");
-                return;
-            }
-
-            int id = Integer.parseInt(txtIdConfig.getText());
-            int opcion = javax.swing.JOptionPane.showConfirmDialog(
-                    this,
-                    "¿Está seguro de eliminar esta configuración?",
-                    "Confirmar eliminación",
-                    javax.swing.JOptionPane.YES_NO_OPTION
-            );
-
-            if (opcion == javax.swing.JOptionPane.YES_OPTION) {
-                model.ConfigDAO dao = new model.ConfigDAO();
-                boolean eliminado = dao.eliminarConfig(id);
-
-                if (eliminado) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Configuración eliminada correctamente");
-                    int fila = tableDatos.getSelectedRow();
-                    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableDatos.getModel();
-                    modelo.removeRow(fila);
-                    limpiarCamposFormulario();
-                } else {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar configuración");
-                }
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Eliminación cancelada");
-            }
-        } catch (NumberFormatException ex) {
-            javax.swing.JOptionPane.showMessageDialog(this, "ID inválido");
-        }
-    }//GEN-LAST:event_btnEliminarConfigMouseClicked
-
-    private void btnEliminarConfigKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarConfigKeyPressed
-
-    }//GEN-LAST:event_btnEliminarConfigKeyPressed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnActualizarConfig;
     private javax.swing.JLabel btnCrearConfig;
-    private javax.swing.JLabel btnEliminarConfig;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lblDireccionConfig;
     private javax.swing.JLabel lblDireccionEmpresa1;
+    private javax.swing.JLabel lblNombreConfig;
     private javax.swing.JLabel lblNombreEmpresa;
+    private javax.swing.JLabel lblRazonConfig;
     private javax.swing.JLabel lblRazonEmpresa;
+    private javax.swing.JLabel lblRucConfig;
     private javax.swing.JLabel lblRucEmpresa;
+    private javax.swing.JLabel lblRucTitle;
+    private javax.swing.JLabel lblTelefonoConfig1;
     private javax.swing.JLabel lblTelefonoEmpresa;
     private javax.swing.JLabel lblTitleFormCategoria;
+    private components.Picture picture1;
     private components.RoundedPanel roundedPanelActualizarConfig;
     private components.RoundedPanel roundedPanelCrearConfig1;
-    private components.RoundedPanel roundedPanelEliminarConfig;
-    private components.CustomTable tableDatos;
     private components.CustomTextField txtDireccionEmpresa;
     private javax.swing.JTextField txtIdConfig;
     private components.CustomTextField txtNombreEmpresa;
@@ -419,12 +381,11 @@ public class ConfigDataForm extends javax.swing.JPanel {
     private components.CustomTextField txtTelefonoEmpresa;
     // End of variables declaration//GEN-END:variables
 
-    private void limpiarCamposFormulario() {
-        txtIdConfig.setText("");
-        txtNombreEmpresa.setText("");
-        txtRucEmpresa.setText("");
-        txtTelefonoEmpresa.setText("");
-        txtDireccionEmpresa.setText("");
-        txtRazonEmpresa.setText("");
+    private void limpiarLabels() {
+        lblNombreConfig.setText("Sin configuración");
+        lblRucConfig.setText("-");
+        lblTelefonoConfig1.setText("-");
+        lblDireccionConfig.setText("-");
+        lblRazonConfig.setText("-");
     }
 }

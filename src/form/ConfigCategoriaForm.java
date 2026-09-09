@@ -89,7 +89,7 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
         setLayout(null);
 
         lblTitleFormCategoria.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        lblTitleFormCategoria.setForeground(new java.awt.Color(196, 94, 95));
+        lblTitleFormCategoria.setForeground(new java.awt.Color(204, 0, 0));
         lblTitleFormCategoria.setText("Formulario categorias");
         add(lblTitleFormCategoria);
         lblTitleFormCategoria.setBounds(40, 20, 241, 28);

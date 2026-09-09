@@ -81,7 +81,7 @@ public class UsuariosForm extends javax.swing.JPanel {
         setLayout(null);
 
         lblFormTitleUsuarios.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        lblFormTitleUsuarios.setForeground(new java.awt.Color(196, 94, 95));
+        lblFormTitleUsuarios.setForeground(new java.awt.Color(255, 51, 51));
         lblFormTitleUsuarios.setText("Formulario usuarios");
         add(lblFormTitleUsuarios);
         lblFormTitleUsuarios.setBounds(60, 30, 225, 28);

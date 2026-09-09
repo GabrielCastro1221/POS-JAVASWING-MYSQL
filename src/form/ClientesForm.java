@@ -186,7 +186,7 @@ public class ClientesForm extends javax.swing.JPanel {
         lblTelefonoCliente.setBounds(40, 220, 90, 17);
 
         lblTitleFormClientes.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        lblTitleFormClientes.setForeground(new java.awt.Color(196, 94, 95));
+        lblTitleFormClientes.setForeground(new java.awt.Color(255, 51, 51));
         lblTitleFormClientes.setText("Formulario clientes");
         add(lblTitleFormClientes);
         lblTitleFormClientes.setBounds(70, 30, 220, 28);

@@ -77,7 +77,6 @@ public class Sidebar extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         listMenu1 = new view.ListMenu();
         listMenu2 = new view.ListMenu();
@@ -88,17 +87,10 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu6 = new view.ListMenu();
         listMenu7 = new view.ListMenu();
         listMenu8 = new view.ListMenu();
-        jLabel2 = new javax.swing.JLabel();
+        picture1 = new components.Picture();
 
         setBackground(new java.awt.Color(243, 243, 243));
         setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(196, 94, 95));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Miscelanea");
-        add(jLabel1);
-        jLabel1.setBounds(40, 30, 130, 30);
 
         jPanel1.setBackground(new java.awt.Color(243, 243, 243));
         jPanel1.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
@@ -143,18 +135,13 @@ public class Sidebar extends javax.swing.JPanel {
         add(jPanel2);
         jPanel2.setBounds(20, 530, 190, 140);
 
-        jLabel2.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(196, 94, 95));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Bellavista");
-        add(jLabel2);
-        jLabel2.setBounds(40, 60, 130, 30);
+        picture1.setPath("/assets/Logo.png");
+        add(picture1);
+        picture1.setBounds(10, 0, 200, 150);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private view.ListMenu listMenu1;
@@ -165,5 +152,6 @@ public class Sidebar extends javax.swing.JPanel {
     private view.ListMenu listMenu6;
     private view.ListMenu listMenu7;
     private view.ListMenu listMenu8;
+    private components.Picture picture1;
     // End of variables declaration//GEN-END:variables
 }

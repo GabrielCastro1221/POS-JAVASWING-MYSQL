@@ -8,77 +8,78 @@ public class Banner extends RoundedPanel {
     public Banner() {
         super(new Color(42, 43, 48), new Color(30, 31, 35), 18);
         initComponents();
+
+        model.ConfigDAO dao = new model.ConfigDAO();
+        model.Config cfg = dao.obtenerUltimaConfig();
+        if (cfg != null) {
+            mostrarConfigEnBanner(cfg);
+        } else {
+            lblRucConfigLog.setText("NIT: -");
+            lblTelefonoConfigLog.setText("Tel: -");
+            lblDireccionConfigLog.setText("Dirección: -");
+            lblRazonConfigLog.setText("Sin configuración");
+        }
+    }
+
+    private void mostrarConfigEnBanner(model.Config cfg) {
+        lblRucConfigLog.setText("NIT: " + cfg.getRuc());
+        lblTelefonoConfigLog.setText("Tel: " + cfg.getTelefono());
+        lblDireccionConfigLog.setText(cfg.getDireccion());
+        lblRazonConfigLog.setText(cfg.getRazon_social());
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        picture1 = new components.Picture();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblRazonConfigLog = new javax.swing.JLabel();
+        lblRucConfigLog = new javax.swing.JLabel();
+        lblTelefonoConfigLog = new javax.swing.JLabel();
+        lblDireccionConfigLog = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        picture2 = new components.Picture();
 
         setBackground(new java.awt.Color(60, 63, 65));
         setLayout(null);
 
-        jLabel1.setBackground(new java.awt.Color(60, 63, 65));
-        jLabel1.setFont(new java.awt.Font("Caladea", 0, 22)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Miscelanea Bellavista");
-        add(jLabel1);
-        jLabel1.setBounds(50, 50, 200, 20);
+        lblRazonConfigLog.setFont(new java.awt.Font("Caladea", 0, 18)); // NOI18N
+        lblRazonConfigLog.setForeground(new java.awt.Color(255, 255, 255));
+        lblRazonConfigLog.setText("Tu tienda de confianza!");
+        add(lblRazonConfigLog);
+        lblRazonConfigLog.setBounds(80, 410, 180, 20);
 
-        picture1.setPath("/assets/brand.png");
-        add(picture1);
-        picture1.setBounds(260, 50, 30, 20);
+        lblRucConfigLog.setFont(new java.awt.Font("Caladea", 0, 18)); // NOI18N
+        lblRucConfigLog.setForeground(new java.awt.Color(255, 255, 255));
+        lblRucConfigLog.setText("NIT: 1053782271");
+        add(lblRucConfigLog);
+        lblRucConfigLog.setBounds(100, 320, 130, 20);
 
-        jLabel2.setFont(new java.awt.Font("sansserif", 0, 15)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(196, 94, 95));
-        jLabel2.setText("Bienvenido");
-        add(jLabel2);
-        jLabel2.setBounds(30, 175, 110, 20);
+        lblTelefonoConfigLog.setFont(new java.awt.Font("Caladea", 0, 18)); // NOI18N
+        lblTelefonoConfigLog.setForeground(new java.awt.Color(255, 255, 255));
+        lblTelefonoConfigLog.setText("Tel: 3412547898");
+        add(lblTelefonoConfigLog);
+        lblTelefonoConfigLog.setBounds(100, 350, 130, 20);
 
-        jLabel3.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("eiusmod?");
-        add(jLabel3);
-        jLabel3.setBounds(30, 325, 250, 20);
-
-        jLabel4.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Lorem Ipsum dolor");
-        add(jLabel4);
-        jLabel4.setBounds(30, 220, 240, 20);
-
-        jLabel5.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Consectetur adpisicing");
-        add(jLabel5);
-        jLabel5.setBounds(30, 253, 240, 20);
-
-        jLabel6.setFont(new java.awt.Font("sansserif", 0, 20)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Sed do  eiusmod tempor");
-        add(jLabel6);
-        jLabel6.setBounds(30, 290, 250, 20);
+        lblDireccionConfigLog.setFont(new java.awt.Font("Caladea", 0, 18)); // NOI18N
+        lblDireccionConfigLog.setForeground(new java.awt.Color(255, 255, 255));
+        lblDireccionConfigLog.setText("Calle 9B # 7-89");
+        add(lblDireccionConfigLog);
+        lblDireccionConfigLog.setBounds(110, 380, 120, 20);
         add(jSeparator1);
         jSeparator1.setBounds(30, 550, 100, 30);
+
+        picture2.setPath("/assets/Logo.png");
+        add(picture2);
+        picture2.setBounds(40, 80, 250, 190);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
-    private components.Picture picture1;
+    private javax.swing.JLabel lblDireccionConfigLog;
+    private javax.swing.JLabel lblRazonConfigLog;
+    private javax.swing.JLabel lblRucConfigLog;
+    private javax.swing.JLabel lblTelefonoConfigLog;
+    private components.Picture picture2;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,8 +20,8 @@ public class ConfigDAO {
                 Config cfg = new Config();
                 cfg.setId(rs.getInt("id"));
                 cfg.setNombre(rs.getString("nombre_empresa"));
-                cfg.setRuc(rs.getInt("ruc"));
-                cfg.setTelefono(rs.getInt("telefono"));
+                cfg.setRuc(rs.getLong("ruc"));
+                cfg.setTelefono(rs.getString("telefono"));
                 cfg.setDireccion(rs.getString("direccion"));
                 cfg.setRazon_social(rs.getString("razon_social"));
                 cfg.setFecha(rs.getTimestamp("fecha"));
@@ -38,8 +38,8 @@ public class ConfigDAO {
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, cfg.getNombre());
-            ps.setInt(2, cfg.getRuc());
-            ps.setInt(3, cfg.getTelefono());
+            ps.setLong(2, cfg.getRuc());
+            ps.setString(3, cfg.getTelefono());
             ps.setString(4, cfg.getDireccion());
             ps.setString(5, cfg.getRazon_social());
             ps.setTimestamp(6, cfg.getFecha());
@@ -56,8 +56,8 @@ public class ConfigDAO {
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, cfg.getNombre());
-            ps.setInt(2, cfg.getRuc());
-            ps.setInt(3, cfg.getTelefono());
+            ps.setLong(2, cfg.getRuc());
+            ps.setString(3, cfg.getTelefono());
             ps.setString(4, cfg.getDireccion());
             ps.setString(5, cfg.getRazon_social());
             ps.setTimestamp(6, cfg.getFecha());
@@ -81,4 +81,25 @@ public class ConfigDAO {
             return false;
         }
     }
+
+    public Config obtenerUltimaConfig() {
+        Config cfg = null;
+        String sql = "SELECT * FROM config ORDER BY id DESC LIMIT 1";
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                cfg = new Config();
+                cfg.setId(rs.getInt("id"));
+                cfg.setNombre(rs.getString("nombre_empresa"));
+                cfg.setRuc(rs.getLong("ruc"));
+                cfg.setTelefono(rs.getString("telefono"));
+                cfg.setDireccion(rs.getString("direccion"));
+                cfg.setRazon_social(rs.getString("razon_social"));
+                cfg.setFecha(rs.getTimestamp("fecha"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener última configuración: " + e.toString());
+        }
+        return cfg;
+    }
+
 }

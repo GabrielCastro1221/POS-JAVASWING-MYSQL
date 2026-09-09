@@ -4,8 +4,8 @@ public class Config {
 
     private int id;
     private String nombre_empresa;
-    private int ruc;
-    private int telefono;
+    private long ruc;
+    private String telefono;
     private String direccion;
     private String razon_social;
     private java.sql.Timestamp fecha;
@@ -13,7 +13,7 @@ public class Config {
     public Config() {
     }
 
-    public Config(int id, int ruc, String nombre, int telefono, String direccion, String razon_social) {
+    public Config(int id, long ruc, String nombre, String telefono, String direccion, String razon_social) {
         this.id = id;
         this.ruc = ruc;
         this.nombre_empresa = nombre;
@@ -30,11 +30,11 @@ public class Config {
         this.id = id;
     }
 
-    public int getRuc() {
+    public long getRuc() {
         return ruc;
     }
 
-    public void setRuc(int ruc) {
+    public void setRuc(long ruc) {
         this.ruc = ruc;
     }
 
@@ -46,11 +46,11 @@ public class Config {
         this.nombre_empresa = nombre;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
