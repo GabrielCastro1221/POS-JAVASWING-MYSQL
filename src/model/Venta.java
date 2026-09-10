@@ -4,7 +4,7 @@ public class Venta {
 
     private int id;
     private int cliente_id;
-    private int vendedor;
+    private String vendedor;
     private double total;
     private java.sql.Timestamp fecha;
     ;
@@ -14,7 +14,7 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(int id, int cliente_id, int vendedor_id, double total, String fecha) {
+    public Venta(int id, int cliente_id, String vendedor_id, double total, String fecha) {
         this.id = id;
         this.cliente_id = cliente_id;
         this.vendedor = vendedor;
@@ -37,11 +37,11 @@ public class Venta {
         this.cliente_id = cliente_id;
     }
 
-    public int getVendedor() {
+    public String getVendedor() {
         return vendedor;
     }
 
-    public void setVendedor(int vendedor_id) {
+    public void setVendedor(String vendedor_id) {
         this.vendedor = vendedor_id;
     }
 

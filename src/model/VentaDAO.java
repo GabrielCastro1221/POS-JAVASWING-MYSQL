@@ -31,7 +31,7 @@ public class VentaDAO {
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, v.getCliente_id());
-            ps.setInt(2, v.getVendedor());
+            ps.setString(2, v.getNombreVendedor());
             ps.setDouble(3, v.getTotal());
             ps.setTimestamp(4, v.getFecha());
 

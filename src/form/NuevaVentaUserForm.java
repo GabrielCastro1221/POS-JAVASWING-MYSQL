@@ -10,7 +10,10 @@ import model.Productos;
 import model.ProductosDAO;
 import model.Venta;
 import model.VentaDAO;
+import model.Config;
+import model.ConfigDAO;
 import model.DetalleVenta;
+import reports.TicketPDF;
 
 public class NuevaVentaUserForm extends javax.swing.JPanel {
 
@@ -178,7 +181,22 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarVentaMouseClicked
-        registrarVenta();
+        int idVenta = registrarVenta();
+        ConfigDAO confDAO = new ConfigDAO();
+        Config cfg = confDAO.obtenerUltimaConfig();
+
+        if (idVenta > 0) {
+            registrarDetalle(idVenta);
+            TicketPDF ticket = new TicketPDF(panelVenta.getTableVenta(), panelVenta.getTotalPagar());
+            ticket.GenerarPDF(
+                    idVenta,
+                    String.valueOf(cfg.getRuc()),
+                    cfg.getNombre(),
+                    cfg.getTelefono(),
+                    cfg.getDireccion(),
+                    cfg.getRazon_social()
+            );
+        }
     }//GEN-LAST:event_btnGenerarVentaMouseClicked
 
 
@@ -196,7 +214,7 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
     private javax.swing.JLabel txtTelClienteVenta;
     // End of variables declaration//GEN-END:variables
 
-    private void registrarVenta() {
+    private int registrarVenta() {
         try {
             int clienteId = Integer.parseInt(txtIdClienteVenta.getText().trim());
             String cliente = txtNombreClienteVenta.getText();
@@ -212,12 +230,32 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
 
             if (vDAO.registrarVenta(v)) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Venta registrada con éxito");
+                return vDAO.idVenta();
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar la venta");
+                return -1;
             }
 
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "ID de cliente inválido");
+            return -1;
+        }
+    }
+
+    private void registrarDetalle(int idVenta) {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) panelVenta.getTableVenta().getModel();
+
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            int productoId = Integer.parseInt(modelo.getValueAt(i, 0).toString());
+            int cantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
+            double precio = Double.parseDouble(modelo.getValueAt(i, 4).toString());
+
+            Dv.setCodigo_producto(productoId);
+            Dv.setCantidad(cantidad);
+            Dv.setPrecio(precio);
+            Dv.setId_venta(idVenta);
+
+            vDAO.registrarDetalleVenta(Dv);
         }
     }
 
