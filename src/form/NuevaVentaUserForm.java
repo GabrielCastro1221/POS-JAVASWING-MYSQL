@@ -6,10 +6,28 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import model.Productos;
+import model.ProductosDAO;
+import model.Venta;
+import model.VentaDAO;
+import model.DetalleVenta;
 
 public class NuevaVentaUserForm extends javax.swing.JPanel {
 
+    private NuevaVenta panelVenta;
+
+    public void setPanelVenta(NuevaVenta panelVenta) {
+        this.panelVenta = panelVenta;
+    }
+
+    Productos pro = new Productos();
+    ProductosDAO proDAO = new ProductosDAO();
+    VentaDAO vDAO = new VentaDAO();
+    Venta v = new Venta();
+    DetalleVenta Dv = new DetalleVenta();
+
     public NuevaVentaUserForm() {
+        this.panelVenta = panelVenta;
         initComponents();
         this.init();
     }
@@ -21,6 +39,7 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         txtCorreoClienteVenta.setVisible(false);
         txtIdClienteVenta.addActionListener(e -> cargarClientePorId());
         btnGenerarVenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        labelVendedor.setVisible(false);
     }
 
     @Override
@@ -78,6 +97,7 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         lblTotalVenta = new javax.swing.JLabel();
         txtTelClienteVenta = new javax.swing.JLabel();
         txtCorreoClienteVenta = new javax.swing.JLabel();
+        labelVendedor = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setPreferredSize(new java.awt.Dimension(1000, 300));
@@ -112,6 +132,11 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         btnGenerarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerarVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGenerarVenta.setText("Generar Venta");
+        btnGenerarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGenerarVentaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanelGenerarVentaLayout = new javax.swing.GroupLayout(roundedPanelGenerarVenta);
         roundedPanelGenerarVenta.setLayout(roundedPanelGenerarVentaLayout);
@@ -146,11 +171,20 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         txtTelClienteVenta.setBounds(480, 30, 0, 0);
         add(txtCorreoClienteVenta);
         txtCorreoClienteVenta.setBounds(490, 70, 0, 0);
+
+        labelVendedor.setText("Miscelanea Bellavista");
+        add(labelVendedor);
+        labelVendedor.setBounds(790, 10, 147, 17);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGenerarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarVentaMouseClicked
+        registrarVenta();
+    }//GEN-LAST:event_btnGenerarVentaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnGenerarVenta;
+    private javax.swing.JLabel labelVendedor;
     private javax.swing.JLabel lblDniClienteVenta1;
     private javax.swing.JLabel lblNombreClienteVenta;
     private javax.swing.JLabel lblTotalPagar;
@@ -161,6 +195,31 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
     private components.CustomTextField txtNombreClienteVenta;
     private javax.swing.JLabel txtTelClienteVenta;
     // End of variables declaration//GEN-END:variables
+
+    private void registrarVenta() {
+        try {
+            int clienteId = Integer.parseInt(txtIdClienteVenta.getText().trim());
+            String cliente = txtNombreClienteVenta.getText();
+            String vendedor = labelVendedor.getText();
+            double monto = panelVenta.getTotalPagar();
+            java.sql.Timestamp fechaActual = new java.sql.Timestamp(System.currentTimeMillis());
+
+            v.setCliente_id(clienteId);
+            v.setNombreCliente(cliente);
+            v.setNombreVendedor(vendedor);
+            v.setTotal(monto);
+            v.setFecha(fechaActual);
+
+            if (vDAO.registrarVenta(v)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Venta registrada con éxito");
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar la venta");
+            }
+
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ID de cliente inválido");
+        }
+    }
 
     private void limpiarCamposCliente() {
         txtIdClienteVenta.setText("");

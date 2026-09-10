@@ -25,7 +25,7 @@
   <SubComponents>
     <Component class="components.Picture" name="icon">
       <Properties>
-        <Property name="path" type="java.lang.String" value="/assets/home.png"/>
+        <Property name="path" type="java.lang.String" value="/assets/settings.png"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

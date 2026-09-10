@@ -27,13 +27,14 @@ public class VentaDAO {
     }
 
     public boolean registrarVenta(Venta v) {
-        String sql = "INSERT INTO ventas (cliente, vendedor, total, fecha) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO ventas (cliente_id, vendedor, total, fecha) VALUES (?, ?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, v.getCliente());
-            ps.setString(2, v.getVendedor());
+            ps.setInt(1, v.getCliente_id());
+            ps.setInt(2, v.getVendedor());
             ps.setDouble(3, v.getTotal());
             ps.setTimestamp(4, v.getFecha());
+
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -70,25 +71,5 @@ public class VentaDAO {
             System.out.println("Error al actualizar stock: " + e.toString());
             return false;
         }
-    }
-
-    public List<Venta> listarVentas() {
-        List<Venta> listaVenta = new ArrayList<>();
-        String sql = "SELECT * FROM ventas";
-        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                Venta vent = new Venta();
-                vent.setId(rs.getInt("id"));
-                vent.setCliente(rs.getString("cliente"));
-                vent.setVendedor(rs.getString("vendedor"));
-                vent.setTotal(rs.getDouble("total"));
-                vent.setFecha(rs.getTimestamp("fecha"));
-                listaVenta.add(vent);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al listar ventas: " + e.toString());
-        }
-        return listaVenta;
     }
 }

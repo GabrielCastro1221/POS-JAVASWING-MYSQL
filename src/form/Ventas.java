@@ -19,27 +19,16 @@ public class Ventas extends javax.swing.JPanel {
 
         customTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "ID", "CLIENTE", "VENDEDOR", "TOTAL"
+                "ID", "CLIENTE", "VENDEDOR", "TOTAL", "FECHA"
             }
         ));
         jScrollPane1.setViewportView(customTable1);
+        if (customTable1.getColumnModel().getColumnCount() > 0) {
+            customTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

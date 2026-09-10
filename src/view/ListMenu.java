@@ -91,7 +91,7 @@ public class ListMenu extends RoundedPanelSys {
         setBackground(new java.awt.Color(243, 243, 243));
         setLayout(null);
 
-        icon.setPath("/assets/home.png");
+        icon.setPath("/assets/settings.png");
         add(icon);
         icon.setBounds(12, 10, 18, 18);
 

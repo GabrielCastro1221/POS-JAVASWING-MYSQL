@@ -2,6 +2,17 @@ package form;
 
 public class NuevaVenta extends javax.swing.JPanel {
 
+    private double totalPagar = 0;
+    private String fechaActual = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.util.Date());
+
+    public double getTotalPagar() {
+        return totalPagar;
+    }
+
+    public String getFechaActual() {
+        return fechaActual;
+    }
+
     public NuevaVenta() {
         initComponents();
         setOpaque(false);
@@ -52,7 +63,13 @@ public class NuevaVenta extends javax.swing.JPanel {
         for (int i = 0; i < modelo.getRowCount(); i++) {
             total += (double) modelo.getValueAt(i, 5);
         }
+        totalPagar = total;
         nuevaVentaUserForm2.actualizarTotal(total);
+        nuevaVentaUserForm2.setPanelVenta(this);
+    }
+
+    public javax.swing.JTable getTableVenta() {
+        return tableVenta;
     }
 
     @SuppressWarnings("unchecked")

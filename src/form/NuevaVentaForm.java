@@ -20,7 +20,6 @@ public class NuevaVentaForm extends javax.swing.JPanel {
         setBackground(new Color(0, 0, 0));
         txtCodigoVentaProd.addActionListener(e -> cargarProductoPorCodigo());
         txtCantidadVentaProd.addActionListener(e -> agregarProductoATabla());
-        txtVendedorNombre.setVisible(false);
     }
 
     @Override
@@ -103,7 +102,6 @@ public class NuevaVentaForm extends javax.swing.JPanel {
         lblPrecioVentaProd1 = new javax.swing.JLabel();
         txtPrecioVentaProd = new components.CustomTextField();
         btnLimpiarVenta = new components.Picture();
-        txtVendedorNombre = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setPreferredSize(new java.awt.Dimension(1000, 1000));
@@ -163,10 +161,6 @@ public class NuevaVentaForm extends javax.swing.JPanel {
         btnLimpiarVenta.setPath("/assets/close.png");
         add(btnLimpiarVenta);
         btnLimpiarVenta.setBounds(1060, 40, 20, 20);
-
-        txtVendedorNombre.setText("Gabriel Castro Ramirez");
-        add(txtVendedorNombre);
-        txtVendedorNombre.setBounds(1000, 10, 147, 17);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -182,7 +176,6 @@ public class NuevaVentaForm extends javax.swing.JPanel {
     private components.CustomTextField txtNombreVentaProd;
     private components.CustomTextField txtPrecioVentaProd;
     private components.CustomTextField txtStockVentaProd;
-    private javax.swing.JLabel txtVendedorNombre;
     // End of variables declaration//GEN-END:variables
 
     private void limpiarCamposVenta() {

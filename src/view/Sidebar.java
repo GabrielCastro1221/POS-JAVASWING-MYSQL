@@ -95,22 +95,28 @@ public class Sidebar extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(243, 243, 243));
         jPanel1.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
 
+        listMenu1.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        listMenu1.setPath("/assets/factura-punto-de-venta.png");
         listMenu1.setText("Nueva venta");
         jPanel1.add(listMenu1);
 
-        listMenu2.setPath("/assets/apps.png");
-        listMenu2.setText("Productos");
+        listMenu2.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        listMenu2.setPath("/assets/alt-de-inventario.png");
+        listMenu2.setText("Inventario");
         jPanel1.add(listMenu2);
 
-        listMenu3.setPath("/assets/plugin.png");
+        listMenu3.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        listMenu3.setPath("/assets/proveedor.png");
         listMenu3.setText("Proveedores");
         jPanel1.add(listMenu3);
 
-        listMenu4.setPath("/assets/sounds.png");
+        listMenu4.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        listMenu4.setPath("/assets/venta.png");
         listMenu4.setText("Ventas");
         jPanel1.add(listMenu4);
 
-        listMenu5.setPath("/assets/element.png");
+        listMenu5.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        listMenu5.setPath("/assets/revisar.png");
         listMenu5.setText("Clientes");
         jPanel1.add(listMenu5);
 
@@ -120,11 +126,13 @@ public class Sidebar extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(243, 243, 243));
         jPanel2.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
 
-        listMenu6.setPath("/assets/notification.png");
+        listMenu6.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        listMenu6.setPath("/assets/comercio.png");
         listMenu6.setText("Reportes");
         jPanel2.add(listMenu6);
 
-        listMenu7.setPath("/assets/library.png");
+        listMenu7.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        listMenu7.setPath("/assets/agregar-usuario.png");
         listMenu7.setText("Usuarios");
         jPanel2.add(listMenu7);
 

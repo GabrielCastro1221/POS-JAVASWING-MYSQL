@@ -7,6 +7,7 @@ public class DetalleVenta {
     private int cantidad;
     private double precio;
     private int id_venta;
+    private String nombreProducto;
 
     public DetalleVenta() {
     }
@@ -57,5 +58,13 @@ public class DetalleVenta {
 
     public void setId_venta(int id_venta) {
         this.id_venta = id_venta;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 }

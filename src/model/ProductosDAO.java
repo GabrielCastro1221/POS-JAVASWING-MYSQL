@@ -110,6 +110,32 @@ public class ProductosDAO {
         }
     }
 
+    public Productos buscarProd(String codigo) {
+        Productos pro = null;
+        String sql = "SELECT * FROM productos WHERE codigo = ?";
+
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, codigo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    pro = new Productos();
+                    pro.setId(rs.getInt("id"));
+                    pro.setCodigo(rs.getString("codigo"));
+                    pro.setNombre(rs.getString("nombre"));
+                    pro.setProveedor_id(rs.getInt("proveedor_id"));
+                    pro.setStock(rs.getInt("stock"));
+                    pro.setPrecio_neto(rs.getDouble("precio_neto"));
+                    pro.setPrecio_bruto(rs.getDouble("precio_bruto"));
+                    pro.setCategoria_id(rs.getInt("categoria_id"));
+                    pro.setFecha(rs.getTimestamp("fecha"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar producto: " + e.toString());
+        }
+        return pro;
+    }
+
     public Productos buscarProductoPorCodigoBarra(String codigoBarra) {
         Productos pro = null;
         String sql = "SELECT p.* FROM productos p "

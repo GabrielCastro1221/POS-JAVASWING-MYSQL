@@ -43,30 +43,46 @@
       <SubComponents>
         <Component class="view.ListMenu" name="listMenu1">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Caladea" size="14" style="1"/>
+            </Property>
+            <Property name="path" type="java.lang.String" value="/assets/factura-punto-de-venta.png"/>
             <Property name="text" type="java.lang.String" value="Nueva venta"/>
           </Properties>
         </Component>
         <Component class="view.ListMenu" name="listMenu2">
           <Properties>
-            <Property name="path" type="java.lang.String" value="/assets/apps.png"/>
-            <Property name="text" type="java.lang.String" value="Productos"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Caladea" size="14" style="1"/>
+            </Property>
+            <Property name="path" type="java.lang.String" value="/assets/alt-de-inventario.png"/>
+            <Property name="text" type="java.lang.String" value="Inventario"/>
           </Properties>
         </Component>
         <Component class="view.ListMenu" name="listMenu3">
           <Properties>
-            <Property name="path" type="java.lang.String" value="/assets/plugin.png"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Caladea" size="14" style="1"/>
+            </Property>
+            <Property name="path" type="java.lang.String" value="/assets/proveedor.png"/>
             <Property name="text" type="java.lang.String" value="Proveedores"/>
           </Properties>
         </Component>
         <Component class="view.ListMenu" name="listMenu4">
           <Properties>
-            <Property name="path" type="java.lang.String" value="/assets/sounds.png"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Caladea" size="14" style="1"/>
+            </Property>
+            <Property name="path" type="java.lang.String" value="/assets/venta.png"/>
             <Property name="text" type="java.lang.String" value="Ventas"/>
           </Properties>
         </Component>
         <Component class="view.ListMenu" name="listMenu5">
           <Properties>
-            <Property name="path" type="java.lang.String" value="/assets/element.png"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Caladea" size="14" style="1"/>
+            </Property>
+            <Property name="path" type="java.lang.String" value="/assets/revisar.png"/>
             <Property name="text" type="java.lang.String" value="Clientes"/>
           </Properties>
         </Component>
@@ -92,13 +108,19 @@
       <SubComponents>
         <Component class="view.ListMenu" name="listMenu6">
           <Properties>
-            <Property name="path" type="java.lang.String" value="/assets/notification.png"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Caladea" size="14" style="1"/>
+            </Property>
+            <Property name="path" type="java.lang.String" value="/assets/comercio.png"/>
             <Property name="text" type="java.lang.String" value="Reportes"/>
           </Properties>
         </Component>
         <Component class="view.ListMenu" name="listMenu7">
           <Properties>
-            <Property name="path" type="java.lang.String" value="/assets/library.png"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Caladea" size="14" style="1"/>
+            </Property>
+            <Property name="path" type="java.lang.String" value="/assets/agregar-usuario.png"/>
             <Property name="text" type="java.lang.String" value="Usuarios"/>
           </Properties>
         </Component>

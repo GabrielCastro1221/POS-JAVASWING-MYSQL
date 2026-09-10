@@ -3,18 +3,21 @@ package model;
 public class Venta {
 
     private int id;
-    private String cliente_id;
-    private String vendedor_id;
+    private int cliente_id;
+    private int vendedor;
     private double total;
     private java.sql.Timestamp fecha;
+    ;
+    private String nombreCliente;
+    private String nombreVendedor;
 
     public Venta() {
     }
 
-    public Venta(int id, String cliente, String vendedor, double total, String fecha) {
+    public Venta(int id, int cliente_id, int vendedor_id, double total, String fecha) {
         this.id = id;
-        this.cliente_id = cliente;
-        this.vendedor_id = vendedor;
+        this.cliente_id = cliente_id;
+        this.vendedor = vendedor;
         this.total = total;
     }
 
@@ -26,20 +29,20 @@ public class Venta {
         this.id = id;
     }
 
-    public String getCliente() {
+    public int getCliente_id() {
         return cliente_id;
     }
 
-    public void setCliente(String cliente) {
-        this.cliente_id = cliente;
+    public void setCliente_id(int cliente_id) {
+        this.cliente_id = cliente_id;
     }
 
-    public String getVendedor() {
-        return vendedor_id;
+    public int getVendedor() {
+        return vendedor;
     }
 
-    public void setVendedor(String vendedor) {
-        this.vendedor_id = vendedor;
+    public void setVendedor(int vendedor_id) {
+        this.vendedor = vendedor_id;
     }
 
     public double getTotal() {
@@ -56,5 +59,21 @@ public class Venta {
 
     public void setFecha(java.sql.Timestamp fecha) {
         this.fecha = fecha;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getNombreVendedor() {
+        return nombreVendedor;
+    }
+
+    public void setNombreVendedor(String nombreVendedor) {
+        this.nombreVendedor = nombreVendedor;
     }
 }
