@@ -4,6 +4,12 @@ import java.awt.Color;
 
 public class VentasForm extends javax.swing.JPanel {
 
+    private javax.swing.JTable tableVentas;
+
+    public void setTableVentas(javax.swing.JTable tableVentas) {
+        this.tableVentas = tableVentas;
+    }
+
     public VentasForm() {
         initComponents();
         this.init();
@@ -12,6 +18,41 @@ public class VentasForm extends javax.swing.JPanel {
     private void init() {
         setOpaque(false);
         setBackground(new Color(0, 0, 0));
+
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                generarPDFVentaSeleccionada();
+            }
+        });
+
+    }
+
+    private void generarPDFVentaSeleccionada() {
+        if (tableVentas == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se ha vinculado la tabla de ventas");
+            return;
+        }
+
+        int fila = tableVentas.getSelectedRow();
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una venta de la tabla");
+            return;
+        }
+
+        int idVenta = Integer.parseInt(tableVentas.getValueAt(fila, 0).toString());
+        String ruta = "/home/DeathRaven1221/Documentos/Miscelanea_bellavista/pdf/venta" + idVenta + ".pdf";
+        java.io.File file = new java.io.File(ruta);
+
+        if (file.exists()) {
+            try {
+                java.awt.Desktop.getDesktop().open(file);
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al abrir PDF: " + e.getMessage());
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "El PDF de la venta no existe en la carpeta");
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -111,7 +111,7 @@ public class VentaDAO {
                     dv.setCodigo_producto(rs.getInt("codigo_producto"));
                     dv.setCantidad(rs.getInt("cantidad"));
                     dv.setPrecio(rs.getDouble("precio"));
-                    dv.setNombreProducto(rs.getString("nombre")); // nombre del producto
+                    dv.setNombreProducto(rs.getString("nombre"));
                     lista.add(dv);
                 }
             }
@@ -121,4 +121,26 @@ public class VentaDAO {
         return lista;
     }
 
+    public List<Venta> listarVentas() {
+        List<Venta> lista = new ArrayList<>();
+        String sql = "SELECT v.id, c.nombre AS cliente, v.vendedor, v.total, v.fecha "
+                + "FROM ventas v "
+                + "JOIN clientes c ON v.cliente_id = c.id "
+                + "ORDER BY v.id DESC";
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Venta v = new Venta();
+                v.setId(rs.getInt("id"));
+                v.setNombreCliente(rs.getString("cliente"));
+                v.setNombreVendedor(rs.getString("vendedor"));
+                v.setTotal(rs.getDouble("total"));
+                v.setFecha(rs.getTimestamp("fecha"));
+                lista.add(v);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en listarVentas: " + e.toString());
+        }
+        return lista;
+    }
 }

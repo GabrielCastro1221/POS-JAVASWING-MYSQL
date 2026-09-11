@@ -1,10 +1,34 @@
 package form;
 
+import java.util.List;
+import model.Venta;
+import model.VentaDAO;
+
 public class Ventas extends javax.swing.JPanel {
 
     public Ventas() {
         initComponents();
         setOpaque(false);
+        ventasForm1.setTableVentas(tableVentas);
+        cargarVentas();
+    }
+
+    private void cargarVentas() {
+        VentaDAO vDAO = new VentaDAO();
+        List<Venta> lista = vDAO.listarVentas();
+        javax.swing.table.DefaultTableModel modelo
+                = (javax.swing.table.DefaultTableModel) tableVentas.getModel();
+        modelo.setRowCount(0);
+
+        for (Venta v : lista) {
+            modelo.addRow(new Object[]{
+                v.getId(),
+                v.getNombreCliente(),
+                v.getNombreVendedor(),
+                String.format("%.2f", v.getTotal()),
+                v.getFecha()
+            });
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -13,11 +37,11 @@ public class Ventas extends javax.swing.JPanel {
 
         ventasForm1 = new form.VentasForm();
         jScrollPane1 = new javax.swing.JScrollPane();
-        customTable1 = new components.CustomTable();
+        tableVentas = new components.CustomTable();
 
         setBackground(new java.awt.Color(61, 63, 65));
 
-        customTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -25,9 +49,9 @@ public class Ventas extends javax.swing.JPanel {
                 "ID", "CLIENTE", "VENDEDOR", "TOTAL", "FECHA"
             }
         ));
-        jScrollPane1.setViewportView(customTable1);
-        if (customTable1.getColumnModel().getColumnCount() > 0) {
-            customTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
+        jScrollPane1.setViewportView(tableVentas);
+        if (tableVentas.getColumnModel().getColumnCount() > 0) {
+            tableVentas.getColumnModel().getColumn(0).setPreferredWidth(30);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -56,8 +80,8 @@ public class Ventas extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private components.CustomTable customTable1;
     private javax.swing.JScrollPane jScrollPane1;
+    private components.CustomTable tableVentas;
     private form.VentasForm ventasForm1;
     // End of variables declaration//GEN-END:variables
 }
