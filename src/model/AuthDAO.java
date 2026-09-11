@@ -13,15 +13,12 @@ public class AuthDAO {
 
     public Auth login(String correo, String pass) {
         Auth usuario = null;
-        String sql = "SELECT * FROM usuarios WHERE correo = ?";
-
+        String sql = "SELECT id, nombre, correo, pass, rol, telefono FROM usuarios WHERE correo = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, correo);
-
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String hashedPass = rs.getString("pass");
-
                     if (BCrypt.checkpw(pass, hashedPass)) {
                         usuario = new Auth();
                         usuario.setId(rs.getInt("id"));
@@ -30,6 +27,7 @@ public class AuthDAO {
                         usuario.setPass(hashedPass);
                         usuario.setRol(rs.getString("rol"));
                         usuario.setTelefono(rs.getString("telefono"));
+                        cn.activarPerfil(usuario.getRol());
                     }
                 }
             }
