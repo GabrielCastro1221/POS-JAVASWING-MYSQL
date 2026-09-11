@@ -48,4 +48,8 @@ public class ValidacionesTextField {
         return telefono.matches(regex);
     }
 
+    public boolean validarCategoria(String categoria) {
+        String regex = "^[A-Za-zÁÉÍÓÚáéíóúñÑ\\s]{3,}$";
+        return categoria != null && categoria.matches(regex);
+    }
 }

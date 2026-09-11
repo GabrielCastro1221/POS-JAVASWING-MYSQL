@@ -11,8 +11,10 @@ import model.ProductosDAO;
 import model.Venta;
 import model.VentaDAO;
 import model.Config;
+import config.Session;
 import model.ConfigDAO;
 import model.DetalleVenta;
+import model.ValidacionesTextField;
 import reports.TicketPDF;
 import reports.TicketPOS;
 
@@ -44,6 +46,10 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         txtIdClienteVenta.addActionListener(e -> cargarClientePorId());
         btnGenerarVenta.setCursor(new Cursor(Cursor.HAND_CURSOR));
         labelVendedor.setVisible(false);
+        if (Session.getUsuario() != null) {
+            labelVendedor.setText(Session.getUsuario().getNombre());
+
+        }
     }
 
     @Override
@@ -132,7 +138,7 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         roundedPanelGenerarVenta.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelGenerarVenta.setTopColor(new java.awt.Color(0, 153, 255));
 
-        btnGenerarVenta.setFont(new java.awt.Font("Caladea", 1, 16)); // NOI18N
+        btnGenerarVenta.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         btnGenerarVenta.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerarVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnGenerarVenta.setText("Generar Venta");
@@ -167,10 +173,10 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         lblTotalPagar.setBounds(780, 60, 150, 22);
 
         lblTotalVenta.setFont(new java.awt.Font("Caladea", 1, 20)); // NOI18N
-        lblTotalVenta.setForeground(new java.awt.Color(255, 255, 255));
+        lblTotalVenta.setForeground(new java.awt.Color(255, 255, 0));
         lblTotalVenta.setText("$ ----------");
         add(lblTotalVenta);
-        lblTotalVenta.setBounds(990, 60, 80, 23);
+        lblTotalVenta.setBounds(930, 50, 130, 40);
         add(txtTelClienteVenta);
         txtTelClienteVenta.setBounds(480, 30, 0, 0);
         add(txtCorreoClienteVenta);
@@ -217,15 +223,41 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private int registrarVenta() {
+        ValidacionesTextField val = new ValidacionesTextField();
+
+        String idStr = txtIdClienteVenta.getText().trim();
+        String nombre = txtNombreClienteVenta.getText().trim();
+        String telefono = txtTelClienteVenta.getText().trim();
+        String correo = txtCorreoClienteVenta.getText().trim();
+
+        if (!idStr.matches("\\d+")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El ID de cliente debe ser numérico");
+            return -1;
+        }
+
+        if (!val.validarNombre(nombre)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
+            return -1;
+        }
+
+        if (!val.validarCelularColombia(telefono)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido de 10 dígitos que empiece por 3");
+            return -1;
+        }
+
+        if (!val.validarCorreo(correo)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un correo válido");
+            return -1;
+        }
+
         try {
-            int clienteId = Integer.parseInt(txtIdClienteVenta.getText().trim());
-            String cliente = txtNombreClienteVenta.getText();
+            int clienteId = Integer.parseInt(idStr);
             String vendedor = labelVendedor.getText();
             double monto = panelVenta.getTotalPagar();
             java.sql.Timestamp fechaActual = new java.sql.Timestamp(System.currentTimeMillis());
 
             v.setCliente_id(clienteId);
-            v.setNombreCliente(cliente);
+            v.setNombreCliente(nombre);
             v.setNombreVendedor(vendedor);
             v.setTotal(monto);
             v.setFecha(fechaActual);

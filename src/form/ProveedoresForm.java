@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import model.Proveedores;
 import model.ProveedoresDAO;
+import model.ValidacionesTextField;
 
 public class ProveedoresForm extends javax.swing.JPanel {
 
@@ -264,16 +265,55 @@ public class ProveedoresForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDireccionProveedorActionPerformed
 
     private void btnCrearProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearProveedorMouseClicked
+        ValidacionesTextField val = new ValidacionesTextField();
+
+        String rucStr = txtRucProveedor.getText().trim();
+        String nombre = txtNombreProveedor.getText().trim();
+        String vendedor = txtVendedorProveedor.getText().trim();
+        String telefono = txtTelefonoProveedor.getText().trim();
+        String direccion = txtDireccionProveedor.getText().trim();
+        String razon = txtRazonProveedor.getText().trim();
+
+        if (!rucStr.matches("\\d{8,}")) {
+            JOptionPane.showMessageDialog(this, "El RUC/NIT debe ser numérico y tener al menos 8 dígitos");
+            return;
+        }
+
+        if (nombre.length() < 3) {
+            JOptionPane.showMessageDialog(this, "El nombre del proveedor debe tener al menos 3 caracteres");
+            return;
+        }
+
+        if (vendedor.length() < 3) {
+            JOptionPane.showMessageDialog(this, "El nombre del vendedor debe tener al menos 3 caracteres");
+            return;
+        }
+
+        if (!val.validarCelularColombia(telefono)) {
+            JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido de 10 dígitos que empiece por 3");
+            return;
+        }
+
+        if (direccion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La dirección no puede estar vacía");
+            return;
+        }
+
+        if (razon.length() < 5) {
+            JOptionPane.showMessageDialog(this, "La razón social debe tener al menos 5 caracteres");
+            return;
+        }
+
         try {
             Proveedores proveedor = new Proveedores();
-            ProveedoresDAO dao = new ProveedoresDAO();
-            proveedor.setRuc(Long.parseLong(txtRucProveedor.getText().trim()));
-            proveedor.setNombre(txtNombreProveedor.getText().trim());
-            proveedor.setVendedor(txtVendedorProveedor.getText().trim());
-            proveedor.setTelefono(txtTelefonoProveedor.getText().trim());
-            proveedor.setDireccion(txtDireccionProveedor.getText().trim());
-            proveedor.setRazon_social(txtRazonProveedor.getText().trim());
+            proveedor.setRuc(Long.parseLong(rucStr));
+            proveedor.setNombre(nombre);
+            proveedor.setVendedor(vendedor);
+            proveedor.setTelefono(telefono);
+            proveedor.setDireccion(direccion);
+            proveedor.setRazon_social(razon);
 
+            ProveedoresDAO dao = new ProveedoresDAO();
             if (dao.registrarProveedor(proveedor)) {
                 JOptionPane.showMessageDialog(this, "Proveedor registrado correctamente");
                 limpiarCampos();
@@ -284,6 +324,7 @@ public class ProveedoresForm extends javax.swing.JPanel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El RUC debe contener solo números", "Dato inválido", JOptionPane.WARNING_MESSAGE);
         }
+
     }//GEN-LAST:event_btnCrearProveedorMouseClicked
 
     private void btnCrearProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearProveedorKeyPressed

@@ -260,19 +260,52 @@ public class ProductosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPrecioNetoProductoActionPerformed
 
     private void btnCrearProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearProductoMouseClicked
-        ProductosDAO dao = new ProductosDAO();
+        String nombre = txtNombreProducto.getText().trim();
+        String stockStr = txtStockProducto.getText().trim();
+        String precioNetoStr = txtPrecioNetoProducto.getText().trim();
+        String precioBrutoStr = txtPrecioBrutoProducto.getText().trim();
 
-        Productos pro = new Productos();
-        pro.setCodigo("COD-" + System.currentTimeMillis());
-        pro.setNombre(txtNombreProducto.getText().trim());
-        pro.setStock(Integer.parseInt(txtStockProducto.getText().trim()));
-        pro.setPrecio_neto(Double.parseDouble(txtPrecioNetoProducto.getText().trim()));
-        pro.setPrecio_bruto(Double.parseDouble(txtPrecioBrutoProducto.getText().trim()));
+        if (nombre.length() < 3) {
+            JOptionPane.showMessageDialog(this, "El nombre del producto debe tener al menos 3 caracteres");
+            return;
+        }
+
+        if (!stockStr.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "El stock debe ser un número entero válido");
+            return;
+        }
+
+        if (!precioNetoStr.matches("\\d+(\\.\\d+)?")) {
+            JOptionPane.showMessageDialog(this, "El precio neto debe ser un número válido");
+            return;
+        }
+        if (!precioBrutoStr.matches("\\d+(\\.\\d+)?")) {
+            JOptionPane.showMessageDialog(this, "El precio bruto debe ser un número válido");
+            return;
+        }
+
+        double precioNeto = Double.parseDouble(precioNetoStr);
+        double precioBruto = Double.parseDouble(precioBrutoStr);
+        if (precioBruto < precioNeto) {
+            JOptionPane.showMessageDialog(this, "El precio bruto no puede ser menor al precio neto");
+            return;
+        }
 
         Proveedores proveedorSeleccionado = (Proveedores) cbxProveedorProducto.getSelectedItem();
-        pro.setProveedor_id(proveedorSeleccionado.getId());
-
         Categoria categoriaSeleccionada = (Categoria) cbxCategoriaProducto.getSelectedItem();
+        if (proveedorSeleccionado == null || categoriaSeleccionada == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un proveedor y una categoría");
+            return;
+        }
+
+        ProductosDAO dao = new ProductosDAO();
+        Productos pro = new Productos();
+        pro.setCodigo("COD-" + System.currentTimeMillis());
+        pro.setNombre(nombre);
+        pro.setStock(Integer.parseInt(stockStr));
+        pro.setPrecio_neto(precioNeto);
+        pro.setPrecio_bruto(precioBruto);
+        pro.setProveedor_id(proveedorSeleccionado.getId());
         pro.setCategoria_id(categoriaSeleccionada.getId());
 
         int idProducto = dao.registrarProducto(pro);
@@ -280,16 +313,13 @@ public class ProductosForm extends javax.swing.JPanel {
             for (String codigoBarra : codigoBarraPanel2.getCodigos()) {
                 dao.registrarCodigoBarra(codigoBarra, idProducto);
             }
-
             ((Producto) getParent()).cargarProductos();
             JOptionPane.showMessageDialog(this, "Producto registrado correctamente");
-
             limpiarCampos();
             codigoBarraPanel2.setCodigos(new ArrayList<>());
         } else {
             JOptionPane.showMessageDialog(this, "Error al registrar producto");
         }
-
     }//GEN-LAST:event_btnCrearProductoMouseClicked
 
     private void btnCrearProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearProductoKeyPressed

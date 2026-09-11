@@ -67,7 +67,7 @@ public class VentasForm extends javax.swing.JPanel {
         setLayout(null);
 
         lblPDF.setFont(new java.awt.Font("Caladea", 1, 18)); // NOI18N
-        lblPDF.setForeground(new java.awt.Color(255, 255, 255));
+        lblPDF.setForeground(new java.awt.Color(204, 204, 204));
         lblPDF.setText("Seleccione una fila para generar PDF de la venta");
         add(lblPDF);
         lblPDF.setBounds(200, 20, 400, 17);
@@ -75,7 +75,7 @@ public class VentasForm extends javax.swing.JPanel {
         roundedPanel1.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanel1.setTopColor(new java.awt.Color(0, 153, 255));
 
-        jLabel1.setFont(new java.awt.Font("Caladea", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Generar PDF");

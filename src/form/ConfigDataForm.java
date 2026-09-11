@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import model.ValidacionesTextField;
 
 public class ConfigDataForm extends javax.swing.JPanel {
 
@@ -325,13 +326,46 @@ public class ConfigDataForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarConfigKeyPressed
 
     private void btnCrearConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearConfigMouseClicked
+        ValidacionesTextField val = new ValidacionesTextField();
+
+        String nombre = txtNombreEmpresa.getText().trim();
+        String rucStr = txtRucEmpresa.getText().trim();
+        String telefono = txtTelefonoEmpresa.getText().trim();
+        String direccion = txtDireccionEmpresa.getText().trim();
+        String razon = txtRazonEmpresa.getText().trim();
+
+        if (!val.validarNombre(nombre)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
+            return;
+        }
+
+        if (!rucStr.matches("\\d{8,10}")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El RUC/NIT debe ser numérico y tener entre 8 y 10 dígitos");
+            return;
+        }
+
+        if (!val.validarCelularColombia(telefono)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido de 10 dígitos que empiece por 3");
+            return;
+        }
+
+        if (direccion.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La dirección no puede estar vacía");
+            return;
+        }
+
+        if (razon.length() < 5) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La razón social debe tener al menos 5 caracteres");
+            return;
+        }
+
         try {
             model.Config cfg = new model.Config();
-            cfg.setNombre(txtNombreEmpresa.getText().trim());
-            cfg.setRuc(Long.parseLong(txtRucEmpresa.getText().trim()));
-            cfg.setTelefono(txtTelefonoEmpresa.getText().trim());
-            cfg.setDireccion(txtDireccionEmpresa.getText().trim());
-            cfg.setRazon_social(txtRazonEmpresa.getText().trim());
+            cfg.setNombre(nombre);
+            cfg.setRuc(Long.parseLong(rucStr));
+            cfg.setTelefono(telefono);
+            cfg.setDireccion(direccion);
+            cfg.setRazon_social(razon);
             cfg.setFecha(new java.sql.Timestamp(System.currentTimeMillis()));
 
             model.ConfigDAO dao = new model.ConfigDAO();

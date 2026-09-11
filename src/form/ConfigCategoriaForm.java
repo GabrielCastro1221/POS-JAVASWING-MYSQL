@@ -9,6 +9,7 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import model.Categoria;
 import model.CategoriaDAO;
+import model.ValidacionesTextField;
 
 public class ConfigCategoriaForm extends javax.swing.JPanel {
 
@@ -24,7 +25,6 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
         btnCrearCategoria.setCursor(new Cursor(Cursor.HAND_CURSOR));
         txtIdCategoria.setVisible(false);
         cargarCategorias();
-
         tableCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -43,22 +43,18 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int arc = 20;
         RoundRectangle2D rounded = new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
-
         g2.setColor(new Color(255, 255, 255, 80));
         g2.draw(rounded);
         g2.dispose();
     }
 
     private void cargarCategorias() {
-        javax.swing.table.DefaultTableModel modelo
-                = (javax.swing.table.DefaultTableModel) tableCategoria.getModel();
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableCategoria.getModel();
         modelo.setRowCount(0);
-
         CategoriaDAO dao = new CategoriaDAO();
         for (Categoria cat : dao.listarCategorias()) {
             modelo.addRow(new Object[]{
@@ -201,12 +197,13 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCategoriaMouseClicked
+        ValidacionesTextField val = new ValidacionesTextField();
+        String nombreCategoria = txtCategoria.getText().trim();
+        if (!val.validarCategoria(nombreCategoria)) {
+            JOptionPane.showMessageDialog(this, "La categoría debe tener al menos 3 letras y no contener números");
+            return;
+        }
         try {
-            String nombreCategoria = txtCategoria.getText().trim();
-            if (nombreCategoria.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "El nombre de la categoría no puede estar vacío");
-                return;
-            }
             Categoria nuevo = new Categoria();
             nuevo.setNombre(nombreCategoria);
             CategoriaDAO cat = new CategoriaDAO();
@@ -220,7 +217,6 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-
         }
     }//GEN-LAST:event_btnCrearCategoriaMouseClicked
 
@@ -229,15 +225,17 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearCategoriaKeyPressed
 
     private void btnActualizarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarCategoriaMouseClicked
-
+        ValidacionesTextField val = new ValidacionesTextField();
+        String nombre = txtCategoria.getText().trim();
+        if (!val.validarCategoria(nombre)) {
+            JOptionPane.showMessageDialog(this, "La categoría debe tener al menos 3 letras y no contener números");
+            return;
+        }
         try {
             int id = Integer.parseInt(txtIdCategoria.getText());
-            String nombre = txtCategoria.getText().trim();
-
             Categoria cat = new Categoria();
             cat.setId(id);
             cat.setNombre(nombre);
-
             CategoriaDAO dao = new CategoriaDAO();
             if (dao.modificarCategoria(cat)) {
                 JOptionPane.showMessageDialog(this, "Categoría actualizada con éxito");
@@ -249,8 +247,6 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-
-
     }//GEN-LAST:event_btnActualizarCategoriaMouseClicked
 
     private void btnActualizarCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarCategoriaKeyPressed
@@ -258,11 +254,9 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarCategoriaKeyPressed
 
     private void btnEliminarCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarCategoriaMouseClicked
-
         try {
             int id = Integer.parseInt(txtIdCategoria.getText());
             int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar esta categoría?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-
             if (confirm == JOptionPane.YES_OPTION) {
                 CategoriaDAO dao = new CategoriaDAO();
                 if (dao.eliminarCategoria(id)) {
@@ -276,8 +270,6 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-
-
     }//GEN-LAST:event_btnEliminarCategoriaMouseClicked
 
     private void btnEliminarCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarCategoriaKeyPressed

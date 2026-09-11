@@ -9,6 +9,7 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import model.ClientesDAO;
 import model.Cliente;
+import model.ValidacionesTextField;
 
 public class ClientesForm extends javax.swing.JPanel {
 
@@ -197,12 +198,32 @@ public class ClientesForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearClienteMouseClicked
+        ValidacionesTextField val = new ValidacionesTextField();
+
+        String nombre = txtNombreCliente.getText().trim();
+        String correo = txtEmailCliente.getText().trim();
+        String telefono = txtTelefonoCliente.getText().trim();
+
+        if (!val.validarNombre(nombre)) {
+            JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
+            return;
+        }
+
+        if (!val.validarCorreo(correo)) {
+            JOptionPane.showMessageDialog(this, "Correo inválido");
+            return;
+        }
+
+        if (!val.validarCelularColombia(telefono)) {
+            JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido de 10 dígitos que empiece por 3");
+            return;
+        }
 
         try {
             Cliente nuevo = new Cliente();
-            nuevo.setNombre(txtNombreCliente.getText());
-            nuevo.setCorreo(txtEmailCliente.getText());
-            nuevo.setTelefono(txtTelefonoCliente.getText());
+            nuevo.setNombre(nombre);
+            nuevo.setCorreo(correo);
+            nuevo.setTelefono(telefono);
 
             ClientesDAO client = new ClientesDAO();
             if (client.RegistrarCliente(nuevo)) {
@@ -219,8 +240,6 @@ public class ClientesForm extends javax.swing.JPanel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido");
         }
-
-
     }//GEN-LAST:event_btnCrearClienteMouseClicked
 
     private void btnCrearClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearClienteKeyPressed
@@ -260,7 +279,7 @@ public class ClientesForm extends javax.swing.JPanel {
         try {
             int id = Integer.parseInt(txtIdCliente.getText());
             int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-            
+
             if (confirm == JOptionPane.YES_OPTION) {
                 if (client.EliminarCliente(id)) {
                     JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito");

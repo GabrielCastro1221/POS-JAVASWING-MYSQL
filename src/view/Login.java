@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Cursor;
 import model.AuthDAO;
+import model.ValidacionesTextField;
+import config.Session;
 
 public class Login extends javax.swing.JPanel {
 
@@ -82,19 +84,37 @@ public class Login extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLoginKeyPressed
 
     private void iniciarSesion() {
-        String correo = txtLoginEmail.getText();
+        ValidacionesTextField val = new ValidacionesTextField();
+
+        String correo = txtLoginEmail.getText().trim();
         String pass = new String(txtLoginPass.getPassword());
+
+        if (!val.validarCorreo(correo)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un correo válido", "Validación", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!val.validarPassword(pass)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos una mayúscula, una minúscula y un número", "Validación", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         model.Auth usuario = log.login(correo, pass);
 
         if (usuario != null) {
+
+            Session.setUsuario(usuario);
+
             System sys = new System();
             sys.setVisible(true);
 
-            java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
+            java.awt.Window window
+                    = javax.swing.SwingUtilities.getWindowAncestor(this);
+
             if (window != null) {
                 window.dispose();
             }
+
         } else {
             javax.swing.JOptionPane.showMessageDialog(
                     this,
@@ -104,6 +124,7 @@ public class Login extends javax.swing.JPanel {
             );
         }
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnLogin;
     private javax.swing.JLabel jLabel1;

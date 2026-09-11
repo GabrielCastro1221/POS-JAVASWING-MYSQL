@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import model.ValidacionesTextField;
 
 public class NuevaVentaForm extends javax.swing.JPanel {
 
@@ -20,6 +21,28 @@ public class NuevaVentaForm extends javax.swing.JPanel {
         setBackground(new Color(0, 0, 0));
         txtCodigoVentaProd.addActionListener(e -> cargarProductoPorCodigo());
         txtCantidadVentaProd.addActionListener(e -> agregarProductoATabla());
+        ValidacionesTextField val = new ValidacionesTextField();
+
+        txtCodigoVentaProd.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                val.numberKeyPress(evt); // ✅ solo números en código de barras
+            }
+        });
+
+        txtCantidadVentaProd.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                val.numberKeyPress(evt); // ✅ solo números en cantidad
+            }
+        });
+
+        txtPrecioVentaProd.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                val.numberDecimalKeyPress(evt, txtPrecioVentaProd); // ✅ admite decimales
+            }
+        });
     }
 
     @Override
@@ -57,9 +80,33 @@ public class NuevaVentaForm extends javax.swing.JPanel {
 
     private void agregarProductoATabla() {
         try {
-            int cantidad = Integer.parseInt(txtCantidadVentaProd.getText().trim());
-            int stock = Integer.parseInt(txtStockVentaProd.getText().trim());
-            double precioUnitario = Double.parseDouble(txtPrecioVentaProd.getText().trim());
+            String cantidadStr = txtCantidadVentaProd.getText().trim();
+            String stockStr = txtStockVentaProd.getText().trim();
+            String precioStr = txtPrecioVentaProd.getText().trim();
+
+            if (cantidadStr.isEmpty() || stockStr.isEmpty() || precioStr.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos");
+                return;
+            }
+
+            if (!cantidadStr.matches("\\d+")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "La cantidad debe ser un número válido");
+                return;
+            }
+
+            if (!stockStr.matches("\\d+")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El stock debe ser un número válido");
+                return;
+            }
+
+            if (!precioStr.matches("\\d+(\\.\\d+)?")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El precio debe ser un número válido");
+                return;
+            }
+
+            int cantidad = Integer.parseInt(cantidadStr);
+            int stock = Integer.parseInt(stockStr);
+            double precioUnitario = Double.parseDouble(precioStr);
 
             if (cantidad > stock) {
                 javax.swing.JOptionPane.showMessageDialog(this, "No hay suficiente stock disponible");
@@ -80,10 +127,12 @@ public class NuevaVentaForm extends javax.swing.JPanel {
                         stock
                 );
             }
+
             limpiarCamposVenta();
             productoSeleccionado = null;
+
         } catch (NumberFormatException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese una cantidad válida");
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos");
         }
     }
 

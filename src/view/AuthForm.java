@@ -20,6 +20,7 @@ public class AuthForm extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(0, 0, 0, 0));
         backgroundPanel.setOpaque(false);
         btnClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnMinimizarLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aplicarFormaRedondeada();
 
         addComponentListener(new ComponentAdapter() {
@@ -50,6 +51,13 @@ public class AuthForm extends javax.swing.JFrame {
                 requestFocusInWindow();
             }
         });
+
+        btnMinimizarLogin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setState(javax.swing.JFrame.ICONIFIED);
+            }
+        });
     }
 
     private void aplicarFormaRedondeada() {
@@ -66,6 +74,7 @@ public class AuthForm extends javax.swing.JFrame {
         btnClose = new components.Picture();
         banner = new view.Banner();
         login1 = new view.Login();
+        btnMinimizarLogin = new components.Picture();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -79,6 +88,10 @@ public class AuthForm extends javax.swing.JFrame {
         banner.setBounds(15, 15, 350, 580);
         backgroundPanel.add(login1);
         login1.setBounds(400, 110, 420, 350);
+
+        btnMinimizarLogin.setPath("/assets/minimizar.png");
+        backgroundPanel.add(btnMinimizarLogin);
+        btnMinimizarLogin.setBounds(790, 20, 30, 28);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,6 +117,7 @@ public class AuthForm extends javax.swing.JFrame {
     private components.RoundedPanel backgroundPanel;
     private view.Banner banner;
     private components.Picture btnClose;
+    private components.Picture btnMinimizarLogin;
     private view.Login login1;
     // End of variables declaration//GEN-END:variables
 }

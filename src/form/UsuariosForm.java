@@ -9,6 +9,7 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import model.Usuarios;
 import model.UsuariosDAO;
+import model.ValidacionesTextField;
 
 public class UsuariosForm extends javax.swing.JPanel {
 
@@ -218,25 +219,55 @@ public class UsuariosForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearUsuarioMouseClicked
+        ValidacionesTextField val = new ValidacionesTextField();
+
+        String nombre = txtNombreUsuario.getText().trim();
+        String correo = txtEmailUsuario.getText().trim();
+        String pass = new String(txtPassUsuario.getPassword());
+        String telefono = txtTelefonoUsuario.getText().trim();
+        String rol = cbxRolUsuario.getSelectedItem().toString();
+
+        if (!val.validarNombre(nombre)) {
+            JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
+            return;
+        }
+
+        if (!val.validarCorreo(correo)) {
+            JOptionPane.showMessageDialog(this, "Ingrese un correo válido");
+            return;
+        }
+
+        if (!val.validarPassword(pass)) {
+            JOptionPane.showMessageDialog(this, "La contraseña debe tener mayúscula, minúscula y número");
+            return;
+        }
+
+        if (!val.validarCelularColombia(telefono)) {
+            JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido de 10 dígitos que empiece por 3");
+            return;
+        }
+
+        if (rol == null || rol.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un rol de usuario");
+            return;
+        }
+
         UsuariosDAO dao = new UsuariosDAO();
         Usuarios u = new Usuarios();
-        u.setNombre(txtNombreUsuario.getText().trim());
-        u.setCorreo(txtEmailUsuario.getText().trim());
-        u.setPass(new String(txtPassUsuario.getPassword()));
-        u.setRol(cbxRolUsuario.getSelectedItem().toString());
-        u.setTelefono(txtTelefonoUsuario.getText().trim());
+        u.setNombre(nombre);
+        u.setCorreo(correo);
+        u.setPass(pass);
+        u.setRol(rol);
+        u.setTelefono(telefono);
+
         boolean registrado = dao.RegistrarUsuario(u);
         ((Usuario) getParent()).cargarUsuarios();
 
         if (registrado) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Usuario registrado correctamente");
-            txtNombreUsuario.setText("");
-            txtEmailUsuario.setText("");
-            txtPassUsuario.setText("");
-            txtTelefonoUsuario.setText("");
-            cbxRolUsuario.setSelectedIndex(0);
+            JOptionPane.showMessageDialog(this, "Usuario registrado correctamente");
+            limpiarCampos();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar usuario");
+            JOptionPane.showMessageDialog(this, "Error al registrar usuario");
         }
     }//GEN-LAST:event_btnCrearUsuarioMouseClicked
 
