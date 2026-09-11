@@ -14,6 +14,7 @@ import model.Config;
 import model.ConfigDAO;
 import model.DetalleVenta;
 import reports.TicketPDF;
+import reports.TicketPOS;
 
 public class NuevaVentaUserForm extends javax.swing.JPanel {
 
@@ -196,6 +197,7 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
                     cfg.getDireccion(),
                     cfg.getRazon_social()
             );
+            TicketPOS.imprimirTicket(idVenta);
         }
     }//GEN-LAST:event_btnGenerarVentaMouseClicked
 

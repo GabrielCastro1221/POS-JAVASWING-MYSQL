@@ -23,7 +23,13 @@ public class TicketPDF {
     public void GenerarPDF(int idVenta, String rucConfig, String nombreConfig, String telefonoConfig,
             String direccionConfig, String razonConfig) {
         try {
-            File file = new File("/home/DeathRaven1221/Documentos/pdf" + idVenta + ".pdf");
+            String rutaBase = "/home/DeathRaven1221/Documentos/Miscelanea_bellavista/pdf";
+            File dir = new File(rutaBase);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            File file = new File(dir, "venta" + idVenta + ".pdf");
             FileOutputStream archivo = new FileOutputStream(file);
             Document doc = new Document(PageSize.A4);
             PdfWriter.getInstance(doc, archivo);
@@ -32,7 +38,7 @@ public class TicketPDF {
             Font negrita = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
             Font normal = new Font(Font.FontFamily.HELVETICA, 11);
 
-            Image img = Image.getInstance("src/assets/Logo.png");
+            Image img = Image.getInstance("src/assets/Logo1.png");
             img.scaleToFit(60, 60);
 
             String fechaActual = new SimpleDateFormat("dd-MM-yyyy").format(new Date());

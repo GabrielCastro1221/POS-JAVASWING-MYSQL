@@ -72,4 +72,53 @@ public class VentaDAO {
             return false;
         }
     }
+
+    public Venta buscarVentaPorId(int idVenta) {
+        Venta v = null;
+        String sql = "SELECT id, cliente_id, vendedor, total, fecha FROM ventas WHERE id = ?";
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idVenta);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    v = new Venta();
+                    v.setId(rs.getInt("id"));
+                    v.setCliente_id(rs.getInt("cliente_id"));
+                    v.setNombreVendedor(rs.getString("vendedor"));
+                    v.setTotal(rs.getDouble("total"));
+                    v.setFecha(rs.getTimestamp("fecha"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en buscarVentaPorId: " + e.toString());
+        }
+        return v;
+    }
+
+    public List<DetalleVenta> listarDetalleVenta(int idVenta) {
+        List<DetalleVenta> lista = new ArrayList<>();
+        String sql = "SELECT d.id_venta, d.codigo_producto, d.cantidad, d.precio, p.nombre "
+                + "FROM detalle_ventas d "
+                + "JOIN productos p ON d.codigo_producto = p.id "
+                + "WHERE d.id_venta = ?";
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idVenta);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    DetalleVenta dv = new DetalleVenta();
+                    dv.setId_venta(rs.getInt("id_venta"));
+                    dv.setCodigo_producto(rs.getInt("codigo_producto"));
+                    dv.setCantidad(rs.getInt("cantidad"));
+                    dv.setPrecio(rs.getDouble("precio"));
+                    dv.setNombreProducto(rs.getString("nombre")); // nombre del producto
+                    lista.add(dv);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en listarDetalleVenta: " + e.toString());
+        }
+        return lista;
+    }
+
 }
