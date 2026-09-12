@@ -16,7 +16,6 @@ public class VentaDAO {
         int id = 0;
         String sql = "SELECT MAX(id) FROM ventas";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
             if (rs.next()) {
                 id = rs.getInt(1);
             }
@@ -29,12 +28,10 @@ public class VentaDAO {
     public boolean registrarVenta(Venta v) {
         String sql = "INSERT INTO ventas (cliente_id, vendedor, total, fecha) VALUES (?, ?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, v.getCliente_id());
             ps.setString(2, v.getNombreVendedor());
             ps.setDouble(3, v.getTotal());
             ps.setTimestamp(4, v.getFecha());
-
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -46,7 +43,6 @@ public class VentaDAO {
     public boolean registrarDetalleVenta(DetalleVenta dv) {
         String sql = "INSERT INTO detalle_ventas(codigo_producto, cantidad, precio, id_venta) VALUES (?, ?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, dv.getCodigo_producto());
             ps.setInt(2, dv.getCantidad());
             ps.setDouble(3, dv.getPrecio());
@@ -62,7 +58,6 @@ public class VentaDAO {
     public boolean actualizarStock(int cant, String cod) {
         String sql = "UPDATE productos SET stock = ? WHERE codigo = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, cant);
             ps.setString(2, cod);
             ps.executeUpdate();
@@ -77,7 +72,6 @@ public class VentaDAO {
         Venta v = null;
         String sql = "SELECT id, cliente_id, vendedor, total, fecha FROM ventas WHERE id = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, idVenta);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -102,7 +96,6 @@ public class VentaDAO {
                 + "JOIN productos p ON d.codigo_producto = p.id "
                 + "WHERE d.id_venta = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, idVenta);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -128,7 +121,6 @@ public class VentaDAO {
                 + "JOIN clientes c ON v.cliente_id = c.id "
                 + "ORDER BY v.id DESC";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 Venta v = new Venta();
                 v.setId(rs.getInt("id"));

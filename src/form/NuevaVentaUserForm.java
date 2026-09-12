@@ -48,7 +48,6 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         labelVendedor.setVisible(false);
         if (Session.getUsuario() != null) {
             labelVendedor.setText(Session.getUsuario().getNombre());
-
         }
     }
 
@@ -71,10 +70,8 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         }
         try {
             int idCliente = Integer.parseInt(idTexto);
-
             model.ClientesDAO dao = new model.ClientesDAO();
             model.Cliente cliente = dao.buscarClientePorId(idCliente);
-
             if (cliente != null) {
                 txtIdClienteVenta.setText(cliente.getId() + "");
                 txtNombreClienteVenta.setText(cliente.getNombre());
@@ -191,19 +188,12 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
         int idVenta = registrarVenta();
         ConfigDAO confDAO = new ConfigDAO();
         Config cfg = confDAO.obtenerUltimaConfig();
-
         if (idVenta > 0) {
             registrarDetalle(idVenta);
             TicketPDF ticket = new TicketPDF(panelVenta.getTableVenta(), panelVenta.getTotalPagar());
-            ticket.GenerarPDF(
-                    idVenta,
-                    String.valueOf(cfg.getRuc()),
-                    cfg.getNombre(),
-                    cfg.getTelefono(),
-                    cfg.getDireccion(),
-                    cfg.getRazon_social()
-            );
+            ticket.GenerarPDF(idVenta, String.valueOf(cfg.getRuc()), cfg.getNombre(), cfg.getTelefono(), cfg.getDireccion(), cfg.getRazon_social());
             TicketPOS.imprimirTicket(idVenta);
+            limpiarCamposCliente();
         }
     }//GEN-LAST:event_btnGenerarVentaMouseClicked
 
@@ -224,44 +214,36 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
 
     private int registrarVenta() {
         ValidacionesTextField val = new ValidacionesTextField();
-
         String idStr = txtIdClienteVenta.getText().trim();
         String nombre = txtNombreClienteVenta.getText().trim();
         String telefono = txtTelClienteVenta.getText().trim();
         String correo = txtCorreoClienteVenta.getText().trim();
-
         if (!idStr.matches("\\d+")) {
             javax.swing.JOptionPane.showMessageDialog(this, "El ID de cliente debe ser numérico");
             return -1;
         }
-
         if (!val.validarNombre(nombre)) {
             javax.swing.JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
             return -1;
         }
-
         if (!val.validarCelularColombia(telefono)) {
             javax.swing.JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido de 10 dígitos que empiece por 3");
             return -1;
         }
-
         if (!val.validarCorreo(correo)) {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un correo válido");
             return -1;
         }
-
         try {
             int clienteId = Integer.parseInt(idStr);
             String vendedor = labelVendedor.getText();
             double monto = panelVenta.getTotalPagar();
             java.sql.Timestamp fechaActual = new java.sql.Timestamp(System.currentTimeMillis());
-
             v.setCliente_id(clienteId);
             v.setNombreCliente(nombre);
             v.setNombreVendedor(vendedor);
             v.setTotal(monto);
             v.setFecha(fechaActual);
-
             if (vDAO.registrarVenta(v)) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Venta registrada con éxito");
                 return vDAO.idVenta();
@@ -278,18 +260,17 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
 
     private void registrarDetalle(int idVenta) {
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) panelVenta.getTableVenta().getModel();
-
         for (int i = 0; i < modelo.getRowCount(); i++) {
             int productoId = Integer.parseInt(modelo.getValueAt(i, 0).toString());
             int cantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
             double precio = Double.parseDouble(modelo.getValueAt(i, 4).toString());
-
             Dv.setCodigo_producto(productoId);
             Dv.setCantidad(cantidad);
             Dv.setPrecio(precio);
             Dv.setId_venta(idVenta);
-
             vDAO.registrarDetalleVenta(Dv);
+            proDAO.restarStock(productoId, cantidad);
+            proDAO.eliminarCodigosBarras(productoId, cantidad);
         }
     }
 

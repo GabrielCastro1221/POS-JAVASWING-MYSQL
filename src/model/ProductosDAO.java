@@ -185,4 +185,30 @@ public class ProductosDAO {
         }
         return lista;
     }
+
+    public boolean restarStock(int productoId, int cantidadVendida) {
+        String sql = "UPDATE productos SET stock = stock - ? WHERE id = ?";
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, cantidadVendida);
+            ps.setInt(2, productoId);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al restar stock: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean eliminarCodigosBarras(int productoId, int cantidadVendida) {
+        String sql = "DELETE FROM codigos_barras WHERE producto_id = ? LIMIT ?";
+        try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, productoId);
+            ps.setInt(2, cantidadVendida);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar códigos de barras: " + e.getMessage());
+            return false;
+        }
+    }
 }

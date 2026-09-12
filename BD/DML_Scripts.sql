@@ -150,6 +150,243 @@ INSERT INTO clientes (nombre, telefono, correo, fecha) VALUES
 ('Nicolás Pineda Gaviria', '3299012345', 'nicolas.pineda@gmail.com', DATE_SUB(NOW(), INTERVAL 90 DAY)),
 ('Alejandra Trujillo Escobar', '3300123456', 'alejandra.trujillo@gmail.com', DATE_SUB(NOW(), INTERVAL 60 DAY));
 
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000084', (SELECT id FROM productos WHERE codigo = 'BEB001')),
+('7501000000101', (SELECT id FROM productos WHERE codigo = 'BEB001')),
+('7501000000107', (SELECT id FROM productos WHERE codigo = 'BEB001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000204', (SELECT id FROM productos WHERE codigo = 'BEB002')),
+('7501000000242', (SELECT id FROM productos WHERE codigo = 'BEB002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000276', (SELECT id FROM productos WHERE codigo = 'BEB003')),
+('7501000000307', (SELECT id FROM productos WHERE codigo = 'BEB003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000327', (SELECT id FROM productos WHERE codigo = 'BEB004')),
+('7501000000424', (SELECT id FROM productos WHERE codigo = 'BEB004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000440', (SELECT id FROM productos WHERE codigo = 'BEB005')),
+('7501000000529', (SELECT id FROM productos WHERE codigo = 'BEB005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000626', (SELECT id FROM productos WHERE codigo = 'BEB006')),
+('7501000000698', (SELECT id FROM productos WHERE codigo = 'BEB006'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000712', (SELECT id FROM productos WHERE codigo = 'BEB007')),
+('7501000000790', (SELECT id FROM productos WHERE codigo = 'BEB007'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000847', (SELECT id FROM productos WHERE codigo = 'BEB008')),
+('7501000000854', (SELECT id FROM productos WHERE codigo = 'BEB008'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000860', (SELECT id FROM productos WHERE codigo = 'BEB009')),
+('7501000000874', (SELECT id FROM productos WHERE codigo = 'BEB009'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000000904', (SELECT id FROM productos WHERE codigo = 'BEB010')),
+('7501000000936', (SELECT id FROM productos WHERE codigo = 'BEB010'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001003', (SELECT id FROM productos WHERE codigo = 'SNK001')),
+('7501000001083', (SELECT id FROM productos WHERE codigo = 'SNK001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001089', (SELECT id FROM productos WHERE codigo = 'SNK002')),
+('7501000001163', (SELECT id FROM productos WHERE codigo = 'SNK002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001191', (SELECT id FROM productos WHERE codigo = 'SNK003')),
+('7501000001285', (SELECT id FROM productos WHERE codigo = 'SNK003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001371', (SELECT id FROM productos WHERE codigo = 'SNK004')),
+('7501000001463', (SELECT id FROM productos WHERE codigo = 'SNK004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001535', (SELECT id FROM productos WHERE codigo = 'SNK005')),
+('7501000001591', (SELECT id FROM productos WHERE codigo = 'SNK005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001622', (SELECT id FROM productos WHERE codigo = 'SNK006')),
+('7501000001682', (SELECT id FROM productos WHERE codigo = 'SNK006'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001760', (SELECT id FROM productos WHERE codigo = 'SNK007')),
+('7501000001798', (SELECT id FROM productos WHERE codigo = 'SNK007'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001801', (SELECT id FROM productos WHERE codigo = 'SNK008')),
+('7501000001824', (SELECT id FROM productos WHERE codigo = 'SNK008'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000001916', (SELECT id FROM productos WHERE codigo = 'ABA001')),
+('7501000001973', (SELECT id FROM productos WHERE codigo = 'ABA001')),
+('7501000002019', (SELECT id FROM productos WHERE codigo = 'ABA001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002057', (SELECT id FROM productos WHERE codigo = 'ABA002')),
+('7501000002079', (SELECT id FROM productos WHERE codigo = 'ABA002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002109', (SELECT id FROM productos WHERE codigo = 'ABA003')),
+('7501000002155', (SELECT id FROM productos WHERE codigo = 'ABA003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002171', (SELECT id FROM productos WHERE codigo = 'ABA004')),
+('7501000002185', (SELECT id FROM productos WHERE codigo = 'ABA004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002236', (SELECT id FROM productos WHERE codigo = 'ABA005')),
+('7501000002251', (SELECT id FROM productos WHERE codigo = 'ABA005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002299', (SELECT id FROM productos WHERE codigo = 'ABA006')),
+('7501000002346', (SELECT id FROM productos WHERE codigo = 'ABA006'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002426', (SELECT id FROM productos WHERE codigo = 'ABA007')),
+('7501000002462', (SELECT id FROM productos WHERE codigo = 'ABA007'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002470', (SELECT id FROM productos WHERE codigo = 'ABA008')),
+('7501000002566', (SELECT id FROM productos WHERE codigo = 'ABA008'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002627', (SELECT id FROM productos WHERE codigo = 'ABA009')),
+('7501000002698', (SELECT id FROM productos WHERE codigo = 'ABA009'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002716', (SELECT id FROM productos WHERE codigo = 'ABA010')),
+('7501000002767', (SELECT id FROM productos WHERE codigo = 'ABA010'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002780', (SELECT id FROM productos WHERE codigo = 'ASP001')),
+('7501000002853', (SELECT id FROM productos WHERE codigo = 'ASP001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000002893', (SELECT id FROM productos WHERE codigo = 'ASP002')),
+('7501000002976', (SELECT id FROM productos WHERE codigo = 'ASP002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003058', (SELECT id FROM productos WHERE codigo = 'ASP003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003107', (SELECT id FROM productos WHERE codigo = 'ASP004')),
+('7501000003183', (SELECT id FROM productos WHERE codigo = 'ASP004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003210', (SELECT id FROM productos WHERE codigo = 'ASP005')),
+('7501000003303', (SELECT id FROM productos WHERE codigo = 'ASP005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003314', (SELECT id FROM productos WHERE codigo = 'ASP006')),
+('7501000003322', (SELECT id FROM productos WHERE codigo = 'ASP006'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003409', (SELECT id FROM productos WHERE codigo = 'ASP007')),
+('7501000003441', (SELECT id FROM productos WHERE codigo = 'ASP007'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003481', (SELECT id FROM productos WHERE codigo = 'ASP008')),
+('7501000003494', (SELECT id FROM productos WHERE codigo = 'ASP008'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003526', (SELECT id FROM productos WHERE codigo = 'ASH001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003541', (SELECT id FROM productos WHERE codigo = 'ASH002')),
+('7501000003592', (SELECT id FROM productos WHERE codigo = 'ASH002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003630', (SELECT id FROM productos WHERE codigo = 'ASH003')),
+('7501000003691', (SELECT id FROM productos WHERE codigo = 'ASH003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003775', (SELECT id FROM productos WHERE codigo = 'ASH004')),
+('7501000003824', (SELECT id FROM productos WHERE codigo = 'ASH004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003847', (SELECT id FROM productos WHERE codigo = 'ASH005')),
+('7501000003897', (SELECT id FROM productos WHERE codigo = 'ASH005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000003945', (SELECT id FROM productos WHERE codigo = 'ASH006')),
+('7501000003974', (SELECT id FROM productos WHERE codigo = 'ASH006'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000004062', (SELECT id FROM productos WHERE codigo = 'ASH007')),
+('7501000004099', (SELECT id FROM productos WHERE codigo = 'ASH007'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000004191', (SELECT id FROM productos WHERE codigo = 'DUL001')),
+('7501000004281', (SELECT id FROM productos WHERE codigo = 'DUL001')),
+('7501000004366', (SELECT id FROM productos WHERE codigo = 'DUL001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000004378', (SELECT id FROM productos WHERE codigo = 'DUL002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000004458', (SELECT id FROM productos WHERE codigo = 'DUL003')),
+('7501000004542', (SELECT id FROM productos WHERE codigo = 'DUL003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000004566', (SELECT id FROM productos WHERE codigo = 'DUL004')),
+('7501000004637', (SELECT id FROM productos WHERE codigo = 'DUL004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000004733', (SELECT id FROM productos WHERE codigo = 'DUL005')),
+('7501000004767', (SELECT id FROM productos WHERE codigo = 'DUL005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000004790', (SELECT id FROM productos WHERE codigo = 'DUL006')),
+('7501000004852', (SELECT id FROM productos WHERE codigo = 'DUL006'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000004903', (SELECT id FROM productos WHERE codigo = 'DUL007')),
+('7501000004940', (SELECT id FROM productos WHERE codigo = 'DUL007'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005024', (SELECT id FROM productos WHERE codigo = 'DUL008')),
+('7501000005115', (SELECT id FROM productos WHERE codigo = 'DUL008'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005189', (SELECT id FROM productos WHERE codigo = 'LAC001')),
+('7501000005220', (SELECT id FROM productos WHERE codigo = 'LAC001')),
+('7501000005310', (SELECT id FROM productos WHERE codigo = 'LAC001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005354', (SELECT id FROM productos WHERE codigo = 'LAC002')),
+('7501000005364', (SELECT id FROM productos WHERE codigo = 'LAC002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005396', (SELECT id FROM productos WHERE codigo = 'LAC003')),
+('7501000005403', (SELECT id FROM productos WHERE codigo = 'LAC003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005446', (SELECT id FROM productos WHERE codigo = 'LAC004')),
+('7501000005500', (SELECT id FROM productos WHERE codigo = 'LAC004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005537', (SELECT id FROM productos WHERE codigo = 'LAC005')),
+('7501000005548', (SELECT id FROM productos WHERE codigo = 'LAC005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005578', (SELECT id FROM productos WHERE codigo = 'LAC006')),
+('7501000005653', (SELECT id FROM productos WHERE codigo = 'LAC006'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005747', (SELECT id FROM productos WHERE codigo = 'LAC007')),
+('7501000005790', (SELECT id FROM productos WHERE codigo = 'LAC007'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005820', (SELECT id FROM productos WHERE codigo = 'PAN001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000005906', (SELECT id FROM productos WHERE codigo = 'PAN002')),
+('7501000005972', (SELECT id FROM productos WHERE codigo = 'PAN002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006025', (SELECT id FROM productos WHERE codigo = 'PAN003')),
+('7501000006110', (SELECT id FROM productos WHERE codigo = 'PAN003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006171', (SELECT id FROM productos WHERE codigo = 'PAN004')),
+('7501000006192', (SELECT id FROM productos WHERE codigo = 'PAN004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006228', (SELECT id FROM productos WHERE codigo = 'PAN005')),
+('7501000006248', (SELECT id FROM productos WHERE codigo = 'PAN005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006282', (SELECT id FROM productos WHERE codigo = 'PAN006')),
+('7501000006356', (SELECT id FROM productos WHERE codigo = 'PAN006'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006427', (SELECT id FROM productos WHERE codigo = 'PAP001')),
+('7501000006463', (SELECT id FROM productos WHERE codigo = 'PAP001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006540', (SELECT id FROM productos WHERE codigo = 'PAP002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006597', (SELECT id FROM productos WHERE codigo = 'PAP003')),
+('7501000006674', (SELECT id FROM productos WHERE codigo = 'PAP003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006728', (SELECT id FROM productos WHERE codigo = 'PAP004')),
+('7501000006777', (SELECT id FROM productos WHERE codigo = 'PAP004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006808', (SELECT id FROM productos WHERE codigo = 'PAP005')),
+('7501000006828', (SELECT id FROM productos WHERE codigo = 'PAP005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006896', (SELECT id FROM productos WHERE codigo = 'PAP006')),
+('7501000006962', (SELECT id FROM productos WHERE codigo = 'PAP006'));
+
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000006976', (SELECT id FROM productos WHERE codigo = 'CYL001')),
+('7501000006985', (SELECT id FROM productos WHERE codigo = 'CYL001')),
+('7501000007002', (SELECT id FROM productos WHERE codigo = 'CYL001'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000007024', (SELECT id FROM productos WHERE codigo = 'CYL002')),
+('7501000007107', (SELECT id FROM productos WHERE codigo = 'CYL002'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000007130', (SELECT id FROM productos WHERE codigo = 'CYL003')),
+('7501000007220', (SELECT id FROM productos WHERE codigo = 'CYL003'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000007277', (SELECT id FROM productos WHERE codigo = 'CYL004')),
+('7501000007356', (SELECT id FROM productos WHERE codigo = 'CYL004'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000007367', (SELECT id FROM productos WHERE codigo = 'CYL005')),
+('7501000007419', (SELECT id FROM productos WHERE codigo = 'CYL005'));
+INSERT INTO codigos_barras (codigo_barra, producto_id) VALUES
+('7501000007470', (SELECT id FROM productos WHERE codigo = 'CYL006')),
+('7501000007549', (SELECT id FROM productos WHERE codigo = 'CYL006'));
 
 DROP PROCEDURE IF EXISTS sp_generar_ventas;
 
@@ -161,7 +398,7 @@ BEGIN
     DECLARE j INT DEFAULT 0;
     DECLARE v_fecha DATETIME;
     DECLARE v_cliente INT UNSIGNED;
-    DECLARE v_vendedor INT UNSIGNED;
+    DECLARE v_vendedor VARCHAR(100);
     DECLARE v_venta_id INT UNSIGNED;
     DECLARE v_total DECIMAL(10,2);
     DECLARE v_lineas INT;
@@ -179,14 +416,13 @@ BEGIN
             SELECT id INTO v_cliente FROM clientes ORDER BY RAND() LIMIT 1;
         END IF;
 
-        SET v_vendedor = NULL;
-        SELECT id INTO v_vendedor FROM usuarios ORDER BY RAND() LIMIT 1;
+        SET v_vendedor = 'Mostrador';
+        SELECT nombre INTO v_vendedor FROM usuarios ORDER BY RAND() LIMIT 1;
 
         SET v_total = 0;
-        INSERT INTO ventas (cliente_id, vendedor_id, total, fecha) VALUES (v_cliente, v_vendedor, 0, v_fecha);
+        INSERT INTO ventas (cliente_id, vendedor, total, fecha) VALUES (v_cliente, v_vendedor, 0, v_fecha);
         SET v_venta_id = LAST_INSERT_ID();
 
-        -- Entre 1 y 4 líneas por venta, con boost en diciembre (temporada alta)
         SET v_lineas = 1 + FLOOR(RAND() * 4);
         IF v_mes = 12 THEN
             SET v_lineas = v_lineas + FLOOR(RAND() * 3);
@@ -223,6 +459,15 @@ DROP PROCEDURE IF EXISTS sp_generar_ventas;
 SELECT 'categorias' AS tabla, COUNT(*) AS registros FROM categorias
 UNION ALL SELECT 'proveedores', COUNT(*) FROM proveedores
 UNION ALL SELECT 'productos', COUNT(*) FROM productos
+UNION ALL SELECT 'codigos_barras', COUNT(*) FROM codigos_barras
 UNION ALL SELECT 'clientes', COUNT(*) FROM clientes
 UNION ALL SELECT 'ventas', COUNT(*) FROM ventas
 UNION ALL SELECT 'detalle_ventas', COUNT(*) FROM detalle_ventas;
+
+SELECT p.codigo, p.nombre, COUNT(cb.id) AS cantidad_codigos
+FROM productos p
+JOIN codigos_barras cb ON cb.producto_id = p.id
+GROUP BY p.id, p.codigo, p.nombre
+HAVING cantidad_codigos > 1
+ORDER BY cantidad_codigos DESC
+LIMIT 15;
