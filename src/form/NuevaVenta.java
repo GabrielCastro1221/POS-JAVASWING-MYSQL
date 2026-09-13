@@ -16,7 +16,6 @@ public class NuevaVenta extends javax.swing.JPanel {
     public NuevaVenta() {
         initComponents();
         setOpaque(false);
-
         tableVenta.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{"ID", "CODIGO", "NOMBRE", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"}
@@ -32,13 +31,11 @@ public class NuevaVenta extends javax.swing.JPanel {
     public void agregarProductoATabla(int productoId, String codigo, String nombre, int cantidad, double precioUnitario, double subtotal, int stock) {
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableVenta.getModel();
         boolean encontrado = false;
-
         for (int i = 0; i < modelo.getRowCount(); i++) {
             int idTabla = (int) modelo.getValueAt(i, 0);
             if (idTabla == productoId) {
                 int cantidadExistente = (int) modelo.getValueAt(i, 3);
                 int nuevaCantidad = cantidadExistente + cantidad;
-
                 if (nuevaCantidad > stock) {
                     javax.swing.JOptionPane.showMessageDialog(this, "No hay suficiente stock disponible");
                     return;
@@ -49,11 +46,9 @@ public class NuevaVenta extends javax.swing.JPanel {
                 break;
             }
         }
-
         if (!encontrado) {
             modelo.insertRow(0, new Object[]{productoId, codigo, nombre, cantidad, precioUnitario, subtotal});
         }
-
         calcularTotalVenta();
     }
 

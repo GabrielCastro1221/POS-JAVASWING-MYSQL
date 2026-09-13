@@ -270,7 +270,6 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
             Dv.setId_venta(idVenta);
             vDAO.registrarDetalleVenta(Dv);
             proDAO.restarStock(productoId, cantidad);
-            proDAO.eliminarCodigosBarras(productoId, cantidad);
         }
     }
 

@@ -34,16 +34,12 @@ public class System extends javax.swing.JFrame implements SelectOption {
     private void init() {
         setBackground(new Color(0, 0, 0, 0));
         getContentPane().setBackground(new Color(0, 0, 0, 0));
-
         backPanel.setOpaque(false);
         backPanel.setBackground(new Color(0, 0, 0, 0));
-
         jPanel1.setOpaque(false);
         jPanel1.setBackground(new Color(0, 0, 0, 0));
-
         jPanel2.setOpaque(false);
         jPanel2.setBackground(new Color(0, 0, 0, 0));
-
         aplicarFormaRedondeada();
 
         addComponentListener(new ComponentAdapter() {
@@ -171,7 +167,7 @@ public class System extends javax.swing.JFrame implements SelectOption {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCloseSysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseSysMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnCloseSysMouseClicked
 
     public static void main(String args[]) {

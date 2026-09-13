@@ -58,23 +58,31 @@ public class NuevaVentaForm extends javax.swing.JPanel {
     }
 
     private void cargarProductoPorCodigo() {
-        String codigoBarra = txtCodigoVentaProd.getText().trim();
-        if (codigoBarra.isEmpty()) {
-            return;
-        }
-
-        model.ProductosDAO dao = new model.ProductosDAO();
-        productoSeleccionado = dao.buscarProductoPorCodigoBarra(codigoBarra);
-        if (productoSeleccionado != null) {
-            txtNombreVentaProd.setText(productoSeleccionado.getNombre());
-            txtStockVentaProd.setText(String.valueOf(productoSeleccionado.getStock()));
-            txtPrecioVentaProd.setText(String.valueOf(productoSeleccionado.getPrecio_bruto()));
-            txtCantidadVentaProd.setText("1");
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Producto no encontrado");
-            limpiarCamposVenta();
-        }
+    String codigo = txtCodigoVentaProd.getText().trim();
+    if (codigo.isEmpty()) {
+        return;
     }
+
+    model.ProductosDAO dao = new model.ProductosDAO();
+
+    // 1. Intenta primero como código de barras (lector físico, cualquiera de los varios códigos del producto)
+    productoSeleccionado = dao.buscarProductoPorCodigoBarra(codigo);
+
+    // 2. Si no lo encontró, intenta como código corto del producto (ej: BEB001, tecleado a mano)
+    if (productoSeleccionado == null) {
+        productoSeleccionado = dao.buscarProd(codigo);
+    }
+
+    if (productoSeleccionado != null) {
+        txtNombreVentaProd.setText(productoSeleccionado.getNombre());
+        txtStockVentaProd.setText(String.valueOf(productoSeleccionado.getStock()));
+        txtPrecioVentaProd.setText(String.valueOf(productoSeleccionado.getPrecio_bruto()));
+        txtCantidadVentaProd.setText("1");
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "Producto no encontrado");
+        limpiarCamposVenta();
+    }
+}
 
     private void agregarProductoATabla() {
         try {

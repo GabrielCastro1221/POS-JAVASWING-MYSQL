@@ -35,12 +35,10 @@ public class ClientesForm extends javax.swing.JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int arc = 20;
         RoundRectangle2D rounded = new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
-
         g2.setColor(new Color(255, 255, 255, 80));
         g2.draw(rounded);
         g2.dispose();
@@ -199,26 +197,21 @@ public class ClientesForm extends javax.swing.JPanel {
 
     private void btnCrearClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearClienteMouseClicked
         ValidacionesTextField val = new ValidacionesTextField();
-
         String nombre = txtNombreCliente.getText().trim();
         String correo = txtEmailCliente.getText().trim();
         String telefono = txtTelefonoCliente.getText().trim();
-
         if (!val.validarNombre(nombre)) {
             JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
             return;
         }
-
         if (!val.validarCorreo(correo)) {
             JOptionPane.showMessageDialog(this, "Correo inválido");
             return;
         }
-
         if (!val.validarCelularColombia(telefono)) {
             JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido de 10 dígitos que empiece por 3");
             return;
         }
-
         try {
             Cliente nuevo = new Cliente();
             nuevo.setNombre(nombre);
@@ -247,7 +240,6 @@ public class ClientesForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearClienteKeyPressed
 
     private void btnActualizarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarClienteMouseClicked
-
         try {
             Cliente c = new Cliente();
             c.setId(Integer.parseInt(txtIdCliente.getText()));
@@ -275,7 +267,10 @@ public class ClientesForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarClienteKeyPressed
 
     private void btnEliminarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarClienteMouseClicked
-
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para eliminar clientes");
+            return;
+        }
         try {
             int id = Integer.parseInt(txtIdCliente.getText());
             int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
@@ -324,7 +319,6 @@ public class ClientesForm extends javax.swing.JPanel {
         txtNombreCliente.setText("");
         txtEmailCliente.setText("");
         txtTelefonoCliente.setText("");
-
         txtNombreCliente.requestFocus();
     }
 }

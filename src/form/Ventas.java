@@ -1,5 +1,6 @@
 package form;
 
+import components.ButtonRendererEditor;
 import java.util.List;
 import model.Venta;
 import model.VentaDAO;
@@ -11,6 +12,9 @@ public class Ventas extends javax.swing.JPanel {
         setOpaque(false);
         ventasForm1.setTableVentas(tableVentas);
         cargarVentas();
+        tableVentas.getColumn("DETALLE VENTA").setCellRenderer(new ButtonRendererEditor(tableVentas));
+        tableVentas.getColumn("DETALLE VENTA").setCellEditor(new ButtonRendererEditor(tableVentas));
+
     }
 
     private void cargarVentas() {
@@ -26,7 +30,8 @@ public class Ventas extends javax.swing.JPanel {
                 v.getNombreCliente(),
                 v.getNombreVendedor(),
                 String.format("%.2f", v.getTotal()),
-                v.getFecha()
+                v.getFecha(),
+                "Detalle"
             });
         }
     }
@@ -46,7 +51,7 @@ public class Ventas extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID", "CLIENTE", "VENDEDOR", "TOTAL", "FECHA"
+                "ID", "CLIENTE", "VENDEDOR", "TOTAL", "FECHA", "DETALLE VENTA"
             }
         ));
         jScrollPane1.setViewportView(tableVentas);

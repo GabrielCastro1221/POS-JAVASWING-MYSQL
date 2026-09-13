@@ -197,6 +197,10 @@ public class ConfigCategoriaForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearCategoriaMouseClicked
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para crear categorias");
+            return;
+        }
         ValidacionesTextField val = new ValidacionesTextField();
         String nombreCategoria = txtCategoria.getText().trim();
         if (!val.validarCategoria(nombreCategoria)) {

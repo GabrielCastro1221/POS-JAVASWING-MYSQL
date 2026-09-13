@@ -112,3 +112,89 @@ proc_anular: BEGIN
 END$$
 
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_registrar_devolucion;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_registrar_devolucion(
+    IN  p_venta_id  INT UNSIGNED,
+    IN  p_items     JSON,
+    OUT p_mensaje   VARCHAR(255)
+)
+proc_devolucion: BEGIN
+    DECLARE v_devolucion_id     INT UNSIGNED;
+    DECLARE v_cantidad_items    INT;
+    DECLARE v_idx               INT DEFAULT 0;
+    DECLARE v_producto_id       INT UNSIGNED;
+    DECLARE v_cantidad_devuelta INT UNSIGNED;
+    DECLARE v_cantidad_vendida  INT UNSIGNED;
+    DECLARE v_precio            DECIMAL(10,2);
+    DECLARE v_detalle_id        INT UNSIGNED;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        GET DIAGNOSTICS CONDITION 1 p_mensaje = MESSAGE_TEXT;
+    END;
+
+    START TRANSACTION;
+
+    IF NOT EXISTS (SELECT 1 FROM ventas WHERE id = p_venta_id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La venta no existe';
+    END IF;
+
+    INSERT INTO devoluciones (id_venta, fecha) VALUES (p_venta_id, NOW());
+    SET v_devolucion_id = LAST_INSERT_ID();
+
+    SET v_cantidad_items = JSON_LENGTH(p_items);
+    SET v_idx = 0;
+
+    WHILE v_idx < v_cantidad_items DO
+        SET v_producto_id       = JSON_UNQUOTE(JSON_EXTRACT(p_items, CONCAT('$[', v_idx, '].producto_id')));
+        SET v_cantidad_devuelta = JSON_UNQUOTE(JSON_EXTRACT(p_items, CONCAT('$[', v_idx, '].cantidad')));
+
+        SET v_detalle_id = NULL;
+
+        SELECT id, cantidad, precio INTO v_detalle_id, v_cantidad_vendida, v_precio
+        FROM detalle_ventas
+        WHERE id_venta = p_venta_id AND codigo_producto = v_producto_id
+        FOR UPDATE;
+
+        IF v_detalle_id IS NULL THEN
+            SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT = 'Ese producto no pertenece a esta venta';
+        END IF;
+
+        IF v_cantidad_devuelta > v_cantidad_vendida THEN
+            SIGNAL SQLSTATE '45000'
+                SET MESSAGE_TEXT = 'No puedes devolver más unidades de las que se vendieron';
+        END IF;
+
+        INSERT INTO detalle_devolucion (id_devolucion, producto_id, cantidad)
+        VALUES (v_devolucion_id, v_producto_id, v_cantidad_devuelta);
+
+        UPDATE productos
+        SET stock = stock + v_cantidad_devuelta
+        WHERE id = v_producto_id;
+
+        IF v_cantidad_devuelta = v_cantidad_vendida THEN
+            DELETE FROM detalle_ventas WHERE id = v_detalle_id;
+        ELSE
+            UPDATE detalle_ventas
+            SET cantidad = cantidad - v_cantidad_devuelta
+            WHERE id = v_detalle_id;
+        END IF;
+
+        UPDATE ventas
+        SET total = total - (v_precio * v_cantidad_devuelta)
+        WHERE id = p_venta_id;
+
+        SET v_idx = v_idx + 1;
+    END WHILE;
+
+    COMMIT;
+    SET p_mensaje = 'Devolución registrada correctamente';
+END$$
+
+DELIMITER ;

@@ -22,7 +22,9 @@ public class Conexion {
 
     private Conexion() {
         Enviroment env = Enviroment.getInstancia();
-        url = "jdbc:mysql://" + env.get("DB_HOST") + ":" + env.get("DB_PORT") + "/" + env.get("DB_NAME") + "?serverTimezone=" + env.get("DB_TIMEZONE");
+        url = "jdbc:mysql://" + env.get("DB_HOST") + ":" + env.get("DB_PORT") + "/" + env.get("DB_NAME")
+                + "?serverTimezone=" + env.get("DB_TIMEZONE")
+                + "&noAccessToProcedureBodies=true";
         usuarioLogin = env.get("DB_USER_LOGIN");
         claveLogin = env.get("DB_PASS_LOGIN");
         usuarioAdmin = env.get("DB_USER_ADMIN");

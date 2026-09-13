@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
 import model.ValidacionesTextField;
 
 public class ConfigDataForm extends javax.swing.JPanel {
@@ -297,6 +298,10 @@ public class ConfigDataForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDireccionEmpresaActionPerformed
 
     private void btnActualizarConfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarConfigMouseClicked
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para actualizar los datos de la empresa");
+            return;
+        }
         try {
             model.Config cfg = new model.Config();
             cfg.setId(Integer.parseInt(txtIdConfig.getText()));

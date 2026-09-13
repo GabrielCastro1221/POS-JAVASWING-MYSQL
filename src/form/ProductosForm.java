@@ -260,6 +260,10 @@ public class ProductosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPrecioNetoProductoActionPerformed
 
     private void btnCrearProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearProductoMouseClicked
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para agregar productos al inventario");
+            return;
+        }
         String nombre = txtNombreProducto.getText().trim();
         String stockStr = txtStockProducto.getText().trim();
         String precioNetoStr = txtPrecioNetoProducto.getText().trim();
@@ -327,6 +331,10 @@ public class ProductosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearProductoKeyPressed
 
     private void btnActualizarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarProductoMouseClicked
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para actualizar el inventario");
+            return;
+        }
         try {
             Productos p = new Productos();
             p.setId(Integer.parseInt(txtIdProducto.getText()));
@@ -367,6 +375,10 @@ public class ProductosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarProductoKeyPressed
 
     private void btnEliminarProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarProductoMouseClicked
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para eliminar productos del inventario");
+            return;
+        }
         try {
             int id = Integer.parseInt(txtIdProducto.getText());
             int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este producto?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);

@@ -34,15 +34,12 @@ public class UsuariosForm extends javax.swing.JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
         int arc = 20;
         RoundRectangle2D rounded = new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
         g2.setColor(new Color(255, 255, 255, 80));
         g2.draw(rounded);
-
         g2.dispose();
     }
 
@@ -219,39 +216,36 @@ public class UsuariosForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearUsuarioMouseClicked
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para registrar usuarios en la plataforma");
+            return;
+        }
         ValidacionesTextField val = new ValidacionesTextField();
-
         String nombre = txtNombreUsuario.getText().trim();
         String correo = txtEmailUsuario.getText().trim();
         String pass = new String(txtPassUsuario.getPassword());
         String telefono = txtTelefonoUsuario.getText().trim();
         String rol = cbxRolUsuario.getSelectedItem().toString();
-
         if (!val.validarNombre(nombre)) {
             JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
             return;
         }
-
         if (!val.validarCorreo(correo)) {
             JOptionPane.showMessageDialog(this, "Ingrese un correo válido");
             return;
         }
-
         if (!val.validarPassword(pass)) {
             JOptionPane.showMessageDialog(this, "La contraseña debe tener mayúscula, minúscula y número");
             return;
         }
-
         if (!val.validarCelularColombia(telefono)) {
             JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido de 10 dígitos que empiece por 3");
             return;
         }
-
         if (rol == null || rol.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un rol de usuario");
             return;
         }
-
         UsuariosDAO dao = new UsuariosDAO();
         Usuarios u = new Usuarios();
         u.setNombre(nombre);
@@ -259,10 +253,8 @@ public class UsuariosForm extends javax.swing.JPanel {
         u.setPass(pass);
         u.setRol(rol);
         u.setTelefono(telefono);
-
         boolean registrado = dao.RegistrarUsuario(u);
         ((Usuario) getParent()).cargarUsuarios();
-
         if (registrado) {
             JOptionPane.showMessageDialog(this, "Usuario registrado correctamente");
             limpiarCampos();
@@ -276,7 +268,10 @@ public class UsuariosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCrearUsuarioKeyPressed
 
     private void btnActualizarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarUsuarioMouseClicked
-
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para actualizar usuarios de plataforma");
+            return;
+        }
         try {
             Usuarios u = new Usuarios();
             u.setId(Integer.parseInt(txtIdUsuario.getText()));
@@ -285,7 +280,6 @@ public class UsuariosForm extends javax.swing.JPanel {
             u.setPass(new String(txtPassUsuario.getPassword()));
             u.setRol(cbxRolUsuario.getSelectedItem().toString());
             u.setTelefono(txtTelefonoUsuario.getText().trim());
-
             UsuariosDAO dao = new UsuariosDAO();
             if (dao.ModificarUsuario(u)) {
                 JOptionPane.showMessageDialog(this, "Usuario actualizado correctamente");
@@ -297,8 +291,6 @@ public class UsuariosForm extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-
-
     }//GEN-LAST:event_btnActualizarUsuarioMouseClicked
 
     private void btnActualizarUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarUsuarioKeyPressed
@@ -306,14 +298,13 @@ public class UsuariosForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarUsuarioKeyPressed
 
     private void btnEliminarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioMouseClicked
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para eliminar usuarios de plataforma");
+            return;
+        }
         try {
             int id = Integer.parseInt(txtIdUsuario.getText());
-
-            int confirm = JOptionPane.showConfirmDialog(this,
-                    "¿Seguro que deseas eliminar este usuario?",
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION);
-
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este usuario?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
                 UsuariosDAO dao = new UsuariosDAO();
                 if (dao.EliminarUsuario(id)) {
@@ -362,8 +353,6 @@ public class UsuariosForm extends javax.swing.JPanel {
         txtPassUsuario.setText("");
         txtTelefonoUsuario.setText("");
         cbxRolUsuario.setSelectedIndex(0);
-
         txtNombreUsuario.requestFocus();
     }
-
 }

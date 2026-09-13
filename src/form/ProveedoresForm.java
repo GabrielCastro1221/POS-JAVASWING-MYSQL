@@ -360,6 +360,10 @@ public class ProveedoresForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnActualizarProveedorKeyPressed
 
     private void btnEliminarProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarProveedorMouseClicked
+        if (!"admin".equalsIgnoreCase(config.Session.getUsuario().getRol())) {
+            JOptionPane.showMessageDialog(this, "No tienes permiso para eliminar proveedores");
+            return;
+        }
         try {
             int id = Integer.parseInt(txtIdProveedor.getText());
             int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este proveedor?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);

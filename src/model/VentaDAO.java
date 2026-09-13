@@ -1,16 +1,33 @@
 package model;
 
 import config.Conexion;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import java.util.ArrayList;
 
 public class VentaDAO {
 
     private final Conexion cn = Conexion.getInstancia();
+
+    public String registrarDevolucion(int ventaId, int productoId, int cantidad) {
+        String sql = "{CALL sp_registrar_devolucion(?, ?, ?)}";
+        String json = String.format("[{\"producto_id\": %d, \"cantidad\": %d}]", productoId, cantidad);
+        try (Connection con = cn.getConnection(); CallableStatement cs = con.prepareCall(sql)) {
+            cs.setInt(1, ventaId);
+            cs.setString(2, json);
+            cs.registerOutParameter(3, Types.VARCHAR);
+            cs.execute();
+            return cs.getString(3);
+        } catch (SQLException e) {
+            System.out.println("Error en registrarDevolucion: " + e.toString());
+            return "Error: " + e.getMessage();
+        }
+    }
 
     public int idVenta() {
         int id = 0;
