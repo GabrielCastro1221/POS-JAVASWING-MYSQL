@@ -14,6 +14,35 @@ public class VentaDAO {
 
     private final Conexion cn = Conexion.getInstancia();
 
+    public static class ResultadoVenta {
+
+        public final int ventaId;
+        public final String mensaje;
+
+        public ResultadoVenta(int ventaId, String mensaje) {
+            this.ventaId = ventaId;
+            this.mensaje = mensaje;
+        }
+    }
+
+    public ResultadoVenta registrarVentaTransaccional(int clienteId, String vendedor, String itemsJson) {
+        String sql = "{CALL sp_registrar_venta(?, ?, ?, ?, ?)}";
+        try (Connection con = cn.getConnection(); CallableStatement cs = con.prepareCall(sql)) {
+            cs.setInt(1, clienteId);
+            cs.setString(2, vendedor);
+            cs.setString(3, itemsJson);
+            cs.registerOutParameter(4, Types.INTEGER);
+            cs.registerOutParameter(5, Types.VARCHAR);
+            cs.execute();
+            int ventaId = cs.getInt(4);
+            String mensaje = cs.getString(5);
+            return new ResultadoVenta(ventaId, mensaje);
+        } catch (SQLException e) {
+            System.out.println("Error en registrarVentaTransaccional: " + e.toString());
+            return new ResultadoVenta(-1, "Error: " + e.getMessage());
+        }
+    }
+
     public String registrarDevolucion(int ventaId, int productoId, int cantidad) {
         String sql = "{CALL sp_registrar_devolucion(?, ?, ?)}";
         String json = String.format("[{\"producto_id\": %d, \"cantidad\": %d}]", productoId, cantidad);

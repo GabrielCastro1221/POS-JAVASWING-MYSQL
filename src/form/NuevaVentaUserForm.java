@@ -186,10 +186,10 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
 
     private void btnGenerarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarVentaMouseClicked
         int idVenta = registrarVenta();
-        ConfigDAO confDAO = new ConfigDAO();
-        Config cfg = confDAO.obtenerUltimaConfig();
         if (idVenta > 0) {
-            registrarDetalle(idVenta);
+            consumirCodigosBarras();
+            ConfigDAO confDAO = new ConfigDAO();
+            Config cfg = confDAO.obtenerUltimaConfig();
             TicketPDF ticket = new TicketPDF(panelVenta.getTableVenta(), panelVenta.getTotalPagar());
             ticket.GenerarPDF(idVenta, String.valueOf(cfg.getRuc()), cfg.getNombre(), cfg.getTelefono(), cfg.getDireccion(), cfg.getRazon_social());
             TicketPOS.imprimirTicket(idVenta);
@@ -234,42 +234,44 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un correo válido");
             return -1;
         }
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) panelVenta.getTableVenta().getModel();
+        if (modelo.getRowCount() == 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Agrega al menos un producto a la venta");
+            return -1;
+        }
         try {
             int clienteId = Integer.parseInt(idStr);
             String vendedor = labelVendedor.getText();
-            double monto = panelVenta.getTotalPagar();
-            java.sql.Timestamp fechaActual = new java.sql.Timestamp(System.currentTimeMillis());
-            v.setCliente_id(clienteId);
-            v.setNombreCliente(nombre);
-            v.setNombreVendedor(vendedor);
-            v.setTotal(monto);
-            v.setFecha(fechaActual);
-            if (vDAO.registrarVenta(v)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Venta registrada con éxito");
-                return vDAO.idVenta();
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar la venta");
-                return -1;
-            }
-
+            String itemsJson = construirJsonItems(modelo);
+            VentaDAO.ResultadoVenta resultado = vDAO.registrarVentaTransaccional(clienteId, vendedor, itemsJson);
+            javax.swing.JOptionPane.showMessageDialog(this, resultado.mensaje);
+            return resultado.ventaId;
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "ID de cliente inválido");
             return -1;
         }
     }
 
-    private void registrarDetalle(int idVenta) {
+    private String construirJsonItems(javax.swing.table.DefaultTableModel modelo) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            int productoId = Integer.parseInt(modelo.getValueAt(i, 0).toString());
+            int cantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
+            if (i > 0) {
+                sb.append(",");
+            }
+            sb.append("{\"producto_id\":").append(productoId).append(",\"cantidad\":").append(cantidad).append("}");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    private void consumirCodigosBarras() {
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) panelVenta.getTableVenta().getModel();
         for (int i = 0; i < modelo.getRowCount(); i++) {
             int productoId = Integer.parseInt(modelo.getValueAt(i, 0).toString());
             int cantidad = Integer.parseInt(modelo.getValueAt(i, 3).toString());
-            double precio = Double.parseDouble(modelo.getValueAt(i, 4).toString());
-            Dv.setCodigo_producto(productoId);
-            Dv.setCantidad(cantidad);
-            Dv.setPrecio(precio);
-            Dv.setId_venta(idVenta);
-            vDAO.registrarDetalleVenta(Dv);
-            proDAO.restarStock(productoId, cantidad);
+            proDAO.eliminarCodigosBarras(productoId, cantidad);
         }
     }
 
