@@ -31,6 +31,7 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu6.setCursor(new Cursor(Cursor.HAND_CURSOR));
         listMenu7.setCursor(new Cursor(Cursor.HAND_CURSOR));
         listMenu8.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu9.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public void optionsEvent(SelectOption SelectOption) {
@@ -50,6 +51,8 @@ public class Sidebar extends javax.swing.JPanel {
         options.add(listMenu7);
         listMenu8.setId(8);
         options.add(listMenu8);
+        listMenu9.setId(9);
+        options.add(listMenu9);
 
         for (ListMenu option : options) {
             option.addMouseListener(new MouseAdapter() {
@@ -81,6 +84,7 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu1 = new view.ListMenu();
         listMenu2 = new view.ListMenu();
         listMenu3 = new view.ListMenu();
+        listMenu9 = new view.ListMenu();
         listMenu4 = new view.ListMenu();
         listMenu5 = new view.ListMenu();
         jPanel2 = new javax.swing.JPanel();
@@ -109,6 +113,10 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu3.setPath("/assets/proveedor.png");
         listMenu3.setText("Proveedores");
         jPanel1.add(listMenu3);
+
+        listMenu9.setPath("/assets/archivo-factura-dolar.png");
+        listMenu9.setText("Compras");
+        jPanel1.add(listMenu9);
 
         listMenu4.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         listMenu4.setPath("/assets/venta.png");
@@ -160,6 +168,7 @@ public class Sidebar extends javax.swing.JPanel {
     private view.ListMenu listMenu6;
     private view.ListMenu listMenu7;
     private view.ListMenu listMenu8;
+    private view.ListMenu listMenu9;
     private components.Picture picture1;
     // End of variables declaration//GEN-END:variables
 }

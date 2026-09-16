@@ -68,6 +68,12 @@
             <Property name="text" type="java.lang.String" value="Proveedores"/>
           </Properties>
         </Component>
+        <Component class="view.ListMenu" name="listMenu9">
+          <Properties>
+            <Property name="path" type="java.lang.String" value="/assets/archivo-factura-dolar.png"/>
+            <Property name="text" type="java.lang.String" value="Compras"/>
+          </Properties>
+        </Component>
         <Component class="view.ListMenu" name="listMenu4">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
