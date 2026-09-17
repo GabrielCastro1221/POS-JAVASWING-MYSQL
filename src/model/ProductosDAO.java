@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -26,8 +27,10 @@ public class ProductosDAO {
     }
 
     public int registrarProducto(Productos pro) {
-        String sql = "INSERT INTO productos (codigo, nombre, proveedor_id, stock, precio_neto, precio_bruto, categoria_id) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO productos "
+                + "(codigo, nombre, proveedor_id, stock, precio_neto, precio_bruto, categoria_id, "
+                + "tasa_iva, fecha_caducidad, unidad_medida, stock_minimo) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, pro.getCodigo());
             ps.setString(2, pro.getNombre());
@@ -36,6 +39,17 @@ public class ProductosDAO {
             ps.setDouble(5, pro.getPrecio_neto());
             ps.setDouble(6, pro.getPrecio_bruto());
             ps.setInt(7, pro.getCategoria_id());
+            ps.setDouble(8, pro.getTasa_iva());
+
+            if (pro.getFecha_caducidad() != null) {
+                ps.setDate(9, pro.getFecha_caducidad());
+            } else {
+                ps.setNull(9, Types.DATE);
+            }
+
+            ps.setString(10, pro.getUnidad_medida());
+            ps.setInt(11, pro.getStock_minimo());
+
             ps.executeUpdate();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
@@ -53,17 +67,7 @@ public class ProductosDAO {
         String sql = "SELECT * FROM productos";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Productos pr = new Productos();
-                pr.setId(rs.getInt("id"));
-                pr.setCodigo(rs.getString("codigo"));
-                pr.setNombre(rs.getString("nombre"));
-                pr.setProveedor_id(rs.getInt("proveedor_id"));
-                pr.setStock(rs.getInt("stock"));
-                pr.setPrecio_neto(rs.getDouble("precio_neto"));
-                pr.setPrecio_bruto(rs.getDouble("precio_bruto"));
-                pr.setCategoria_id(rs.getInt("categoria_id"));
-                pr.setFecha(rs.getTimestamp("fecha"));
-                listaPr.add(pr);
+                listaPr.add(mapearProducto(rs));
             }
         } catch (SQLException e) {
             System.out.println("Error al listar productos: " + e.toString());
@@ -84,7 +88,10 @@ public class ProductosDAO {
     }
 
     public boolean modificarProducto(Productos pro) {
-        String sql = "UPDATE productos SET codigo = ?, nombre = ?, proveedor_id = ?, stock = ?, precio_neto = ?, precio_bruto = ?, categoria_id = ? WHERE id = ?";
+        String sql = "UPDATE productos SET codigo = ?, nombre = ?, proveedor_id = ?, stock = ?, "
+                + "precio_neto = ?, precio_bruto = ?, categoria_id = ?, "
+                + "tasa_iva = ?, fecha_caducidad = ?, unidad_medida = ?, stock_minimo = ? "
+                + "WHERE id = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, pro.getCodigo());
             ps.setString(2, pro.getNombre());
@@ -93,7 +100,15 @@ public class ProductosDAO {
             ps.setDouble(5, pro.getPrecio_neto());
             ps.setDouble(6, pro.getPrecio_bruto());
             ps.setInt(7, pro.getCategoria_id());
-            ps.setInt(8, pro.getId());
+            ps.setDouble(8, pro.getTasa_iva());
+            if (pro.getFecha_caducidad() != null) {
+                ps.setDate(9, pro.getFecha_caducidad());
+            } else {
+                ps.setNull(9, Types.DATE);
+            }
+            ps.setString(10, pro.getUnidad_medida());
+            ps.setInt(11, pro.getStock_minimo());
+            ps.setInt(12, pro.getId());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -109,16 +124,7 @@ public class ProductosDAO {
             ps.setString(1, codigo);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    pro = new Productos();
-                    pro.setId(rs.getInt("id"));
-                    pro.setCodigo(rs.getString("codigo"));
-                    pro.setNombre(rs.getString("nombre"));
-                    pro.setProveedor_id(rs.getInt("proveedor_id"));
-                    pro.setStock(rs.getInt("stock"));
-                    pro.setPrecio_neto(rs.getDouble("precio_neto"));
-                    pro.setPrecio_bruto(rs.getDouble("precio_bruto"));
-                    pro.setCategoria_id(rs.getInt("categoria_id"));
-                    pro.setFecha(rs.getTimestamp("fecha"));
+                    pro = mapearProducto(rs);
                 }
             }
         } catch (SQLException e) {
@@ -136,16 +142,7 @@ public class ProductosDAO {
             ps.setString(1, codigoBarra);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    pro = new Productos();
-                    pro.setId(rs.getInt("id"));
-                    pro.setCodigo(rs.getString("codigo"));
-                    pro.setNombre(rs.getString("nombre"));
-                    pro.setProveedor_id(rs.getInt("proveedor_id"));
-                    pro.setStock(rs.getInt("stock"));
-                    pro.setPrecio_neto(rs.getDouble("precio_neto"));
-                    pro.setPrecio_bruto(rs.getDouble("precio_bruto"));
-                    pro.setCategoria_id(rs.getInt("categoria_id"));
-                    pro.setFecha(rs.getTimestamp("fecha"));
+                    pro = mapearProducto(rs);
                 }
             }
         } catch (SQLException e) {
@@ -167,23 +164,33 @@ public class ProductosDAO {
             ps.setString(3, like);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Productos pro = new Productos();
-                    pro.setId(rs.getInt("id"));
-                    pro.setCodigo(rs.getString("codigo"));
-                    pro.setNombre(rs.getString("nombre"));
-                    pro.setProveedor_id(rs.getInt("proveedor_id"));
-                    pro.setStock(rs.getInt("stock"));
-                    pro.setPrecio_neto(rs.getDouble("precio_neto"));
-                    pro.setPrecio_bruto(rs.getDouble("precio_bruto"));
-                    pro.setFecha(rs.getTimestamp("fecha"));
-                    pro.setCategoria_id(rs.getInt("categoria_id"));
-                    lista.add(pro);
+                    lista.add(mapearProducto(rs));
                 }
             }
         } catch (SQLException e) {
             System.out.println("Error al buscar productos: " + e.getMessage());
         }
         return lista;
+    }
+
+    private Productos mapearProducto(ResultSet rs) throws SQLException {
+        Productos pro = new Productos();
+        pro.setId(rs.getInt("id"));
+        pro.setCodigo(rs.getString("codigo"));
+        pro.setNombre(rs.getString("nombre"));
+        pro.setProveedor_id(rs.getInt("proveedor_id"));
+        pro.setStock(rs.getInt("stock"));
+        pro.setPrecio_neto(rs.getDouble("precio_neto"));
+        pro.setPrecio_bruto(rs.getDouble("precio_bruto"));
+        pro.setCategoria_id(rs.getInt("categoria_id"));
+        pro.setFecha(rs.getTimestamp("fecha"));
+        pro.setTasa_iva(rs.getDouble("tasa_iva"));
+        pro.setFecha_caducidad(rs.getDate("fecha_caducidad"));
+        pro.setUnidad_medida(rs.getString("unidad_medida"));
+        pro.setStock_minimo(rs.getInt("stock_minimo"));
+        java.math.BigDecimal costoProm = rs.getBigDecimal("costo_promedio");
+        pro.setCosto_promedio(costoProm != null ? costoProm.doubleValue() : null);
+        return pro;
     }
 
     public boolean restarStock(int productoId, int cantidadVendida) {

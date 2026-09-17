@@ -11,6 +11,11 @@ public class Productos {
     private double precio_bruto;
     private int categoria_id;
     private java.sql.Timestamp fecha;
+    private Double costo_promedio;
+    private double tasa_iva;
+    private java.sql.Date fecha_caducidad;
+    private String unidad_medida;
+    private int stock_minimo;
 
     public Productos() {
     }
@@ -97,5 +102,45 @@ public class Productos {
 
     public void setFecha(java.sql.Timestamp fecha) {
         this.fecha = fecha;
+    }
+
+    public Double getCosto_promedio() {
+        return costo_promedio;
+    }
+
+    public void setCosto_promedio(Double costo_promedio) {
+        this.costo_promedio = costo_promedio;
+    }
+
+    public double getTasa_iva() {
+        return tasa_iva;
+    }
+
+    public void setTasa_iva(double tasa_iva) {
+        this.tasa_iva = tasa_iva;
+    }
+
+    public java.sql.Date getFecha_caducidad() {
+        return fecha_caducidad;
+    }
+
+    public void setFecha_caducidad(java.sql.Date fecha_caducidad) {
+        this.fecha_caducidad = fecha_caducidad;
+    }
+
+    public String getUnidad_medida() {
+        return unidad_medida;
+    }
+
+    public void setUnidad_medida(String unidad_medida) {
+        this.unidad_medida = unidad_medida;
+    }
+
+    public int getStock_minimo() {
+        return stock_minimo;
+    }
+
+    public void setStock_minimo(int stock_minimo) {
+        this.stock_minimo = stock_minimo;
     }
 }

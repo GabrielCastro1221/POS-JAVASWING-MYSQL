@@ -2,6 +2,7 @@ package view;
 
 import form.Clientes;
 import form.Compras;
+import form.ComprasVer;
 import form.Config;
 import form.Dashboard;
 import form.NuevaVenta;
@@ -202,6 +203,7 @@ public class System extends javax.swing.JFrame implements SelectOption {
             case 8 -> formToChange = new Config();
             case 9 -> formToChange = new Compras();
             case 10 -> formToChange = new Dashboard();
+            case 11 -> formToChange = new ComprasVer();
             default -> formToChange = new NuevaVenta();
         }
         addForm(formToChange);

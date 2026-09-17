@@ -31,7 +31,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="20" y="150" width="190" height="270"/>
+          <AbsoluteConstraints x="20" y="150" width="190" height="300"/>
         </Constraint>
       </Constraints>
 
@@ -50,6 +50,27 @@
             <Property name="text" type="java.lang.String" value="Nueva venta"/>
           </Properties>
         </Component>
+        <Component class="view.ListMenu" name="listMenu9">
+          <Properties>
+            <Property name="path" type="java.lang.String" value="/assets/archivo-factura-dolar.png"/>
+            <Property name="text" type="java.lang.String" value="Nueva compra"/>
+          </Properties>
+        </Component>
+        <Component class="view.ListMenu" name="listMenu4">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Caladea" size="14" style="1"/>
+            </Property>
+            <Property name="path" type="java.lang.String" value="/assets/venta.png"/>
+            <Property name="text" type="java.lang.String" value="Ventas"/>
+          </Properties>
+        </Component>
+        <Component class="view.ListMenu" name="listMenu11">
+          <Properties>
+            <Property name="path" type="java.lang.String" value="/assets/carrito-de-compra-anadir.png"/>
+            <Property name="text" type="java.lang.String" value="Compras"/>
+          </Properties>
+        </Component>
         <Component class="view.ListMenu" name="listMenu2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -66,21 +87,6 @@
             </Property>
             <Property name="path" type="java.lang.String" value="/assets/proveedor.png"/>
             <Property name="text" type="java.lang.String" value="Proveedores"/>
-          </Properties>
-        </Component>
-        <Component class="view.ListMenu" name="listMenu9">
-          <Properties>
-            <Property name="path" type="java.lang.String" value="/assets/archivo-factura-dolar.png"/>
-            <Property name="text" type="java.lang.String" value="Compras"/>
-          </Properties>
-        </Component>
-        <Component class="view.ListMenu" name="listMenu4">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Caladea" size="14" style="1"/>
-            </Property>
-            <Property name="path" type="java.lang.String" value="/assets/venta.png"/>
-            <Property name="text" type="java.lang.String" value="Ventas"/>
           </Properties>
         </Component>
         <Component class="view.ListMenu" name="listMenu5">

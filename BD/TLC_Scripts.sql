@@ -12,13 +12,17 @@ CREATE PROCEDURE sp_registrar_venta(
     OUT p_mensaje     VARCHAR(255)
 )
 proc_venta: BEGIN
-    DECLARE v_total        DECIMAL(10,2) DEFAULT 0;
+    DECLARE v_subtotal_total DECIMAL(10,2) DEFAULT 0;
+    DECLARE v_iva_total      DECIMAL(10,2) DEFAULT 0;
     DECLARE v_cantidad_items INT;
-    DECLARE v_idx          INT DEFAULT 0;
-    DECLARE v_producto_id  INT UNSIGNED;
-    DECLARE v_cantidad     INT UNSIGNED;
-    DECLARE v_stock_actual INT UNSIGNED;
-    DECLARE v_precio       DECIMAL(10,2);
+    DECLARE v_idx            INT DEFAULT 0;
+    DECLARE v_producto_id    INT UNSIGNED;
+    DECLARE v_cantidad       INT UNSIGNED;
+    DECLARE v_stock_actual   INT UNSIGNED;
+    DECLARE v_precio         DECIMAL(10,2);
+    DECLARE v_tasa_iva       DECIMAL(5,2);
+    DECLARE v_subtotal_linea DECIMAL(10,2);
+    DECLARE v_iva_linea      DECIMAL(10,2);
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -29,8 +33,8 @@ proc_venta: BEGIN
 
     START TRANSACTION;
 
-    INSERT INTO ventas (cliente_id, vendedor, total, fecha)
-    VALUES (p_cliente_id, p_vendedor, 0, NOW());
+    INSERT INTO ventas (cliente_id, vendedor, total, subtotal, iva_total, fecha)
+    VALUES (p_cliente_id, p_vendedor, 0, 0, 0, NOW());
 
     SET p_venta_id = LAST_INSERT_ID();
     SET v_cantidad_items = JSON_LENGTH(p_items);
@@ -40,7 +44,7 @@ proc_venta: BEGIN
         SET v_producto_id = JSON_UNQUOTE(JSON_EXTRACT(p_items, CONCAT('$[', v_idx, '].producto_id')));
         SET v_cantidad     = JSON_UNQUOTE(JSON_EXTRACT(p_items, CONCAT('$[', v_idx, '].cantidad')));
 
-        SELECT stock, precio_bruto INTO v_stock_actual, v_precio
+        SELECT stock, precio_bruto, tasa_iva INTO v_stock_actual, v_precio, v_tasa_iva
         FROM productos
         WHERE id = v_producto_id
         FOR UPDATE;
@@ -62,11 +66,21 @@ proc_venta: BEGIN
         INSERT INTO detalle_ventas (codigo_producto, cantidad, precio, id_venta)
         VALUES (v_producto_id, v_cantidad, v_precio, p_venta_id);
 
-        SET v_total = v_total + (v_precio * v_cantidad);
+        -- precio_bruto ya incluye el IVA; lo desglosamos
+        SET v_subtotal_linea = (v_precio * v_cantidad) / (1 + (v_tasa_iva / 100));
+        SET v_iva_linea = (v_precio * v_cantidad) - v_subtotal_linea;
+
+        SET v_subtotal_total = v_subtotal_total + v_subtotal_linea;
+        SET v_iva_total = v_iva_total + v_iva_linea;
+
         SET v_idx = v_idx + 1;
     END WHILE;
 
-    UPDATE ventas SET total = v_total WHERE id = p_venta_id;
+    UPDATE ventas
+    SET subtotal = v_subtotal_total,
+        iva_total = v_iva_total,
+        total = v_subtotal_total + v_iva_total
+    WHERE id = p_venta_id;
 
     COMMIT;
     SET p_mensaje = 'Venta registrada con éxito';
@@ -299,4 +313,3 @@ proc_compra: BEGIN
 END$$
 
 DELIMITER ;
-

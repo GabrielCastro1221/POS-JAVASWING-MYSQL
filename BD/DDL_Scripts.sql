@@ -57,6 +57,11 @@ CREATE TABLE IF NOT EXISTS productos (
     precio_neto DECIMAL(10,2) NOT NULL,
     precio_bruto DECIMAL(10,2) NOT NULL,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    costo_promedio DECIMAL(10,2) NULL COMMENT 'Costo ponderado real de compra',
+    tasa_iva DECIMAL(5,2) NOT NULL DEFAULT 19.00 COMMENT 'Porcentaje de IVA aplicable (0, 5, 19)',
+    fecha_caducidad DATE NULL COMMENT 'NULL si el producto no vence',
+    unidad_medida VARCHAR(20) NOT NULL DEFAULT 'unidad' COMMENT 'unidad, kg, litro, caja, etc.',
+    stock_minimo INT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Umbral para alertas de reabastecimiento',
     FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (proveedor_id) REFERENCES proveedores(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
@@ -71,11 +76,16 @@ CREATE TABLE IF NOT EXISTS codigos_barras (
 CREATE TABLE IF NOT EXISTS ventas (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT UNSIGNED,
-    vendedor_id INT UNSIGNED,
+    vendedor VARCHAR(100) NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (vendedor_id) REFERENCES usuarios(id) ON DELETE SET NULL ON UPDATE CASCADE
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    subtotal DECIMAL(10,2) NULL COMMENT 'Total antes de impuestos',
+    iva_total DECIMAL(10,2) NULL COMMENT 'Suma del IVA de todas las líneas',
+    descuento_total DECIMAL(10,2) NOT NULL DEFAULT 0,
+    estado ENUM('completada','anulada') NOT NULL DEFAULT 'completada',
+    forma_pago ENUM('efectivo','tarjeta','transferencia') NOT NULL DEFAULT 'efectivo',
+    numero_factura VARCHAR(20) NULL COMMENT 'Consecutivo interno propio',
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS detalle_ventas (

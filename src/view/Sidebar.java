@@ -33,6 +33,7 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu8.setCursor(new Cursor(Cursor.HAND_CURSOR));
         listMenu9.setCursor(new Cursor(Cursor.HAND_CURSOR));
         listMenu10.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu11.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public void optionsEvent(SelectOption SelectOption) {
@@ -56,6 +57,8 @@ public class Sidebar extends javax.swing.JPanel {
         options.add(listMenu9);
         listMenu10.setId(10);
         options.add(listMenu10);
+        listMenu11.setId(11);
+        options.add(listMenu11);
 
         for (ListMenu option : options) {
             option.addMouseListener(new MouseAdapter() {
@@ -85,10 +88,11 @@ public class Sidebar extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         listMenu1 = new view.ListMenu();
-        listMenu2 = new view.ListMenu();
-        listMenu3 = new view.ListMenu();
         listMenu9 = new view.ListMenu();
         listMenu4 = new view.ListMenu();
+        listMenu11 = new view.ListMenu();
+        listMenu2 = new view.ListMenu();
+        listMenu3 = new view.ListMenu();
         listMenu5 = new view.ListMenu();
         jPanel2 = new javax.swing.JPanel();
         listMenu6 = new view.ListMenu();
@@ -108,6 +112,19 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu1.setText("Nueva venta");
         jPanel1.add(listMenu1);
 
+        listMenu9.setPath("/assets/archivo-factura-dolar.png");
+        listMenu9.setText("Nueva compra");
+        jPanel1.add(listMenu9);
+
+        listMenu4.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        listMenu4.setPath("/assets/venta.png");
+        listMenu4.setText("Ventas");
+        jPanel1.add(listMenu4);
+
+        listMenu11.setPath("/assets/carrito-de-compra-anadir.png");
+        listMenu11.setText("Compras");
+        jPanel1.add(listMenu11);
+
         listMenu2.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         listMenu2.setPath("/assets/alt-de-inventario.png");
         listMenu2.setText("Inventario");
@@ -118,22 +135,13 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu3.setText("Proveedores");
         jPanel1.add(listMenu3);
 
-        listMenu9.setPath("/assets/archivo-factura-dolar.png");
-        listMenu9.setText("Compras");
-        jPanel1.add(listMenu9);
-
-        listMenu4.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
-        listMenu4.setPath("/assets/venta.png");
-        listMenu4.setText("Ventas");
-        jPanel1.add(listMenu4);
-
         listMenu5.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         listMenu5.setPath("/assets/revisar.png");
         listMenu5.setText("Clientes");
         jPanel1.add(listMenu5);
 
         add(jPanel1);
-        jPanel1.setBounds(20, 150, 190, 270);
+        jPanel1.setBounds(20, 150, 190, 300);
 
         jPanel2.setBackground(new java.awt.Color(243, 243, 243));
         jPanel2.setLayout(new java.awt.GridLayout(0, 1, 0, 9));
@@ -170,6 +178,7 @@ public class Sidebar extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private view.ListMenu listMenu1;
     private view.ListMenu listMenu10;
+    private view.ListMenu listMenu11;
     private view.ListMenu listMenu2;
     private view.ListMenu listMenu3;
     private view.ListMenu listMenu4;
