@@ -2,6 +2,16 @@ CREATE DATABASE IF NOT EXISTS MiscelaneaBellavista;
 
 USE MiscelaneaBellavista;
 
+CREATE TABLE IF NOT EXISTS config (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre_empresa VARCHAR(200) NOT NULL,
+    ruc VARCHAR(20) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
+    direccion VARCHAR(200) NOT NULL,
+    razon_social VARCHAR(200) NOT NULL,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -78,31 +88,51 @@ CREATE TABLE IF NOT EXISTS detalle_ventas (
     FOREIGN KEY (id_venta) REFERENCES ventas(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE devoluciones (
+CREATE TABLE IF NOT EXISTS devoluciones (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     id_venta INT UNSIGNED NOT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_venta) REFERENCES ventas(id) 
+    FOREIGN KEY (id_venta) REFERENCES ventas(id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE detalle_devolucion (
+CREATE TABLE IF NOT EXISTS detalle_devolucion (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     id_devolucion INT UNSIGNED NOT NULL,
     producto_id INT UNSIGNED NOT NULL,
     cantidad INT UNSIGNED NOT NULL,
-    FOREIGN KEY (id_devolucion) REFERENCES devoluciones(id) 
+    FOREIGN KEY (id_devolucion) REFERENCES devoluciones(id)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (producto_id) REFERENCES productos(id) 
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS config (
+CREATE TABLE IF NOT EXISTS compras (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nombre_empresa VARCHAR(200) NOT NULL,
-    ruc VARCHAR(20) NOT NULL,
-    telefono VARCHAR(20) NOT NULL,
-    direccion VARCHAR(200) NOT NULL,
-    razon_social VARCHAR(200) NOT NULL,
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    proveedor_id INT UNSIGNED NOT NULL,
+    usuario_id INT UNSIGNED NULL COMMENT 'Quién registró la compra',
+    numero_factura_proveedor VARCHAR(50) NULL COMMENT 'Número de factura que emitió el proveedor',
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    subtotal DECIMAL(10,2) NOT NULL DEFAULT 0,
+    iva_total DECIMAL(10,2) NOT NULL DEFAULT 0,
+    total DECIMAL(10,2) NOT NULL DEFAULT 0,
+    estado ENUM('registrada','anulada') NOT NULL DEFAULT 'registrada',
+    FOREIGN KEY (proveedor_id) REFERENCES proveedores(id)
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+        ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS detalle_compras (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_compra INT UNSIGNED NOT NULL,
+    producto_id INT UNSIGNED NOT NULL,
+    cantidad INT UNSIGNED NOT NULL,
+    costo_unitario DECIMAL(10,2) NOT NULL,
+    iva_linea DECIMAL(10,2) NOT NULL DEFAULT 0,
+    subtotal_linea DECIMAL(10,2) NOT NULL COMMENT 'cantidad * costo_unitario, guardado como snapshot',
+    FOREIGN KEY (id_compra) REFERENCES compras(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );

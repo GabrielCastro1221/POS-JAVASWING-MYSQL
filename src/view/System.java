@@ -3,6 +3,7 @@ package view;
 import form.Clientes;
 import form.Compras;
 import form.Config;
+import form.Dashboard;
 import form.NuevaVenta;
 import form.Producto;
 import form.Proveedor;
@@ -191,26 +192,17 @@ public class System extends javax.swing.JFrame implements SelectOption {
     public void changeForm(int id) {
         JComponent formToChange;
         switch (id) {
-            case 1 ->
-                formToChange = new NuevaVenta();
-            case 2 ->
-                formToChange = new Producto();
-            case 3 ->
-                formToChange = new Proveedor();
-            case 4 ->
-                formToChange = new Ventas();
-            case 5 ->
-                formToChange = new Clientes();
-            case 6 ->
-                formToChange = new Reportes();
-            case 7 ->
-                formToChange = new Usuario();
-            case 8 ->
-                formToChange = new Config();
-            case 9 ->
-                formToChange = new Compras();
-            default ->
-                formToChange = new NuevaVenta();
+            case 1 -> formToChange = new NuevaVenta();
+            case 2 -> formToChange = new Producto();
+            case 3 -> formToChange = new Proveedor();
+            case 4 -> formToChange = new Ventas();
+            case 5 -> formToChange = new Clientes();
+            case 6 -> formToChange = new Reportes();
+            case 7 -> formToChange = new Usuario();
+            case 8 -> formToChange = new Config();
+            case 9 -> formToChange = new Compras();
+            case 10 -> formToChange = new Dashboard();
+            default -> formToChange = new NuevaVenta();
         }
         addForm(formToChange);
     }

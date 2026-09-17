@@ -32,6 +32,7 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu7.setCursor(new Cursor(Cursor.HAND_CURSOR));
         listMenu8.setCursor(new Cursor(Cursor.HAND_CURSOR));
         listMenu9.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listMenu10.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public void optionsEvent(SelectOption SelectOption) {
@@ -53,6 +54,8 @@ public class Sidebar extends javax.swing.JPanel {
         options.add(listMenu8);
         listMenu9.setId(9);
         options.add(listMenu9);
+        listMenu10.setId(10);
+        options.add(listMenu10);
 
         for (ListMenu option : options) {
             option.addMouseListener(new MouseAdapter() {
@@ -89,6 +92,7 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu5 = new view.ListMenu();
         jPanel2 = new javax.swing.JPanel();
         listMenu6 = new view.ListMenu();
+        listMenu10 = new view.ListMenu();
         listMenu7 = new view.ListMenu();
         listMenu8 = new view.ListMenu();
         picture1 = new components.Picture();
@@ -129,15 +133,19 @@ public class Sidebar extends javax.swing.JPanel {
         jPanel1.add(listMenu5);
 
         add(jPanel1);
-        jPanel1.setBounds(20, 150, 190, 248);
+        jPanel1.setBounds(20, 150, 190, 270);
 
         jPanel2.setBackground(new java.awt.Color(243, 243, 243));
-        jPanel2.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
+        jPanel2.setLayout(new java.awt.GridLayout(0, 1, 0, 9));
 
         listMenu6.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
-        listMenu6.setPath("/assets/comercio.png");
+        listMenu6.setPath("/assets/ReporteExcel.png");
         listMenu6.setText("Reportes");
         jPanel2.add(listMenu6);
+
+        listMenu10.setPath("/assets/monitor-de-tablero.png");
+        listMenu10.setText("Dashboard");
+        jPanel2.add(listMenu10);
 
         listMenu7.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         listMenu7.setPath("/assets/agregar-usuario.png");
@@ -149,7 +157,7 @@ public class Sidebar extends javax.swing.JPanel {
         jPanel2.add(listMenu8);
 
         add(jPanel2);
-        jPanel2.setBounds(20, 530, 190, 140);
+        jPanel2.setBounds(20, 500, 190, 170);
 
         picture1.setPath("/assets/Logo.png");
         add(picture1);
@@ -161,6 +169,7 @@ public class Sidebar extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private view.ListMenu listMenu1;
+    private view.ListMenu listMenu10;
     private view.ListMenu listMenu2;
     private view.ListMenu listMenu3;
     private view.ListMenu listMenu4;

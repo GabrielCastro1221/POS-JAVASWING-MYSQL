@@ -22,18 +22,18 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="155" max="-2" attributes="0"/>
-              <EmptySpace pref="1019" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="372" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="491" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace pref="619" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="256" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="286" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -41,13 +41,10 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Caladea" size="18" style="1"/>
-        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Reportes"/>
+        <Property name="text" type="java.lang.String" value="Dashboard"/>
       </Properties>
     </Component>
   </SubComponents>

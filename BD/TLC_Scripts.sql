@@ -198,3 +198,105 @@ proc_devolucion: BEGIN
 END$$
 
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS sp_registrar_compra;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_registrar_compra(
+    IN  p_proveedor_id  INT UNSIGNED,
+    IN  p_usuario_id    INT UNSIGNED,
+    IN  p_numero_factura VARCHAR(50),
+    IN  p_items         JSON,
+    OUT p_compra_id     INT UNSIGNED,
+    OUT p_mensaje       VARCHAR(255)
+)
+proc_compra: BEGIN
+    DECLARE v_subtotal_total   DECIMAL(10,2) DEFAULT 0;
+    DECLARE v_iva_total        DECIMAL(10,2) DEFAULT 0;
+    DECLARE v_cantidad_items   INT;
+    DECLARE v_idx              INT DEFAULT 0;
+
+    DECLARE v_producto_id      INT UNSIGNED;
+    DECLARE v_cantidad         INT UNSIGNED;
+    DECLARE v_costo_unitario   DECIMAL(10,2);
+    DECLARE v_tasa_iva         DECIMAL(5,2);
+    DECLARE v_iva_linea        DECIMAL(10,2);
+    DECLARE v_subtotal_linea   DECIMAL(10,2);
+
+    DECLARE v_stock_actual     INT UNSIGNED;
+    DECLARE v_costo_prom_actual DECIMAL(10,2);
+    DECLARE v_nuevo_costo_prom  DECIMAL(10,2);
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SET p_compra_id = NULL;
+        GET DIAGNOSTICS CONDITION 1 p_mensaje = MESSAGE_TEXT;
+    END;
+
+    START TRANSACTION;
+
+    IF NOT EXISTS (SELECT 1 FROM proveedores WHERE id = p_proveedor_id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El proveedor no existe';
+    END IF;
+
+    INSERT INTO compras (proveedor_id, usuario_id, numero_factura_proveedor, fecha, subtotal, iva_total, total)
+    VALUES (p_proveedor_id, p_usuario_id, p_numero_factura, NOW(), 0, 0, 0);
+
+    SET p_compra_id = LAST_INSERT_ID();
+    SET v_cantidad_items = JSON_LENGTH(p_items);
+    SET v_idx = 0;
+
+    WHILE v_idx < v_cantidad_items DO
+        SET v_producto_id    = JSON_UNQUOTE(JSON_EXTRACT(p_items, CONCAT('$[', v_idx, '].producto_id')));
+        SET v_cantidad       = JSON_UNQUOTE(JSON_EXTRACT(p_items, CONCAT('$[', v_idx, '].cantidad')));
+        SET v_costo_unitario = JSON_UNQUOTE(JSON_EXTRACT(p_items, CONCAT('$[', v_idx, '].costo_unitario')));
+        SET v_tasa_iva       = JSON_UNQUOTE(JSON_EXTRACT(p_items, CONCAT('$[', v_idx, '].tasa_iva')));
+
+        IF NOT EXISTS (SELECT 1 FROM productos WHERE id = v_producto_id) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Uno de los productos no existe';
+        END IF;
+
+        SET v_subtotal_linea = v_cantidad * v_costo_unitario;
+        SET v_iva_linea = v_subtotal_linea * (v_tasa_iva / 100);
+
+        INSERT INTO detalle_compras (id_compra, producto_id, cantidad, costo_unitario, iva_linea, subtotal_linea)
+        VALUES (p_compra_id, v_producto_id, v_cantidad, v_costo_unitario, v_iva_linea, v_subtotal_linea);
+
+        SELECT stock, costo_promedio INTO v_stock_actual, v_costo_prom_actual
+        FROM productos
+        WHERE id = v_producto_id
+        FOR UPDATE;
+
+        IF v_costo_prom_actual IS NULL OR v_stock_actual = 0 THEN
+            SET v_nuevo_costo_prom = v_costo_unitario;
+        ELSE
+            SET v_nuevo_costo_prom =
+                ((v_stock_actual * v_costo_prom_actual) + (v_cantidad * v_costo_unitario))
+                / (v_stock_actual + v_cantidad);
+        END IF;
+
+        UPDATE productos
+        SET stock = stock + v_cantidad,
+            costo_promedio = v_nuevo_costo_prom
+        WHERE id = v_producto_id;
+
+        SET v_subtotal_total = v_subtotal_total + v_subtotal_linea;
+        SET v_iva_total = v_iva_total + v_iva_linea;
+
+        SET v_idx = v_idx + 1;
+    END WHILE;
+
+    UPDATE compras
+    SET subtotal = v_subtotal_total,
+        iva_total = v_iva_total,
+        total = v_subtotal_total + v_iva_total
+    WHERE id = p_compra_id;
+
+    COMMIT;
+    SET p_mensaje = 'Compra registrada correctamente';
+END$$
+
+DELIMITER ;
+
