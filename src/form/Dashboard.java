@@ -4,6 +4,7 @@ public class Dashboard extends javax.swing.JPanel {
 
     public Dashboard() {
         initComponents();
+        setOpaque(false);
     }
 
     @SuppressWarnings("unchecked")

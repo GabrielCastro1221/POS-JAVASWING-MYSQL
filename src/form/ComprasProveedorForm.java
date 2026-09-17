@@ -1,6 +1,11 @@
 package form;
 
+import model.Proveedores;
 import model.ProveedoresDAO;
+import config.Session;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.CompraDAO;
 
 public class ComprasProveedorForm extends javax.swing.JPanel {
 
@@ -14,9 +19,13 @@ public class ComprasProveedorForm extends javax.swing.JPanel {
 
     private void cargarProveedores() {
         cbxProveedorCompra.removeAllItems();
-        for (model.Proveedores pr : provDAO.listarProveedores()) {
-            cbxProveedorCompra.addItem(pr.getNombre());
+        for (Proveedores pr : provDAO.listarProveedores()) {
+            cbxProveedorCompra.addItem(pr);
         }
+    }
+
+    public void actualizarTotal(double total) {
+        lblTotalCompraF.setText("$ " + String.format("%.2f", total));
     }
 
     @SuppressWarnings("unchecked")
@@ -99,9 +108,58 @@ public class ComprasProveedorForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarCompraMouseClicked
+        Object seleccionado = cbxProveedorCompra.getSelectedItem();
+        if (!(seleccionado instanceof Proveedores)) {
+            JOptionPane.showMessageDialog(this, "Selecciona un proveedor válido");
+            return;
+        }
+        Proveedores proveedor = (Proveedores) seleccionado;
+        String numeroFactura = txtNumeroFactura.getText().trim();
+        if (numeroFactura.isEmpty() || numeroFactura.equalsIgnoreCase("numero de la factura")) {
+            JOptionPane.showMessageDialog(this, "Ingresa el número de factura del proveedor");
+            return;
+        }
+        if (!(getParent() instanceof Compras)) {
+            return;
+        }
+        Compras panelCompra = (Compras) getParent();
+        DefaultTableModel modelo = (DefaultTableModel) panelCompra.getTableCompras().getModel();
 
+        if (modelo.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Agrega al menos un producto a la compra");
+            return;
+        }
+        String itemsJson = construirJsonItems(modelo);
+        Integer usuarioId = (Session.getUsuario() != null) ? Session.getUsuario().getId() : null;
+        CompraDAO compraDAO = new CompraDAO();
+        CompraDAO.ResultadoCompra resultado = compraDAO.registrarCompraTransaccional(proveedor.getId(), usuarioId, numeroFactura, itemsJson);
+        JOptionPane.showMessageDialog(this, resultado.mensaje);
+        if (resultado.compraId > 0) {
+            actualizarTotal(panelCompra.getTotalCompra());
+            panelCompra.limpiarTabla();
+            txtNumeroFactura.setText("");
+        }
     }//GEN-LAST:event_btnGuardarCompraMouseClicked
 
+    private String construirJsonItems(DefaultTableModel modelo) {
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            int productoId = (int) modelo.getValueAt(i, 0);
+            int cantidad = (int) modelo.getValueAt(i, 3);
+            double costoUnitario = (double) modelo.getValueAt(i, 4);
+            double tasaIva = (double) modelo.getValueAt(i, 5);
+            if (i > 0) {
+                sb.append(",");
+            }
+            sb.append("{\"producto_id\":").append(productoId)
+                    .append(",\"cantidad\":").append(cantidad)
+                    .append(",\"costo_unitario\":").append(costoUnitario)
+                    .append(",\"tasa_iva\":").append(tasaIva)
+                    .append("}");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnGuardarCompra;

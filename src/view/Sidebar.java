@@ -143,7 +143,7 @@ public class Sidebar extends javax.swing.JPanel {
         listMenu6.setText("Reportes");
         jPanel2.add(listMenu6);
 
-        listMenu10.setPath("/assets/monitor-de-tablero.png");
+        listMenu10.setPath("/assets/comercio.png");
         listMenu10.setText("Dashboard");
         jPanel2.add(listMenu10);
 

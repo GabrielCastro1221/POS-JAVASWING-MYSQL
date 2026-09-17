@@ -123,7 +123,7 @@
         </Component>
         <Component class="view.ListMenu" name="listMenu10">
           <Properties>
-            <Property name="path" type="java.lang.String" value="/assets/monitor-de-tablero.png"/>
+            <Property name="path" type="java.lang.String" value="/assets/comercio.png"/>
             <Property name="text" type="java.lang.String" value="Dashboard"/>
           </Properties>
         </Component>

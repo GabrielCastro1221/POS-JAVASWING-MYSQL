@@ -5,8 +5,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
+import model.Productos;
+import model.ProductosDAO;
 
 public class ComprasForm extends javax.swing.JPanel {
+
+    private Productos productoSeleccionado;
 
     public ComprasForm() {
         initComponents();
@@ -17,6 +22,8 @@ public class ComprasForm extends javax.swing.JPanel {
         setOpaque(false);
         setBackground(new Color(0, 0, 0, 0));
         cargarTasasIva();
+        txtCodigoCompraProd.addActionListener(e -> cargarProductoPorCodigo());
+        txtCantidadCompraProd.addActionListener(e -> agregarProductoATabla());
     }
 
     @Override
@@ -45,6 +52,78 @@ public class ComprasForm extends javax.swing.JPanel {
             return 0.0;
         }
         return Double.parseDouble(seleccion.replace("%", "").trim());
+    }
+
+    private void cargarProductoPorCodigo() {
+        String codigo = txtCodigoCompraProd.getText().trim();
+        if (codigo.isEmpty()) {
+            return;
+        }
+        ProductosDAO dao = new ProductosDAO();
+        productoSeleccionado = dao.buscarProductoPorCodigoBarra(codigo);
+        if (productoSeleccionado == null) {
+            productoSeleccionado = dao.buscarProd(codigo);
+        }
+        if (productoSeleccionado != null) {
+            txtNombreCompraProd.setText(productoSeleccionado.getNombre());
+            txtStockCompraProd.setText(String.valueOf(productoSeleccionado.getStock()));
+            txtPrecioCompraProd.setText("");
+            txtCantidadCompraProd.setText("");
+            txtPrecioCompraProd.requestFocus();
+        } else {
+            JOptionPane.showMessageDialog(this, "Producto no encontrado");
+            limpiarCamposCompra();
+        }
+    }
+
+    private void agregarProductoATabla() {
+        if (productoSeleccionado == null) {
+            JOptionPane.showMessageDialog(this, "Primero busca un producto válido");
+            return;
+        }
+        String cantidadStr = txtCantidadCompraProd.getText().trim();
+        String precioStr = txtPrecioCompraProd.getText().trim();
+        if (cantidadStr.isEmpty() || precioStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingresa la cantidad y el costo unitario");
+            return;
+        }
+        if (!cantidadStr.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero válido");
+            return;
+        }
+        if (!precioStr.matches("\\d+(\\.\\d+)?")) {
+            JOptionPane.showMessageDialog(this, "El costo unitario debe ser un número válido");
+            return;
+        }
+        int cantidad = Integer.parseInt(cantidadStr);
+        double costoUnitario = Double.parseDouble(precioStr);
+        if (cantidad <= 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a cero");
+            return;
+        }
+        double tasaIva = getTasaIvaSeleccionada();
+        if (getParent() instanceof Compras) {
+            Compras panelCompra = (Compras) getParent();
+            panelCompra.agregarProductoATabla(
+                    productoSeleccionado.getId(),
+                    productoSeleccionado.getCodigo(),
+                    productoSeleccionado.getNombre(),
+                    cantidad,
+                    costoUnitario,
+                    tasaIva
+            );
+        }
+        limpiarCamposCompra();
+        txtCodigoCompraProd.requestFocus();
+    }
+
+    private void limpiarCamposCompra() {
+        productoSeleccionado = null;
+        txtCodigoCompraProd.setText("");
+        txtNombreCompraProd.setText("");
+        txtStockCompraProd.setText("");
+        txtPrecioCompraProd.setText("");
+        txtCantidadCompraProd.setText("");
     }
 
     @SuppressWarnings("unchecked")
