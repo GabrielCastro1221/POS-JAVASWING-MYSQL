@@ -23,7 +23,7 @@ public class TicketPDF {
     public void GenerarPDF(int idVenta, String rucConfig, String nombreConfig, String telefonoConfig,
             String direccionConfig, String razonConfig) {
         try {
-            String rutaBase = "/home/DeathRaven1221/Documentos/Miscelanea_bellavista/pdf";
+            String rutaBase = "/home/DeathRaven1221/Documentos/Miscelanea_bellavista/Facturas_ventas";
             File dir = new File(rutaBase);
             if (!dir.exists()) {
                 dir.mkdirs();
