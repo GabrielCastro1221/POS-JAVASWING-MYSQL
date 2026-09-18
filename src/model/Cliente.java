@@ -6,6 +6,7 @@ public class Cliente {
     private String nombre;
     private String telefono;
     private String correo;
+    private String numero_documento;
     private java.sql.Timestamp fecha;
 
     public Cliente() {
@@ -48,6 +49,14 @@ public class Cliente {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public String getNumero_documento() {
+        return numero_documento;
+    }
+
+    public void setNumero_documento(String numero_documento) {
+        this.numero_documento = numero_documento;
     }
 
     public java.sql.Timestamp getFecha() {

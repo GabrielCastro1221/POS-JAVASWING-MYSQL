@@ -19,12 +19,13 @@ public class Usuario extends javax.swing.JPanel {
                 if (fila >= 0) {
                     String id = tableUsuarios.getValueAt(fila, 0).toString();
                     String nombre = tableUsuarios.getValueAt(fila, 1).toString();
-                    String correo = tableUsuarios.getValueAt(fila, 2).toString();
-                    String pass = tableUsuarios.getValueAt(fila, 3).toString();
-                    String rol = tableUsuarios.getValueAt(fila, 4).toString();
-                    String telefono = tableUsuarios.getValueAt(fila, 5).toString();
+                    String numeroDocumento = tableUsuarios.getValueAt(fila, 2).toString();
+                    String correo = tableUsuarios.getValueAt(fila, 3).toString();
+                    String pass = tableUsuarios.getValueAt(fila, 4).toString();
+                    String rol = tableUsuarios.getValueAt(fila, 5).toString();
+                    String telefono = tableUsuarios.getValueAt(fila, 6).toString();
 
-                    usuariosForm1.setDatosUsuario(id, nombre, correo, pass, rol, telefono);
+                    usuariosForm1.setDatosUsuario(id, nombre, correo, pass, rol, telefono, numeroDocumento);
                 }
             }
         });
@@ -40,6 +41,7 @@ public class Usuario extends javax.swing.JPanel {
             modelo.addRow(new Object[]{
                 u.getId(),
                 u.getNombre(),
+                u.getNumero_documento(),
                 u.getCorreo(),
                 u.getPass(),
                 u.getRol(),
@@ -61,33 +63,36 @@ public class Usuario extends javax.swing.JPanel {
 
         tableUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "EMAIL", "CONTRASEÑA", "ROL", "TELEFONO", "FECHA"
+                "ID", "NOMBRE", "DOCUMENTO", "EMAIL", "CONTRASEÑA", "ROL", "TELEFONO", "FECHA"
             }
         ));
         jScrollPane1.setViewportView(tableUsuarios);
         if (tableUsuarios.getColumnModel().getColumnCount() > 0) {
             tableUsuarios.getColumnModel().getColumn(0).setPreferredWidth(40);
-            tableUsuarios.getColumnModel().getColumn(2).setPreferredWidth(120);
-            tableUsuarios.getColumnModel().getColumn(6).setPreferredWidth(150);
+            tableUsuarios.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tableUsuarios.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tableUsuarios.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tableUsuarios.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tableUsuarios.getColumnModel().getColumn(7).setPreferredWidth(100);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

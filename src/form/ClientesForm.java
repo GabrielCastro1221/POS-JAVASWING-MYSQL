@@ -44,9 +44,10 @@ public class ClientesForm extends javax.swing.JPanel {
         g2.dispose();
     }
 
-    public void setDatosCliente(int id, String nombre, String telefono, String correo, String fecha) {
+    public void setDatosCliente(int id, String nombre, String numeroDocumento, String telefono, String correo, String fecha) {
         txtIdCliente.setText(String.valueOf(id));
         txtNombreCliente.setText(nombre);
+        txtDocumentoCliente.setText(numeroDocumento);
         txtTelefonoCliente.setText(telefono);
         txtEmailCliente.setText(correo);
         txtFechaCliente.setText(fecha);
@@ -68,9 +69,10 @@ public class ClientesForm extends javax.swing.JPanel {
         lblNombreCliente = new javax.swing.JLabel();
         lblEmailCliente = new javax.swing.JLabel();
         lblTelefonoCliente = new javax.swing.JLabel();
-        lblTitleFormClientes = new javax.swing.JLabel();
         txtIdCliente = new components.CustomTextField();
         txtFechaCliente = new components.CustomTextField();
+        lblDocumentoCliente = new javax.swing.JLabel();
+        txtDocumentoCliente = new components.CustomTextField();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -79,17 +81,17 @@ public class ClientesForm extends javax.swing.JPanel {
         txtTelefonoCliente.setForeground(new java.awt.Color(200, 200, 200));
         txtTelefonoCliente.setText("Ingrese el telefono del cliente");
         add(txtTelefonoCliente);
-        txtTelefonoCliente.setBounds(30, 240, 290, 40);
+        txtTelefonoCliente.setBounds(30, 250, 290, 40);
 
         txtNombreCliente.setForeground(new java.awt.Color(200, 200, 200));
         txtNombreCliente.setText("Ingrese el nombre del cliente");
         add(txtNombreCliente);
-        txtNombreCliente.setBounds(30, 100, 290, 40);
+        txtNombreCliente.setBounds(30, 40, 290, 40);
 
         txtEmailCliente.setForeground(new java.awt.Color(200, 200, 200));
         txtEmailCliente.setText("Ingrese el email del cliente");
         add(txtEmailCliente);
-        txtEmailCliente.setBounds(30, 170, 290, 40);
+        txtEmailCliente.setBounds(30, 180, 290, 40);
 
         roundedPanelCrearCliente.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelCrearCliente.setCornerRadius(10);
@@ -114,7 +116,7 @@ public class ClientesForm extends javax.swing.JPanel {
         btnCrearCliente.setBounds(0, 0, 290, 40);
 
         add(roundedPanelCrearCliente);
-        roundedPanelCrearCliente.setBounds(30, 300, 290, 40);
+        roundedPanelCrearCliente.setBounds(30, 320, 290, 40);
 
         roundedPanelActualizarCliente.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelActualizarCliente.setCornerRadius(10);
@@ -139,7 +141,7 @@ public class ClientesForm extends javax.swing.JPanel {
         btnActualizarCliente.setBounds(0, 0, 290, 40);
 
         add(roundedPanelActualizarCliente);
-        roundedPanelActualizarCliente.setBounds(30, 360, 290, 40);
+        roundedPanelActualizarCliente.setBounds(30, 380, 290, 40);
 
         roundedPanelEliminarCliente.setBottomColor(new java.awt.Color(213, 69, 53));
         roundedPanelEliminarCliente.setCornerRadius(10);
@@ -164,44 +166,54 @@ public class ClientesForm extends javax.swing.JPanel {
         btnEliminarCliente.setBounds(0, 0, 290, 40);
 
         add(roundedPanelEliminarCliente);
-        roundedPanelEliminarCliente.setBounds(30, 420, 290, 40);
+        roundedPanelEliminarCliente.setBounds(30, 440, 290, 40);
 
         lblNombreCliente.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblNombreCliente.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreCliente.setText("Nombre completo");
         add(lblNombreCliente);
-        lblNombreCliente.setBounds(40, 80, 150, 17);
+        lblNombreCliente.setBounds(40, 20, 150, 17);
 
         lblEmailCliente.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblEmailCliente.setForeground(new java.awt.Color(255, 255, 255));
         lblEmailCliente.setText("Correo electronico");
         add(lblEmailCliente);
-        lblEmailCliente.setBounds(40, 150, 160, 17);
+        lblEmailCliente.setBounds(40, 160, 160, 17);
 
         lblTelefonoCliente.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblTelefonoCliente.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefonoCliente.setText("Telefono");
         add(lblTelefonoCliente);
-        lblTelefonoCliente.setBounds(40, 220, 90, 17);
-
-        lblTitleFormClientes.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        lblTitleFormClientes.setForeground(new java.awt.Color(255, 51, 51));
-        lblTitleFormClientes.setText("Formulario clientes");
-        add(lblTitleFormClientes);
-        lblTitleFormClientes.setBounds(70, 30, 220, 28);
+        lblTelefonoCliente.setBounds(40, 230, 90, 17);
         add(txtIdCliente);
-        txtIdCliente.setBounds(20, 20, 10, 33);
+        txtIdCliente.setBounds(10, 490, 10, 33);
         add(txtFechaCliente);
-        txtFechaCliente.setBounds(40, 20, 10, 33);
+        txtFechaCliente.setBounds(30, 490, 10, 33);
+
+        lblDocumentoCliente.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        lblDocumentoCliente.setForeground(new java.awt.Color(255, 255, 255));
+        lblDocumentoCliente.setText("Numero de documento");
+        add(lblDocumentoCliente);
+        lblDocumentoCliente.setBounds(40, 90, 150, 17);
+
+        txtDocumentoCliente.setForeground(new java.awt.Color(200, 200, 200));
+        txtDocumentoCliente.setText("Ingrese numero de documento");
+        add(txtDocumentoCliente);
+        txtDocumentoCliente.setBounds(30, 110, 290, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearClienteMouseClicked
         ValidacionesTextField val = new ValidacionesTextField();
         String nombre = txtNombreCliente.getText().trim();
+        String documento = txtDocumentoCliente.getText().trim();
         String correo = txtEmailCliente.getText().trim();
         String telefono = txtTelefonoCliente.getText().trim();
         if (!val.validarNombre(nombre)) {
             JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
+            return;
+        }
+        if (documento.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar el número de documento");
             return;
         }
         if (!val.validarCorreo(correo)) {
@@ -213,25 +225,30 @@ public class ClientesForm extends javax.swing.JPanel {
             return;
         }
         try {
+            ClientesDAO client = new ClientesDAO();
+
+            if (client.buscarClientePorDocumento(documento) != null) {
+                JOptionPane.showMessageDialog(this, "Ya existe un cliente registrado con ese número de documento");
+                return;
+            }
             Cliente nuevo = new Cliente();
             nuevo.setNombre(nombre);
+            nuevo.setNumero_documento(documento);
             nuevo.setCorreo(correo);
             nuevo.setTelefono(telefono);
-
-            ClientesDAO client = new ClientesDAO();
             if (client.RegistrarCliente(nuevo)) {
                 JOptionPane.showMessageDialog(this, "Cliente registrado con éxito");
                 limpiarCampos();
-
-                if (getParent() instanceof Clientes) {
-                    Clientes panelClientes = (Clientes) getParent();
+                if (getParent() instanceof Clientes panelClientes) {
                     panelClientes.cargarClientes();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Error al registrar cliente");
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El teléfono debe ser un número válido");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al registrar cliente: " + e.getMessage());
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnCrearClienteMouseClicked
 
@@ -244,9 +261,9 @@ public class ClientesForm extends javax.swing.JPanel {
             Cliente c = new Cliente();
             c.setId(Integer.parseInt(txtIdCliente.getText()));
             c.setNombre(txtNombreCliente.getText());
+            c.setNumero_documento(txtDocumentoCliente.getText());
             c.setTelefono(txtTelefonoCliente.getText());
             c.setCorreo(txtEmailCliente.getText());
-
             if (client.ModificarCliente(c)) {
                 JOptionPane.showMessageDialog(this, "Cliente actualizado con éxito");
                 limpiarCampos();
@@ -301,13 +318,14 @@ public class ClientesForm extends javax.swing.JPanel {
     private javax.swing.JLabel btnActualizarCliente;
     private javax.swing.JLabel btnCrearCliente;
     private javax.swing.JLabel btnEliminarCliente;
+    private javax.swing.JLabel lblDocumentoCliente;
     private javax.swing.JLabel lblEmailCliente;
     private javax.swing.JLabel lblNombreCliente;
     private javax.swing.JLabel lblTelefonoCliente;
-    private javax.swing.JLabel lblTitleFormClientes;
     private components.RoundedPanel roundedPanelActualizarCliente;
     private components.RoundedPanel roundedPanelCrearCliente;
     private components.RoundedPanel roundedPanelEliminarCliente;
+    private components.CustomTextField txtDocumentoCliente;
     private components.CustomTextField txtEmailCliente;
     private components.CustomTextField txtFechaCliente;
     private components.CustomTextField txtIdCliente;
@@ -315,10 +333,13 @@ public class ClientesForm extends javax.swing.JPanel {
     private components.CustomTextField txtTelefonoCliente;
     // End of variables declaration//GEN-END:variables
 
-    private void limpiarCampos() {;
+    private void limpiarCampos() {
+        txtIdCliente.setText("");
         txtNombreCliente.setText("");
-        txtEmailCliente.setText("");
+        txtDocumentoCliente.setText("");
         txtTelefonoCliente.setText("");
+        txtEmailCliente.setText("");
+        txtFechaCliente.setText("");
         txtNombreCliente.requestFocus();
     }
 }

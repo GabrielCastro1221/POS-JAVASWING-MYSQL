@@ -8,6 +8,7 @@ public class Usuarios {
     private String pass;
     private String rol;
     private String telefono;
+    private String numero_documento;
     private java.sql.Timestamp fecha;
 
     public Usuarios() {
@@ -68,6 +69,14 @@ public class Usuarios {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getNumero_documento() {
+        return numero_documento;
+    }
+
+    public void setNumero_documento(String numero_documento) {
+        this.numero_documento = numero_documento;
     }
 
     public java.sql.Timestamp getFecha() {

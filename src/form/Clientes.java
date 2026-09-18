@@ -15,7 +15,6 @@ public class Clientes extends javax.swing.JPanel {
         dao = new ClientesDAO();
         modelo = (DefaultTableModel) tableClientes.getModel();
         cargarClientes();
-
         tableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -23,11 +22,11 @@ public class Clientes extends javax.swing.JPanel {
                 if (fila >= 0) {
                     int id = Integer.parseInt(tableClientes.getValueAt(fila, 0).toString());
                     String nombre = tableClientes.getValueAt(fila, 1).toString();
-                    String telefono = tableClientes.getValueAt(fila, 2).toString();
-                    String correo = tableClientes.getValueAt(fila, 3).toString();
-                    String fecha = tableClientes.getValueAt(fila, 4).toString();
-
-                    clientesForm1.setDatosCliente(id, nombre, telefono, correo, fecha);
+                    String numeroDocumento = tableClientes.getValueAt(fila, 2).toString();
+                    String telefono = tableClientes.getValueAt(fila, 3).toString();
+                    String correo = tableClientes.getValueAt(fila, 4).toString();
+                    String fecha = tableClientes.getValueAt(fila, 5).toString();
+                    clientesForm1.setDatosCliente(id, nombre, numeroDocumento, telefono, correo, fecha);
                 }
             }
         });
@@ -36,12 +35,12 @@ public class Clientes extends javax.swing.JPanel {
     public void cargarClientes() {
         modelo.setRowCount(0);
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
         for (Cliente c : dao.ListarClientes()) {
             String fechaFormateada = c.getFecha() != null ? sdf.format(c.getFecha()) : "";
             modelo.addRow(new Object[]{
                 c.getId(),
                 c.getNombre(),
+                c.getNumero_documento(),
                 c.getTelefono(),
                 c.getCorreo(),
                 fechaFormateada
@@ -61,23 +60,23 @@ public class Clientes extends javax.swing.JPanel {
 
         tableClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "TELEFONO", "EMAIL", "FECHA"
+                "ID", "NOMBRE", "DOCUMENTO", "TELEFONO", "EMAIL", "FECHA"
             }
         ));
         jScrollPane1.setViewportView(tableClientes);

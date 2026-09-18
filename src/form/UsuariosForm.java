@@ -43,22 +43,22 @@ public class UsuariosForm extends javax.swing.JPanel {
         g2.dispose();
     }
 
-    public void setDatosUsuario(String id, String nombre, String correo, String pass, String rol, String telefono) {
+    public void setDatosUsuario(String id, String nombre, String correo, String pass, String rol, String telefono, String numeroDocumento) {
         txtIdUsuario.setText(id);
         txtNombreUsuario.setText(nombre);
         txtEmailUsuario.setText(correo);
         txtPassUsuario.setText(pass);
         cbxRolUsuario.setSelectedItem(rol);
         txtTelefonoUsuario.setText(telefono);
+        txtDocumento.setText(numeroDocumento);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblFormTitleUsuarios = new javax.swing.JLabel();
-        lblNombreUsuario = new javax.swing.JLabel();
-        txtNombreUsuario = new components.CustomTextField();
+        lblDocumento = new javax.swing.JLabel();
+        txtDocumento = new components.CustomTextField();
         lblEmailUsuario = new javax.swing.JLabel();
         txtEmailUsuario = new components.CustomTextField();
         lblPassUsuario = new javax.swing.JLabel();
@@ -74,68 +74,64 @@ public class UsuariosForm extends javax.swing.JPanel {
         roundedPanelEliminarUsuario = new components.RoundedPanel();
         btnEliminarUsuario = new javax.swing.JLabel();
         txtIdUsuario = new components.CustomTextField();
+        lblNombreUsuario = new javax.swing.JLabel();
+        txtNombreUsuario = new components.CustomTextField();
 
         setBackground(new java.awt.Color(61, 63, 65));
         setLayout(null);
 
-        lblFormTitleUsuarios.setFont(new java.awt.Font("Caladea", 1, 24)); // NOI18N
-        lblFormTitleUsuarios.setForeground(new java.awt.Color(255, 51, 51));
-        lblFormTitleUsuarios.setText("Formulario usuarios");
-        add(lblFormTitleUsuarios);
-        lblFormTitleUsuarios.setBounds(60, 30, 225, 28);
+        lblDocumento.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        lblDocumento.setForeground(new java.awt.Color(255, 255, 255));
+        lblDocumento.setText("Numero de documento");
+        add(lblDocumento);
+        lblDocumento.setBounds(40, 110, 160, 17);
 
-        lblNombreUsuario.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
-        lblNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombreUsuario.setText("Nombre completo");
-        add(lblNombreUsuario);
-        lblNombreUsuario.setBounds(40, 80, 109, 17);
-
-        txtNombreUsuario.setForeground(new java.awt.Color(200, 200, 200));
-        txtNombreUsuario.setText("Ingrese el nombre del usuario");
-        add(txtNombreUsuario);
-        txtNombreUsuario.setBounds(29, 104, 286, 33);
+        txtDocumento.setForeground(new java.awt.Color(200, 200, 200));
+        txtDocumento.setText("Ingrese el numero de documento");
+        add(txtDocumento);
+        txtDocumento.setBounds(30, 130, 286, 33);
 
         lblEmailUsuario.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblEmailUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblEmailUsuario.setText("Correo electronico");
         add(lblEmailUsuario);
-        lblEmailUsuario.setBounds(40, 150, 150, 17);
+        lblEmailUsuario.setBounds(40, 170, 150, 17);
 
         txtEmailUsuario.setForeground(new java.awt.Color(200, 200, 200));
         txtEmailUsuario.setText("Ingrese el email del usuario");
         add(txtEmailUsuario);
-        txtEmailUsuario.setBounds(30, 170, 290, 33);
+        txtEmailUsuario.setBounds(30, 190, 290, 33);
 
         lblPassUsuario.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblPassUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblPassUsuario.setText("Contraseña");
         add(lblPassUsuario);
-        lblPassUsuario.setBounds(40, 220, 110, 17);
+        lblPassUsuario.setBounds(40, 230, 110, 17);
 
         cbxRolUsuario.setToolTipText("");
         add(cbxRolUsuario);
-        cbxRolUsuario.setBounds(30, 380, 290, 21);
+        cbxRolUsuario.setBounds(30, 390, 290, 21);
 
         txtPassUsuario.setPlaceholder("Ingrese la contraseña del usuario");
         add(txtPassUsuario);
-        txtPassUsuario.setBounds(30, 240, 290, 33);
+        txtPassUsuario.setBounds(30, 250, 290, 33);
 
         lblTelefonoUsuario.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblTelefonoUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefonoUsuario.setText("Telefono");
         add(lblTelefonoUsuario);
-        lblTelefonoUsuario.setBounds(40, 290, 70, 17);
+        lblTelefonoUsuario.setBounds(40, 300, 70, 17);
 
         txtTelefonoUsuario.setForeground(new java.awt.Color(200, 200, 200));
         txtTelefonoUsuario.setText("Ingrese el telefono del cliente");
         add(txtTelefonoUsuario);
-        txtTelefonoUsuario.setBounds(30, 310, 290, 33);
+        txtTelefonoUsuario.setBounds(30, 320, 290, 33);
 
         lblRolUsuario.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblRolUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblRolUsuario.setText("Rol de usuario");
         add(lblRolUsuario);
-        lblRolUsuario.setBounds(30, 360, 110, 17);
+        lblRolUsuario.setBounds(30, 370, 110, 17);
 
         roundedPanelCrearUsuario.setBottomColor(new java.awt.Color(51, 51, 255));
         roundedPanelCrearUsuario.setCornerRadius(10);
@@ -212,7 +208,18 @@ public class UsuariosForm extends javax.swing.JPanel {
         add(roundedPanelEliminarUsuario);
         roundedPanelEliminarUsuario.setBounds(30, 540, 290, 40);
         add(txtIdUsuario);
-        txtIdUsuario.setBounds(60, 600, 10, 33);
+        txtIdUsuario.setBounds(0, 600, 10, 33);
+
+        lblNombreUsuario.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
+        lblNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreUsuario.setText("Nombre completo");
+        add(lblNombreUsuario);
+        lblNombreUsuario.setBounds(40, 40, 109, 17);
+
+        txtNombreUsuario.setForeground(new java.awt.Color(200, 200, 200));
+        txtNombreUsuario.setText("Ingrese el nombre del usuario");
+        add(txtNombreUsuario);
+        txtNombreUsuario.setBounds(30, 70, 286, 33);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCrearUsuarioMouseClicked
@@ -222,12 +229,22 @@ public class UsuariosForm extends javax.swing.JPanel {
         }
         ValidacionesTextField val = new ValidacionesTextField();
         String nombre = txtNombreUsuario.getText().trim();
+        String numeroDocumento = txtDocumento.getText().trim();
         String correo = txtEmailUsuario.getText().trim();
         String pass = new String(txtPassUsuario.getPassword());
         String telefono = txtTelefonoUsuario.getText().trim();
         String rol = cbxRolUsuario.getSelectedItem().toString();
+
         if (!val.validarNombre(nombre)) {
             JOptionPane.showMessageDialog(this, "El nombre debe tener al menos 8 caracteres");
+            return;
+        }
+        if (numeroDocumento.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el número de documento");
+            return;
+        }
+        if (!numeroDocumento.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "El número de documento debe ser numérico");
             return;
         }
         if (!val.validarCorreo(correo)) {
@@ -246,9 +263,11 @@ public class UsuariosForm extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un rol de usuario");
             return;
         }
+
         UsuariosDAO dao = new UsuariosDAO();
         Usuarios u = new Usuarios();
         u.setNombre(nombre);
+        u.setNumero_documento(numeroDocumento);
         u.setCorreo(correo);
         u.setPass(pass);
         u.setRol(rol);
@@ -273,9 +292,16 @@ public class UsuariosForm extends javax.swing.JPanel {
             return;
         }
         try {
+            String numeroDocumento = txtDocumento.getText().trim();
+            if (!numeroDocumento.isEmpty() && !numeroDocumento.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "El número de documento debe ser numérico");
+                return;
+            }
+
             Usuarios u = new Usuarios();
             u.setId(Integer.parseInt(txtIdUsuario.getText()));
             u.setNombre(txtNombreUsuario.getText().trim());
+            u.setNumero_documento(numeroDocumento);
             u.setCorreo(txtEmailUsuario.getText().trim());
             u.setPass(new String(txtPassUsuario.getPassword()));
             u.setRol(cbxRolUsuario.getSelectedItem().toString());
@@ -330,8 +356,8 @@ public class UsuariosForm extends javax.swing.JPanel {
     private javax.swing.JLabel btnCrearUsuario;
     private javax.swing.JLabel btnEliminarUsuario;
     private components.CustomComboBox cbxRolUsuario;
+    private javax.swing.JLabel lblDocumento;
     private javax.swing.JLabel lblEmailUsuario;
-    private javax.swing.JLabel lblFormTitleUsuarios;
     private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JLabel lblPassUsuario;
     private javax.swing.JLabel lblRolUsuario;
@@ -339,6 +365,7 @@ public class UsuariosForm extends javax.swing.JPanel {
     private components.RoundedPanel roundedPanelActualizarCliente;
     private components.RoundedPanel roundedPanelCrearUsuario;
     private components.RoundedPanel roundedPanelEliminarUsuario;
+    private components.CustomTextField txtDocumento;
     private components.CustomTextField txtEmailUsuario;
     private components.CustomTextField txtIdUsuario;
     private components.CustomTextField txtNombreUsuario;
@@ -349,6 +376,7 @@ public class UsuariosForm extends javax.swing.JPanel {
     private void limpiarCampos() {
         txtIdUsuario.setText("");
         txtNombreUsuario.setText("");
+        txtDocumento.setText("");
         txtEmailUsuario.setText("");
         txtPassUsuario.setText("");
         txtTelefonoUsuario.setText("");

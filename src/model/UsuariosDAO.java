@@ -14,17 +14,15 @@ public class UsuariosDAO {
     private final Conexion cn = Conexion.getInstancia();
 
     public boolean RegistrarUsuario(Usuarios u) {
-        String sql = "INSERT INTO usuarios (nombre, correo, pass, rol, telefono) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nombre, correo, pass, rol, telefono, numero_documento) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             String hashedPass = BCrypt.hashpw(u.getPass(), BCrypt.gensalt());
-
             ps.setString(1, u.getNombre());
             ps.setString(2, u.getCorreo());
             ps.setString(3, hashedPass);
             ps.setString(4, u.getRol());
             ps.setString(5, u.getTelefono());
-
+            ps.setString(6, u.getNumero_documento());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -36,9 +34,7 @@ public class UsuariosDAO {
     public List<Usuarios> ListarUsuarios() {
         List<Usuarios> listaUs = new ArrayList<>();
         String sql = "SELECT * FROM usuarios";
-
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
             while (rs.next()) {
                 Usuarios u = new Usuarios();
                 u.setId(rs.getInt("id"));
@@ -47,6 +43,7 @@ public class UsuariosDAO {
                 u.setPass(rs.getString("pass"));
                 u.setRol(rs.getString("rol"));
                 u.setTelefono(rs.getString("telefono"));
+                u.setNumero_documento(rs.getString("numero_documento"));
                 u.setFecha(rs.getTimestamp("fecha"));
                 listaUs.add(u);
             }
@@ -59,7 +56,6 @@ public class UsuariosDAO {
     public boolean EliminarUsuario(int id) {
         String sql = "DELETE FROM usuarios WHERE id = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, id);
             ps.executeUpdate();
             return true;
@@ -70,16 +66,15 @@ public class UsuariosDAO {
     }
 
     public boolean ModificarUsuario(Usuarios u) {
-        String sql = "UPDATE usuarios SET nombre = ?, correo = ?, pass = ?, rol = ?, telefono = ? WHERE id = ?";
+        String sql = "UPDATE usuarios SET nombre = ?, correo = ?, pass = ?, rol = ?, telefono = ?, numero_documento = ? WHERE id = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setString(1, u.getNombre());
             ps.setString(2, u.getCorreo());
             ps.setString(3, u.getPass());
             ps.setString(4, u.getRol());
             ps.setString(5, u.getTelefono());
-            ps.setInt(6, u.getId());
-
+            ps.setString(6, u.getNumero_documento());
+            ps.setInt(7, u.getId());
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -91,9 +86,7 @@ public class UsuariosDAO {
     public Usuarios buscarUsuario(String correo) {
         Usuarios u = null;
         String sql = "SELECT * FROM usuarios WHERE correo = ?";
-
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setString(1, correo);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -104,6 +97,8 @@ public class UsuariosDAO {
                     u.setPass(rs.getString("pass"));
                     u.setRol(rs.getString("rol"));
                     u.setTelefono(rs.getString("telefono"));
+                    u.setNumero_documento(rs.getString("numero_documento"));
+                    u.setFecha(rs.getTimestamp("fecha"));
                 }
             }
         } catch (SQLException e) {

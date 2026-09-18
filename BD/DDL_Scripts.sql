@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     pass VARCHAR(255) NOT NULL,
     rol VARCHAR(20) NOT NULL,
     telefono VARCHAR(20) NOT NULL,
+    numero_documento VARCHAR(20) UNIQUE,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -27,6 +28,7 @@ CREATE TABLE IF NOT EXISTS clientes (
     nombre VARCHAR(150) NOT NULL,
     telefono VARCHAR(20) NOT NULL,
     correo VARCHAR(100) NOT NULL UNIQUE,
+    numero_documento VARCHAR(20) UNIQUE,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
