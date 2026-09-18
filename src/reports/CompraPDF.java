@@ -15,8 +15,8 @@ public class CompraPDF {
     public void generarPDF(Compra compra, List<DetalleCompra> detalles, String rucConfig,
             String nombreConfig, String telefonoConfig, String direccionConfig, String razonConfig) {
         try {
-            String rutaBase = "/home/DeathRaven1221/Documentos/Miscelanea_bellavista/Facturas_compras";
-            File dir = new File(rutaBase);
+            String carpetaUsuario = System.getProperty("user.home");
+            File dir = new File(carpetaUsuario, "MiscelaneaBellavista" + File.separator + "Facturas_compras");
             if (!dir.exists()) {
                 dir.mkdirs();
             }

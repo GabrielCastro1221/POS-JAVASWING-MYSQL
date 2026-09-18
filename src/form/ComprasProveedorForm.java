@@ -1,11 +1,17 @@
 package form;
 
-import model.Proveedores;
-import model.ProveedoresDAO;
 import config.Session;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Compra;
 import model.CompraDAO;
+import model.Config;
+import model.ConfigDAO;
+import model.DetalleCompra;
+import model.Proveedores;
+import model.ProveedoresDAO;
+import reports.CompraPDF;
+import java.util.List;
 
 public class ComprasProveedorForm extends javax.swing.JPanel {
 
@@ -124,7 +130,6 @@ public class ComprasProveedorForm extends javax.swing.JPanel {
         }
         Compras panelCompra = (Compras) getParent();
         DefaultTableModel modelo = (DefaultTableModel) panelCompra.getTableCompras().getModel();
-
         if (modelo.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Agrega al menos un producto a la compra");
             return;
@@ -132,14 +137,31 @@ public class ComprasProveedorForm extends javax.swing.JPanel {
         String itemsJson = construirJsonItems(modelo);
         Integer usuarioId = (Session.getUsuario() != null) ? Session.getUsuario().getId() : null;
         CompraDAO compraDAO = new CompraDAO();
-        CompraDAO.ResultadoCompra resultado = compraDAO.registrarCompraTransaccional(proveedor.getId(), usuarioId, numeroFactura, itemsJson);
+        CompraDAO.ResultadoCompra resultado = compraDAO.registrarCompraTransaccional(
+                proveedor.getId(), usuarioId, numeroFactura, itemsJson
+        );
         JOptionPane.showMessageDialog(this, resultado.mensaje);
         if (resultado.compraId > 0) {
+            generarPdfCompra(resultado.compraId);
             actualizarTotal(panelCompra.getTotalCompra());
             panelCompra.limpiarTabla();
             txtNumeroFactura.setText("");
         }
     }//GEN-LAST:event_btnGuardarCompraMouseClicked
+
+    private void generarPdfCompra(int compraId) {
+        CompraDAO compraDAO = new CompraDAO();
+        Compra compra = compraDAO.buscarCompraPorId(compraId);
+        List<DetalleCompra> detalles = compraDAO.listarDetalleCompra(compraId);
+        if (compra == null) {
+            System.out.println("No se pudo recuperar la compra #" + compraId + " para generar el PDF");
+            return;
+        }
+        ConfigDAO confDAO = new ConfigDAO();
+        Config cfg = confDAO.obtenerUltimaConfig();
+        CompraPDF pdf = new CompraPDF();
+        pdf.generarPDF(compra, detalles, String.valueOf(cfg.getRuc()), cfg.getNombre(), cfg.getTelefono(), cfg.getDireccion(), cfg.getRazon_social());
+    }
 
     private String construirJsonItems(DefaultTableModel modelo) {
         StringBuilder sb = new StringBuilder("[");

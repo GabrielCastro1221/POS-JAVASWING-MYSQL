@@ -116,7 +116,9 @@ public class VentaDAO {
 
     public Venta buscarVentaPorId(int idVenta) {
         Venta v = null;
-        String sql = "SELECT id, cliente_id, vendedor, total, fecha FROM ventas WHERE id = ?";
+        String sql = "SELECT id, cliente_id, vendedor, total, fecha, subtotal, iva_total, "
+                + "descuento_total, estado, forma_pago, numero_factura "
+                + "FROM ventas WHERE id = ?";
         try (Connection con = cn.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idVenta);
             try (ResultSet rs = ps.executeQuery()) {
@@ -127,6 +129,17 @@ public class VentaDAO {
                     v.setNombreVendedor(rs.getString("vendedor"));
                     v.setTotal(rs.getDouble("total"));
                     v.setFecha(rs.getTimestamp("fecha"));
+
+                    java.math.BigDecimal subtotal = rs.getBigDecimal("subtotal");
+                    v.setSubtotal(subtotal != null ? subtotal.doubleValue() : null);
+
+                    java.math.BigDecimal ivaTotal = rs.getBigDecimal("iva_total");
+                    v.setIva_total(ivaTotal != null ? ivaTotal.doubleValue() : null);
+
+                    v.setDescuento_total(rs.getDouble("descuento_total"));
+                    v.setEstado(rs.getString("estado"));
+                    v.setForma_pago(rs.getString("forma_pago"));
+                    v.setNumero_factura(rs.getString("numero_factura"));
                 }
             }
         } catch (SQLException e) {

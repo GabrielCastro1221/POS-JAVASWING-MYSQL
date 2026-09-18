@@ -190,8 +190,9 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
             consumirCodigosBarras();
             ConfigDAO confDAO = new ConfigDAO();
             Config cfg = confDAO.obtenerUltimaConfig();
+            Venta ventaCompleta = vDAO.buscarVentaPorId(idVenta);
             TicketPDF ticket = new TicketPDF(panelVenta.getTableVenta(), panelVenta.getTotalPagar());
-            ticket.GenerarPDF(idVenta, String.valueOf(cfg.getRuc()), cfg.getNombre(), cfg.getTelefono(), cfg.getDireccion(), cfg.getRazon_social());
+            ticket.GenerarPDF(ventaCompleta, String.valueOf(cfg.getRuc()), cfg.getNombre(), cfg.getTelefono(), cfg.getDireccion(), cfg.getRazon_social());
             TicketPOS.imprimirTicket(idVenta);
             limpiarCamposCliente();
         }
@@ -260,7 +261,8 @@ public class NuevaVentaUserForm extends javax.swing.JPanel {
             if (i > 0) {
                 sb.append(",");
             }
-            sb.append("{\"producto_id\":").append(productoId).append(",\"cantidad\":").append(cantidad).append("}");
+            sb.append("{\"producto_id\":").append(productoId)
+                    .append(",\"cantidad\":").append(cantidad).append("}");
         }
         sb.append("]");
         return sb.toString();
