@@ -65,7 +65,7 @@
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Component id="txtNombreCompraProd" min="-2" pref="186" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="614" max="-2" attributes="0"/>
-                          <Component id="btnLimpiarVenta" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="btnLimpiarCompra" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -114,7 +114,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txtCodigoCompraProd" min="-2" max="-2" attributes="0"/>
                       <Component id="txtNombreCompraProd" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnLimpiarVenta" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="btnLimpiarCompra" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -217,7 +217,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="components.Picture" name="btnLimpiarVenta">
+    <Component class="components.Picture" name="btnLimpiarCompra">
       <Properties>
         <Property name="path" type="java.lang.String" value="/assets/close.png"/>
       </Properties>

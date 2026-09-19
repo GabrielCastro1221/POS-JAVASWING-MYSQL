@@ -23,11 +23,7 @@ public class Compras extends javax.swing.JPanel {
         setOpaque(false);
         tableCompras.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
-                new String[]{
-                    "ID", "CODIGO", "NOMBRE", "CANTIDAD",
-                    "PRECIO UNITARIO", "TASA IVA", "IVA LINEA",
-                    "SUBTOTAL LINEA", "TOTAL LINEA"
-                }
+                new String[]{"ID", "CODIGO", "NOMBRE", "CANTIDAD", "PRECIO UNITARIO", "TASA IVA", "IVA LINEA", "SUBTOTAL LINEA", "TOTAL LINEA"}
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -70,10 +66,10 @@ public class Compras extends javax.swing.JPanel {
                 costoUnitario, tasaIva, ivaLinea, subtotalLinea, totalLinea
             });
         }
-        calcularTotalesCompra();
+        recalcularTotalesCompra();
     }
 
-    private void calcularTotalesCompra() {
+    public void recalcularTotalesCompra() {
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableCompras.getModel();
         double subtotal = 0;
         double iva = 0;

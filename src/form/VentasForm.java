@@ -35,17 +35,15 @@ public class VentasForm extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, "No se ha vinculado la tabla de ventas");
             return;
         }
-
         int fila = tableVentas.getSelectedRow();
         if (fila == -1) {
             javax.swing.JOptionPane.showMessageDialog(this, "Seleccione una venta de la tabla");
             return;
         }
-
         int idVenta = Integer.parseInt(tableVentas.getValueAt(fila, 0).toString());
-        String ruta = "/home/DeathRaven1221/Documentos/Miscelanea_bellavista/pdf/venta" + idVenta + ".pdf";
-        java.io.File file = new java.io.File(ruta);
-
+        String carpetaUsuario = System.getProperty("user.home");
+        java.io.File file = new java.io.File(carpetaUsuario + java.io.File.separator + "MiscelaneaBellavista" + java.io.File.separator
+                + "Facturas_ventas" + java.io.File.separator + "venta" + idVenta + ".pdf");
         if (file.exists()) {
             try {
                 java.awt.Desktop.getDesktop().open(file);
@@ -53,7 +51,7 @@ public class VentasForm extends javax.swing.JPanel {
                 javax.swing.JOptionPane.showMessageDialog(this, "Error al abrir PDF: " + e.getMessage());
             }
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "El PDF de la venta no existe en la carpeta");
+            javax.swing.JOptionPane.showMessageDialog(this, "No se encontró la factura:\n" + file.getAbsolutePath());
         }
     }
 

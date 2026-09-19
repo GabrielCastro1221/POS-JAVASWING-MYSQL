@@ -24,6 +24,13 @@ public class ComprasForm extends javax.swing.JPanel {
         cargarTasasIva();
         txtCodigoCompraProd.addActionListener(e -> cargarProductoPorCodigo());
         txtCantidadCompraProd.addActionListener(e -> agregarProductoATabla());
+        btnLimpiarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarProductoSeleccionado();
+            }
+        });
     }
 
     @Override
@@ -104,14 +111,7 @@ public class ComprasForm extends javax.swing.JPanel {
         double tasaIva = getTasaIvaSeleccionada();
         if (getParent() instanceof Compras) {
             Compras panelCompra = (Compras) getParent();
-            panelCompra.agregarProductoATabla(
-                    productoSeleccionado.getId(),
-                    productoSeleccionado.getCodigo(),
-                    productoSeleccionado.getNombre(),
-                    cantidad,
-                    costoUnitario,
-                    tasaIva
-            );
+            panelCompra.agregarProductoATabla(productoSeleccionado.getId(), productoSeleccionado.getCodigo(), productoSeleccionado.getNombre(), cantidad, costoUnitario, tasaIva);
         }
         limpiarCamposCompra();
         txtCodigoCompraProd.requestFocus();
@@ -124,6 +124,27 @@ public class ComprasForm extends javax.swing.JPanel {
         txtStockCompraProd.setText("");
         txtPrecioCompraProd.setText("");
         txtCantidadCompraProd.setText("");
+    }
+
+    private void eliminarProductoSeleccionado() {
+        if (!(getParent() instanceof Compras)) {
+            return;
+        }
+        Compras panelCompra = (Compras) getParent();
+        javax.swing.JTable tabla = panelCompra.getTableCompras();
+        int filaSeleccionada = tabla.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla");
+            return;
+        }
+        int opcion = JOptionPane.showConfirmDialog(this, "¿Deseas eliminar el producto seleccionado?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (opcion != JOptionPane.YES_OPTION) {
+            return;
+        }
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tabla.getModel();
+        modelo.removeRow(filaSeleccionada);
+        panelCompra.recalcularTotalesCompra();
+        limpiarCamposCompra();
     }
 
     @SuppressWarnings("unchecked")
@@ -140,7 +161,7 @@ public class ComprasForm extends javax.swing.JPanel {
         txtPrecioCompraProd = new components.CustomTextField();
         lblStockCompraProd = new javax.swing.JLabel();
         txtStockCompraProd = new components.CustomTextField();
-        btnLimpiarVenta = new components.Picture();
+        btnLimpiarCompra = new components.Picture();
         lblTasaIvaCompra = new javax.swing.JLabel();
         cbxTasaIva = new components.CustomComboBox();
 
@@ -178,7 +199,7 @@ public class ComprasForm extends javax.swing.JPanel {
 
         txtStockCompraProd.setForeground(new java.awt.Color(200, 200, 200));
 
-        btnLimpiarVenta.setPath("/assets/close.png");
+        btnLimpiarCompra.setPath("/assets/close.png");
 
         lblTasaIvaCompra.setFont(new java.awt.Font("Caladea", 1, 14)); // NOI18N
         lblTasaIvaCompra.setForeground(new java.awt.Color(255, 255, 255));
@@ -225,7 +246,7 @@ public class ComprasForm extends javax.swing.JPanel {
                             .addGap(10, 10, 10)
                             .addComponent(txtNombreCompraProd, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(614, 614, 614)
-                            .addComponent(btnLimpiarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnLimpiarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -260,7 +281,7 @@ public class ComprasForm extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtCodigoCompraProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtNombreCompraProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnLimpiarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnLimpiarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -271,7 +292,7 @@ public class ComprasForm extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private components.Picture btnLimpiarVenta;
+    private components.Picture btnLimpiarCompra;
     private components.CustomComboBox cbxTasaIva;
     private javax.swing.JLabel lblCantidadCompraProd;
     private javax.swing.JLabel lblCodigoCompraProd;

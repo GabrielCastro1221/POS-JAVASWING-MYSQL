@@ -129,13 +129,10 @@ public class VentaDAO {
                     v.setNombreVendedor(rs.getString("vendedor"));
                     v.setTotal(rs.getDouble("total"));
                     v.setFecha(rs.getTimestamp("fecha"));
-
                     java.math.BigDecimal subtotal = rs.getBigDecimal("subtotal");
                     v.setSubtotal(subtotal != null ? subtotal.doubleValue() : null);
-
                     java.math.BigDecimal ivaTotal = rs.getBigDecimal("iva_total");
                     v.setIva_total(ivaTotal != null ? ivaTotal.doubleValue() : null);
-
                     v.setDescuento_total(rs.getDouble("descuento_total"));
                     v.setEstado(rs.getString("estado"));
                     v.setForma_pago(rs.getString("forma_pago"));

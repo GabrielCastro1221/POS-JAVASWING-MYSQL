@@ -20,6 +20,7 @@ public class ComprasVer extends javax.swing.JPanel {
         listarCompras();
         configurarColumnaDetalle();
         eventoDetalle();
+        compraVerForm1.setTableCompras(tableCompras);
 
         tableCompras.addMouseMotionListener(new MouseAdapter() {
             @Override
@@ -62,8 +63,7 @@ public class ComprasVer extends javax.swing.JPanel {
         tableCompras.getColumnModel().getColumn(9)
                 .setCellRenderer(new DefaultTableCellRenderer() {
                     @Override
-                    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                            boolean hasFocus, int row, int column) {
+                    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                         label.setHorizontalAlignment(JLabel.CENTER);
                         label.setText("<html><b><font color='#FF0000'>Detalle compra</font></b></html>");

@@ -22,25 +22,29 @@ public class NuevaVentaForm extends javax.swing.JPanel {
         txtCodigoVentaProd.addActionListener(e -> cargarProductoPorCodigo());
         txtCantidadVentaProd.addActionListener(e -> agregarProductoATabla());
         ValidacionesTextField val = new ValidacionesTextField();
-
         txtCodigoVentaProd.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 val.numberKeyPress(evt);
             }
         });
-
         txtCantidadVentaProd.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 val.numberKeyPress(evt);
             }
         });
-
         txtPrecioVentaProd.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 val.numberDecimalKeyPress(evt, txtPrecioVentaProd);
+            }
+        });
+        btnLimpiarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLimpiarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarProductoSeleccionado();
             }
         });
     }
@@ -58,31 +62,25 @@ public class NuevaVentaForm extends javax.swing.JPanel {
     }
 
     private void cargarProductoPorCodigo() {
-    String codigo = txtCodigoVentaProd.getText().trim();
-    if (codigo.isEmpty()) {
-        return;
+        String codigo = txtCodigoVentaProd.getText().trim();
+        if (codigo.isEmpty()) {
+            return;
+        }
+        model.ProductosDAO dao = new model.ProductosDAO();
+        productoSeleccionado = dao.buscarProductoPorCodigoBarra(codigo);
+        if (productoSeleccionado == null) {
+            productoSeleccionado = dao.buscarProd(codigo);
+        }
+        if (productoSeleccionado != null) {
+            txtNombreVentaProd.setText(productoSeleccionado.getNombre());
+            txtStockVentaProd.setText(String.valueOf(productoSeleccionado.getStock()));
+            txtPrecioVentaProd.setText(String.valueOf(productoSeleccionado.getPrecio_bruto()));
+            txtCantidadVentaProd.setText("1");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Producto no encontrado");
+            limpiarCamposVenta();
+        }
     }
-
-    model.ProductosDAO dao = new model.ProductosDAO();
-
-    // 1. Intenta primero como código de barras (lector físico, cualquiera de los varios códigos del producto)
-    productoSeleccionado = dao.buscarProductoPorCodigoBarra(codigo);
-
-    // 2. Si no lo encontró, intenta como código corto del producto (ej: BEB001, tecleado a mano)
-    if (productoSeleccionado == null) {
-        productoSeleccionado = dao.buscarProd(codigo);
-    }
-
-    if (productoSeleccionado != null) {
-        txtNombreVentaProd.setText(productoSeleccionado.getNombre());
-        txtStockVentaProd.setText(String.valueOf(productoSeleccionado.getStock()));
-        txtPrecioVentaProd.setText(String.valueOf(productoSeleccionado.getPrecio_bruto()));
-        txtCantidadVentaProd.setText("1");
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Producto no encontrado");
-        limpiarCamposVenta();
-    }
-}
 
     private void agregarProductoATabla() {
         try {
@@ -115,20 +113,34 @@ public class NuevaVentaForm extends javax.swing.JPanel {
             double subtotal = cantidad * precioUnitario;
             if (getParent() instanceof NuevaVenta && productoSeleccionado != null) {
                 NuevaVenta panelVenta = (NuevaVenta) getParent();
-                panelVenta.agregarProductoATabla(
-                        productoSeleccionado.getId(),
-                        txtCodigoVentaProd.getText().trim(),
-                        txtNombreVentaProd.getText().trim(),
-                        cantidad,
-                        precioUnitario,
-                        subtotal,
-                        stock
-                );
+                panelVenta.agregarProductoATabla(productoSeleccionado.getId(), txtCodigoVentaProd.getText().trim(), txtNombreVentaProd.getText().trim(),
+                        cantidad, precioUnitario, subtotal, stock);
             }
             limpiarCamposVenta();
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos");
         }
+    }
+
+    private void eliminarProductoSeleccionado() {
+        if (!(getParent() instanceof NuevaVenta)) {
+            return;
+        }
+        NuevaVenta panelVenta = (NuevaVenta) getParent();
+        javax.swing.JTable tabla = panelVenta.getTableVenta();
+        int filaSeleccionada = tabla.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un producto de la tabla");
+            return;
+        }
+        int opcion = javax.swing.JOptionPane.showConfirmDialog(this, "¿Desea eliminar el producto seleccionado?", "Confirmar eliminación", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (opcion != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tabla.getModel();
+        modelo.removeRow(filaSeleccionada);
+        panelVenta.recalcularTotalVenta();
+        limpiarCamposVenta();
     }
 
     @SuppressWarnings("unchecked")

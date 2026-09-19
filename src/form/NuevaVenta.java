@@ -16,16 +16,12 @@ public class NuevaVenta extends javax.swing.JPanel {
     public NuevaVenta() {
         initComponents();
         setOpaque(false);
-        tableVenta.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{},
-                new String[]{"ID", "CODIGO", "NOMBRE", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"}
-        ) {
+        tableVenta.setModel(new javax.swing.table.DefaultTableModel(new Object[][]{}, new String[]{"ID", "CODIGO", "NOMBRE", "CANTIDAD", "PRECIO UNITARIO", "TOTAL"}) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         });
-
     }
 
     public void agregarProductoATabla(int productoId, String codigo, String nombre, int cantidad, double precioUnitario, double subtotal, int stock) {
@@ -49,10 +45,10 @@ public class NuevaVenta extends javax.swing.JPanel {
         if (!encontrado) {
             modelo.insertRow(0, new Object[]{productoId, codigo, nombre, cantidad, precioUnitario, subtotal});
         }
-        calcularTotalVenta();
+        recalcularTotalVenta();
     }
 
-    private void calcularTotalVenta() {
+    public void recalcularTotalVenta() {
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tableVenta.getModel();
         double total = 0;
         for (int i = 0; i < modelo.getRowCount(); i++) {

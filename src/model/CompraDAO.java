@@ -149,7 +149,6 @@ public class CompraDAO {
         String sqlDetalle = "SELECT producto_id, cantidad FROM detalle_compras WHERE id_compra = ?";
         String sqlRevertirStock = "UPDATE productos SET stock = stock - ? WHERE id = ?";
         String sqlMarcarAnulada = "UPDATE compras SET estado = 'anulada' WHERE id = ?";
-
         try (Connection con = cn.getConnection()) {
             con.setAutoCommit(false);
             try {

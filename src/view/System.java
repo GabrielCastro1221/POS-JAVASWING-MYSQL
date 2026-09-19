@@ -23,6 +23,18 @@ import javax.swing.JComponent;
 
 public class System extends javax.swing.JFrame implements SelectOption {
 
+    private final NuevaVenta nuevaVentaForm = new NuevaVenta();
+    private final Producto productoForm = new Producto();
+    private final Proveedor proveedorForm = new Proveedor();
+    private final Ventas ventasForm = new Ventas();
+    private final Clientes clientesForm = new Clientes();
+    private final Reportes reportesForm = new Reportes();
+    private final Usuario usuarioForm = new Usuario();
+    private final Config configForm = new Config();
+    private final Compras comprasForm = new Compras();
+    private final Dashboard dashboardForm = new Dashboard();
+    private final ComprasVer comprasVerForm = new ComprasVer();
+
     public System() {
         setUndecorated(true);
         initComponents();
@@ -31,7 +43,7 @@ public class System extends javax.swing.JFrame implements SelectOption {
         btnMinimizarSys.setCursor(new Cursor(Cursor.HAND_CURSOR));
         sidebar.getListMenu1().setSelected(true);
         sidebar.optionsEvent(this);
-        addForm(new NuevaVenta());
+        addForm(nuevaVentaForm);
     }
 
     private void init() {
@@ -44,21 +56,18 @@ public class System extends javax.swing.JFrame implements SelectOption {
         jPanel2.setOpaque(false);
         jPanel2.setBackground(new Color(0, 0, 0, 0));
         aplicarFormaRedondeada();
-
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 aplicarFormaRedondeada();
             }
         });
-
         btnCloseSys.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
             }
         });
-
         btnMinimizarSys.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -174,7 +183,6 @@ public class System extends javax.swing.JFrame implements SelectOption {
     }//GEN-LAST:event_btnCloseSysMouseClicked
 
     public static void main(String args[]) {
-
         java.awt.EventQueue.invokeLater(() -> new System().setVisible(true));
     }
 
@@ -193,18 +201,30 @@ public class System extends javax.swing.JFrame implements SelectOption {
     public void changeForm(int id) {
         JComponent formToChange;
         switch (id) {
-            case 1 -> formToChange = new NuevaVenta();
-            case 2 -> formToChange = new Producto();
-            case 3 -> formToChange = new Proveedor();
-            case 4 -> formToChange = new Ventas();
-            case 5 -> formToChange = new Clientes();
-            case 6 -> formToChange = new Reportes();
-            case 7 -> formToChange = new Usuario();
-            case 8 -> formToChange = new Config();
-            case 9 -> formToChange = new Compras();
-            case 10 -> formToChange = new Dashboard();
-            case 11 -> formToChange = new ComprasVer();
-            default -> formToChange = new NuevaVenta();
+            case 1 ->
+                formToChange = nuevaVentaForm;
+            case 2 ->
+                formToChange = productoForm;
+            case 3 ->
+                formToChange = proveedorForm;
+            case 4 ->
+                formToChange = ventasForm;
+            case 5 ->
+                formToChange = clientesForm;
+            case 6 ->
+                formToChange = reportesForm;
+            case 7 ->
+                formToChange = usuarioForm;
+            case 8 ->
+                formToChange = configForm;
+            case 9 ->
+                formToChange = comprasForm;
+            case 10 ->
+                formToChange = dashboardForm;
+            case 11 ->
+                formToChange = comprasVerForm;
+            default ->
+                formToChange = nuevaVentaForm;
         }
         addForm(formToChange);
     }

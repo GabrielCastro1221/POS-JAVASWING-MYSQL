@@ -1,13 +1,53 @@
 package form;
 
 import java.awt.Cursor;
+import javax.swing.JTable;
+import java.awt.Desktop;
+import java.io.File;
+import javax.swing.JOptionPane;
 
 public class CompraVerForm extends javax.swing.JPanel {
+
+    private JTable tableCompras;
+
+    public void setTableCompras(JTable tableCompras) {
+        this.tableCompras = tableCompras;
+    }
 
     public CompraVerForm() {
         initComponents();
         setOpaque(false);
         btnVerFactura.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnVerFactura.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verFacturaCompra();
+            }
+        });
+    }
+
+    private void verFacturaCompra() {
+        if (tableCompras == null) {
+            JOptionPane.showMessageDialog(this, "No se ha vinculado la tabla de compras");
+            return;
+        }
+        int fila = tableCompras.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una compra");
+            return;
+        }
+        int idCompra = Integer.parseInt(tableCompras.getValueAt(fila, 0).toString());
+        File file = new File(System.getProperty("user.home") + File.separator + "MiscelaneaBellavista" + File.separator
+                + "Facturas_compras" + File.separator + "compra_" + idCompra + ".pdf");
+        if (file.exists()) {
+            try {
+                Desktop.getDesktop().open(file);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al abrir PDF:\n" + e.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No existe el PDF de la compra:\n" + file.getAbsolutePath());
+        }
     }
 
     @SuppressWarnings("unchecked")

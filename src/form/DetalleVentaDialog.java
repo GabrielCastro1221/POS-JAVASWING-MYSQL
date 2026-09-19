@@ -39,10 +39,7 @@ public class DetalleVentaDialog extends JDialog {
         header.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
         header.add(titulo, BorderLayout.CENTER);
         panel.add(header, BorderLayout.NORTH);
-        tableDetalle = new JTable(new DefaultTableModel(
-                new Object[][]{},
-                new String[]{"Producto", "Cantidad", "Precio Unitario", "Subtotal"}
-        ) {
+        tableDetalle = new JTable(new DefaultTableModel(new Object[][]{}, new String[]{"Producto", "Cantidad", "Precio Unitario", "Subtotal"}) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -75,12 +72,8 @@ public class DetalleVentaDialog extends JDialog {
         DefaultTableModel modelo = (DefaultTableModel) tableDetalle.getModel();
         modelo.setRowCount(0);
         for (DetalleVenta dv : detallesActuales) {
-            modelo.addRow(new Object[]{
-                dv.getNombreProducto(),
-                dv.getCantidad(),
-                String.format("%.2f", dv.getPrecio()),
-                String.format("%.2f", dv.getCantidad() * dv.getPrecio())
-            });
+            modelo.addRow(new Object[]{dv.getNombreProducto(), dv.getCantidad(), String.format("%.2f", dv.getPrecio()), 
+                String.format("%.2f", dv.getCantidad() * dv.getPrecio())});
         }
     }
 
@@ -92,13 +85,8 @@ public class DetalleVentaDialog extends JDialog {
         }
         DetalleVenta detalleSeleccionado = detallesActuales.get(filaSeleccionada);
         int cantidadComprada = detalleSeleccionado.getCantidad();
-        String input = JOptionPane.showInputDialog(this,
-                "Producto: " + detalleSeleccionado.getNombreProducto()
-                + "\nCantidad comprada: " + cantidadComprada
-                + "\n\n¿Cuántas unidades deseas devolver?",
-                "Devolución / Reclamo",
-                JOptionPane.QUESTION_MESSAGE
-        );
+        String input = JOptionPane.showInputDialog(this, "Producto: " + detalleSeleccionado.getNombreProducto() + "\nCantidad comprada: " + cantidadComprada
+                + "\n\n¿Cuántas unidades deseas devolver?", "Devolución / Reclamo", JOptionPane.QUESTION_MESSAGE);
         if (input == null) {
             return;
         }
@@ -117,23 +105,13 @@ public class DetalleVentaDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "No puedes devolver más de lo comprado (" + cantidadComprada + " unidades)");
             return;
         }
-
-        int confirmacion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Confirmas la devolución de " + cantidadDevolver + " unidad(es) de \""
-                + detalleSeleccionado.getNombreProducto() + "\"?",
-                "Confirmar devolución",
-                JOptionPane.YES_NO_OPTION
-        );
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Confirmas la devolución de " + cantidadDevolver + " unidad(es) de \""
+                + detalleSeleccionado.getNombreProducto() + "\"?", "Confirmar devolución", JOptionPane.YES_NO_OPTION);
         if (confirmacion != JOptionPane.YES_OPTION) {
             return;
         }
         VentaDAO vDAO = new VentaDAO();
-        String mensaje = vDAO.registrarDevolucion(
-                ventaId,
-                detalleSeleccionado.getCodigo_producto(),
-                cantidadDevolver
-        );
+        String mensaje = vDAO.registrarDevolucion(ventaId, detalleSeleccionado.getCodigo_producto(), cantidadDevolver);
         JOptionPane.showMessageDialog(this, mensaje);
         cargarDetalle(ventaId);
     }
