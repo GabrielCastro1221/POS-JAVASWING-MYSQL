@@ -97,7 +97,7 @@ CREATE PROCEDURE sp_anular_venta(
     OUT p_mensaje  VARCHAR(255)
 )
 proc_anular: BEGIN
-    DECLARE v_existe INT DEFAULT 0;
+    DECLARE v_estado_actual VARCHAR(20);
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -107,11 +107,16 @@ proc_anular: BEGIN
 
     START TRANSACTION;
 
-    SELECT COUNT(*) INTO v_existe FROM ventas WHERE id = p_venta_id;
+    SELECT estado INTO v_estado_actual FROM ventas WHERE id = p_venta_id FOR UPDATE;
 
-    IF v_existe = 0 THEN
+    IF v_estado_actual IS NULL THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'La venta no existe';
+    END IF;
+
+    IF v_estado_actual = 'anulada' THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Esta venta ya estaba anulada';
     END IF;
 
     UPDATE productos p
@@ -119,7 +124,9 @@ proc_anular: BEGIN
     SET p.stock = p.stock + dv.cantidad
     WHERE dv.id_venta = p_venta_id;
 
-    DELETE FROM ventas WHERE id = p_venta_id;
+    UPDATE ventas
+    SET estado = 'anulada'
+    WHERE id = p_venta_id;
 
     COMMIT;
     SET p_mensaje = 'Venta anulada y stock restaurado con éxito';

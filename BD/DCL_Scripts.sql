@@ -1,37 +1,141 @@
-CREATE USER IF NOT EXISTS 'app_login'@'%' IDENTIFIED BY 'LoginBellavista2026!';
+CREATE USER IF NOT EXISTS 'app_login'@'%'
+IDENTIFIED BY 'LoginBellavista2026!';
+
 GRANT SELECT (id, nombre, correo, pass, rol, telefono)
-    ON MiscelaneaBellavista.usuarios TO 'app_login'@'%';
-GRANT SELECT ON MiscelaneaBellavista.config TO 'app_login'@'%';
+ON MiscelaneaBellavista.usuarios
+TO 'app_login'@'%';
 
-CREATE USER IF NOT EXISTS 'app_admin'@'%' IDENTIFIED BY 'AdminBellavista2026!';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.clientes       TO 'app_admin'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.proveedores    TO 'app_admin'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.categorias     TO 'app_admin'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.productos      TO 'app_admin'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.codigos_barras TO 'app_admin'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.ventas         TO 'app_admin'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.detalle_ventas TO 'app_admin'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.config         TO 'app_admin'@'%';
-GRANT SELECT, INSERT, UPDATE, DELETE ON MiscelaneaBellavista.usuarios       TO 'app_admin'@'%';
+GRANT SELECT
+ON MiscelaneaBellavista.config
+TO 'app_login'@'%';
 
-CREATE USER IF NOT EXISTS 'app_vendedor'@'%' IDENTIFIED BY 'VendedorBellavista2026!';
+CREATE USER IF NOT EXISTS 'app_admin'@'%'
+IDENTIFIED BY 'AdminBellavista2026!';
 
-GRANT SELECT ON MiscelaneaBellavista.categorias     TO 'app_vendedor'@'%';
-GRANT SELECT ON MiscelaneaBellavista.proveedores    TO 'app_vendedor'@'%';
-GRANT SELECT ON MiscelaneaBellavista.codigos_barras TO 'app_vendedor'@'%';
-GRANT SELECT ON MiscelaneaBellavista.config         TO 'app_vendedor'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.categorias
+TO 'app_admin'@'%';
 
-GRANT SELECT ON MiscelaneaBellavista.productos TO 'app_vendedor'@'%';
-GRANT UPDATE (stock) ON MiscelaneaBellavista.productos TO 'app_vendedor'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.clientes
+TO 'app_admin'@'%';
 
-GRANT INSERT, UPDATE ON MiscelaneaBellavista.proveedores TO 'app_vendedor'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.codigos_barras
+TO 'app_admin'@'%';
 
-GRANT SELECT, INSERT, UPDATE ON MiscelaneaBellavista.clientes TO 'app_vendedor'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.compras
+TO 'app_admin'@'%';
 
-GRANT SELECT, INSERT ON MiscelaneaBellavista.ventas         TO 'app_vendedor'@'%';
-GRANT SELECT, INSERT ON MiscelaneaBellavista.detalle_ventas TO 'app_vendedor'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.config
+TO 'app_admin'@'%';
 
-GRANT SELECT (id, nombre) ON MiscelaneaBellavista.usuarios TO 'app_vendedor'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.detalle_compras
+TO 'app_admin'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.detalle_ventas
+TO 'app_admin'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.productos
+TO 'app_admin'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.proveedores
+TO 'app_admin'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.usuarios
+TO 'app_admin'@'%';
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON MiscelaneaBellavista.ventas
+TO 'app_admin'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE MiscelaneaBellavista.sp_registrar_venta
+TO 'app_admin'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE MiscelaneaBellavista.sp_registrar_compra
+TO 'app_admin'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE MiscelaneaBellavista.sp_registrar_devolucion
+TO 'app_admin'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE MiscelaneaBellavista.sp_anular_venta
+TO 'app_admin'@'%';
+
+CREATE USER IF NOT EXISTS 'app_vendedor'@'%'
+IDENTIFIED BY 'VendedorBellavista2026!';
+
+GRANT SELECT
+ON MiscelaneaBellavista.categorias
+TO 'app_vendedor'@'%';
+
+GRANT SELECT
+ON MiscelaneaBellavista.codigos_barras
+TO 'app_vendedor'@'%';
+
+GRANT SELECT
+ON MiscelaneaBellavista.config
+TO 'app_vendedor'@'%';
+
+GRANT SELECT
+ON MiscelaneaBellavista.productos
+TO 'app_vendedor'@'%';
+
+GRANT UPDATE (stock)
+ON MiscelaneaBellavista.productos
+TO 'app_vendedor'@'%';
+
+GRANT SELECT, INSERT, UPDATE
+ON MiscelaneaBellavista.clientes
+TO 'app_vendedor'@'%';
+
+GRANT SELECT, INSERT, UPDATE
+ON MiscelaneaBellavista.proveedores
+TO 'app_vendedor'@'%';
+
+GRANT SELECT, INSERT
+ON MiscelaneaBellavista.ventas
+TO 'app_vendedor'@'%';
+
+GRANT SELECT, INSERT
+ON MiscelaneaBellavista.detalle_ventas
+TO 'app_vendedor'@'%';
+
+GRANT SELECT, INSERT
+ON MiscelaneaBellavista.compras
+TO 'app_vendedor'@'%';
+
+GRANT SELECT, INSERT
+ON MiscelaneaBellavista.detalle_compras
+TO 'app_vendedor'@'%';
+
+GRANT SELECT (id, nombre)
+ON MiscelaneaBellavista.usuarios
+TO 'app_vendedor'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE MiscelaneaBellavista.sp_registrar_venta
+TO 'app_vendedor'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE MiscelaneaBellavista.sp_registrar_compra
+TO 'app_vendedor'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE MiscelaneaBellavista.sp_registrar_devolucion
+TO 'app_vendedor'@'%';
+
+FLUSH PRIVILEGES;
 
 SHOW GRANTS FOR 'app_login'@'%';
 SHOW GRANTS FOR 'app_admin'@'%';

@@ -58,6 +58,19 @@ public class VentaDAO {
         }
     }
 
+    public String anularVenta(int ventaId) {
+        String sql = "{CALL sp_anular_venta(?, ?)}";
+        try (Connection con = cn.getConnection(); CallableStatement cs = con.prepareCall(sql)) {
+            cs.setInt(1, ventaId);
+            cs.registerOutParameter(2, Types.VARCHAR);
+            cs.execute();
+            return cs.getString(2);
+        } catch (SQLException e) {
+            System.out.println("Error en anularVenta: " + e.toString());
+            return "Error: " + e.getMessage();
+        }
+    }
+
     public int idVenta() {
         int id = 0;
         String sql = "SELECT MAX(id) FROM ventas";
